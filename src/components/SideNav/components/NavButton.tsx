@@ -15,7 +15,7 @@ const NavButton: React.FC<NavButtonProps> = ({ label, icon, to }) => {
     <Link
       to={to}
       className={`flex items-center gap-4 p-3 rounded-lg text-sm font-medium ${
-        isActive ? "bg-blue-100 text-blue-600" : "text-gray-600 hover:bg-gray-100"
+        isActive ? "bg-primary1 text-white" : "text-gray-600 hover:bg-gray-100"
       }`}
     >
       <span className="text-xl">{icon}</span>

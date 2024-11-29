@@ -2,10 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    @apply font-poppins
+* {
+  @apply font-poppins;
 }
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+@layer utilities {
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
+
+  .animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+  }
+}

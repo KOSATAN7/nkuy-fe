@@ -13,6 +13,7 @@ export default {
         poppins: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        primary1: '#7EC7FF',
         primary10: '#0A1323',
         primary20: '#0F1B33',
         primary30: '#125678',
