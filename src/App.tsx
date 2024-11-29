@@ -8,6 +8,7 @@ import { HeaderProvider } from "./components/SideNav/components/HeaderContext";
 import Dashboard from "./pages/Dashboard";
 import Film from "./pages/Film";
 import Venue from "./pages/Venue";
+import CreateKategori from "./pages/Kategori/CreateKategori";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="kategori" element={<Kategori />} />
+            <Route path="kategori/create" element={<CreateKategori />} />
             <Route path="film" element={<Film />} />
             <Route path="venue" element={<Venue />} />
           </Route>
