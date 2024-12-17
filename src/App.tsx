@@ -9,6 +9,12 @@ import Dashboard from "./pages/Dashboard";
 import Film from "./pages/Film";
 import Venue from "./pages/Venue";
 import CreateKategori from "./pages/Kategori/CreateKategori";
+import UpdateKategori from "./pages/Kategori/UpdateKategori";
+import CreateFilm from "./pages/Film/CreateFilm";
+import CreateVenue from "./pages/Venue/CreateVenue";
+import UpdateFilm from "./pages/Film/UpdateFilm";
+import SubKategori from "./pages/SubKategori";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -16,12 +22,18 @@ function App() {
       <BrowserRouter>
       <HeaderProvider>
         <Routes>
+            <Route path="/" element={<LandingPage />} />
           <Route path="/" element={<Layout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="kategori" element={<Kategori />} />
             <Route path="kategori/create" element={<CreateKategori />} />
+            <Route path="kategori/update/:id" element={<UpdateKategori />} />
+            <Route path="subkategori" element={<SubKategori />} />
             <Route path="film" element={<Film />} />
+            <Route path="film/create" element={<CreateFilm />} />
+            <Route path="film/update/:id" element={<UpdateFilm />} />
             <Route path="venue" element={<Venue />} />
+            <Route path="venue/create" element={<CreateVenue />} />
           </Route>
         </Routes>
       </HeaderProvider>
