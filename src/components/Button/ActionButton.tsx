@@ -42,9 +42,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       {updatePath && (
         <button
           onClick={() => navigate(updatePath)}
-          className="bg-yellow-200 p-2 rounded-lg hover:bg-yellow-300"
+          className="bg-primary2 p-2 rounded-lg hover:bg-blue-400"
         >
-          <HiOutlinePencil className="text-gray-600" />
+          <HiOutlinePencil className="text-white" />
         </button>
       )}
 
@@ -60,9 +60,9 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       {onDelete && (
         <button
           onClick={handleDelete}
-          className="bg-red-200 p-2 rounded-lg hover:bg-red-300"
+          className="bg-danger1 p-2 rounded-lg hover:bg-red-300"
         >
-          <HiOutlineTrash className="text-gray-600" />
+          <HiOutlineTrash className="text-white" />
         </button>
       )}
     </div>

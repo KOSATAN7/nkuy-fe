@@ -5,6 +5,7 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { RxDashboard } from "react-icons/rx";
 import { CiMonitor } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
 
 
 const SideNav = () => {
@@ -17,6 +18,7 @@ const SideNav = () => {
       <div className="flex flex-col gap-4">
         <NavButton label="Dashboard" icon={<LuLayoutDashboard />} to="/dashboard" />
         <NavButton label="Kategori" icon={<RxDashboard />} to="/kategori" />
+        <NavButton label="Sub Kategori" icon={<MdOutlineDashboardCustomize />} to="/subkategori" />
         <NavButton label="Film" icon={<CiMonitor />} to="/film" />
         <NavButton label="Venue" icon={<IoLocationOutline />} to="/venue" />
       </div>
