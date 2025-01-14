@@ -23,11 +23,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
   return (
     <div className="max-w-sm rounded-3xl shadow-lg bg-white">
       <div className="relative">
-        <img
-          src={image}
-          alt={title}
-          className="rounded-t-3xl w-full"
-        />
+        <img src={image} alt={title} className="rounded-t-3xl w-full" />
       </div>
 
       <div className="p-4">
@@ -41,13 +37,11 @@ const MatchCard: React.FC<MatchCardProps> = ({
             <p className="text-gray-600 text-sm">{time}</p>
           </div>
         </div>
-        <p className="text-gray-600 text-sm pb-4">
-          {description}
-        </p>
+        <p className="text-gray-600 text-sm pb-4">{description}</p>
         <div className="flex justify-center">
-        <button className="p-5 bg-primary1 text-white py-2 rounded-full font-semibold hover:bg-primary1-dark transition">
-          {buttonText}
-        </button>
+          <button className="p-5 bg-primary1 text-white py-2 rounded-full font-semibold hover:bg-primary1-dark transition">
+            {buttonText}
+          </button>
         </div>
       </div>
     </div>

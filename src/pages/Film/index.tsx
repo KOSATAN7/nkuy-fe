@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useHeaderContext } from "../../components/SideNav/components/HeaderContext";
 import ActionButton from "@/components/Button/ActionButton";
 import { deleteFilm, getFilm } from "@/service/index";
-import Alert  from "@/components/Alert";
+import Alert from "@/components/Alert";
+import { formatDate } from "@/utils/FormatDate";
 
 interface FilmData {
   id: number;
@@ -40,30 +41,6 @@ const Film: React.FC = () => {
     };
     fetchData();
   }, []);
-
-  function convertMillisToCustomDateTime(millis: number): string {
-    const date = new Date(millis);
-
-    const days = [
-      "Minggu",
-      "Senin",
-      "Selasa",
-      "Rabu",
-      "Kamis",
-      "Jumat",
-      "Sabtu",
-    ];
-    const dayName = days[date.getDay()];
-
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-
-    const hours = String(date.getHours()).padStart(2, "0");
-    const minutes = String(date.getMinutes()).padStart(2, "0");
-
-    return `${dayName}, ${day}/${month}/${year} ${hours}.${minutes}`;
-  }
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -111,11 +88,10 @@ const Film: React.FC = () => {
         setAlertMessage(null);
         setAlertType(null);
       }, 2000);
-  
+
       return () => clearTimeout(timer);
     }
   }, [alertMessage]);
-  
 
   return (
     <div className="p-5">
@@ -141,9 +117,7 @@ const Film: React.FC = () => {
               <td className="p-4">
                 {row.kategori.nama_kategori || "Kategori Tidak Tersedia"}
               </td>
-              <td className="p-4">
-                {convertMillisToCustomDateTime(row.jadwal)}
-              </td>
+              <td className="p-4">{formatDate(row.jadwal)}</td>
               <td className="p-4">{getStatusBadge(row.status)}</td>
               <td className="p-4">
                 <ActionButton

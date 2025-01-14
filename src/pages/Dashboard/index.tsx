@@ -1,8 +1,9 @@
+import TextField from "@/components/Field/TextField";
 
 const Dashboard = () => {
   return (
-    <div>
-        <h1>Kuda Liar Dashboad</h1>
+    <div className="">
+        <TextField title="Kuda Liar" />
     </div>
   )
 }

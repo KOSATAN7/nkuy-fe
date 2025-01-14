@@ -30,6 +30,17 @@ export const getFilm = async () => {
     return response;
 }
 
+export const getFilmById = async (id: string) => {
+    const response = await axios.get(`${API_BASE_URL}/film/${id}`);
+    return response;
+}
+
+export const updateFilm = async (id: string, payload: any) => {
+    const response = await axios.put(`${API_BASE_URL}/film/${id}`, payload);
+    return response;
+  };
+  
+
 export const postFilm = async (data: POSTFILM) => {
     const response = await axios.post(`${API_BASE_URL}/film`,data)
     return response;

@@ -14,29 +14,31 @@ import CreateFilm from "./pages/Film/CreateFilm";
 import CreateVenue from "./pages/Venue/CreateVenue";
 import UpdateFilm from "./pages/Film/UpdateFilm";
 import SubKategori from "./pages/SubKategori";
-import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/Login";
+import LandingPage from "./pages/UserPage/LandingPage";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-      <HeaderProvider>
-        <Routes>
+        <HeaderProvider>
+          <Routes>
             <Route path="/" element={<LandingPage />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="kategori" element={<Kategori />} />
-            <Route path="kategori/create" element={<CreateKategori />} />
-            <Route path="kategori/update/:id" element={<UpdateKategori />} />
-            <Route path="subkategori" element={<SubKategori />} />
-            <Route path="film" element={<Film />} />
-            <Route path="film/create" element={<CreateFilm />} />
-            <Route path="film/update/:id" element={<UpdateFilm />} />
-            <Route path="venue" element={<Venue />} />
-            <Route path="venue/create" element={<CreateVenue />} />
-          </Route>
-        </Routes>
-      </HeaderProvider>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<Layout />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="kategori" element={<Kategori />} />
+              <Route path="kategori/create" element={<CreateKategori />} />
+              <Route path="kategori/update/:id" element={<UpdateKategori />} />
+              <Route path="subkategori" element={<SubKategori />} />
+              <Route path="film" element={<Film />} />
+              <Route path="film/create" element={<CreateFilm />} />
+              <Route path="film/update/:id" element={<UpdateFilm />} />
+              <Route path="venue" element={<Venue />} />
+              <Route path="venue/create" element={<CreateVenue />} />
+            </Route>
+          </Routes>
+        </HeaderProvider>
       </BrowserRouter>
     </ThemeProvider>
   );
