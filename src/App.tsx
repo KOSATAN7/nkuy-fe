@@ -17,6 +17,7 @@ import SubKategori from "./pages/SubKategori";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import LandingPage from "./pages/UserPage/LandingPage";
+import TentangPage from "./pages/UserPage/Tentang";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/tentang" element={<TentangPage />} />
             <Route path="/" element={<Layout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="kategori" element={<Kategori />} />
