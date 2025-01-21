@@ -16,6 +16,8 @@ import UpdateFilm from "./pages/Film/UpdateFilm";
 import SubKategori from "./pages/SubKategori";
 import LoginPage from "./pages/Login";
 import LandingPage from "./pages/UserPage/LandingPage";
+import PanduanPage from "./pages/UserPage/Panduan";
+import KontakPage from "./pages/UserPage/Kontak";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <HeaderProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/panduan" element={<PanduanPage />} />
+            <Route path="/kontak" element={<KontakPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<Layout />}>
               <Route path="dashboard" element={<Dashboard />} />

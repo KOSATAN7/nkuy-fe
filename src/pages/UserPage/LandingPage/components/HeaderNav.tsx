@@ -8,10 +8,10 @@ const HeaderNav = () => {
       <div className="p-3 flex justify-between items-center">
         <img src={Logo} alt="" className="w-[200px]" />
         <div className="flex gap-5 font-semibold">
-          <p className="hover:text-primary1">Beranda</p>
-          <p className="hover:text-primary1">Panduan</p>
-          <p className="hover:text-primary1">Tentang</p>
-          <p className="hover:text-primary1">Kontak</p>
+          <p className="hover:text-primary1 cursor-pointer" onClick={() => navigate("/")}>Beranda</p>
+          <p className="hover:text-primary1  cursor-pointer" onClick={() => navigate("/panduan")}>Panduan</p>
+          <p className="hover:text-primary1  cursor-pointer" onClick={() => navigate("/tentang")}>Tentang</p>
+          <p className="hover:text-primary1  cursor-pointer" onClick={() => navigate("/kontak")}>Kontak</p>
         </div>
         <button
           onClick={() => navigate("/login")}
