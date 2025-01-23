@@ -55,7 +55,7 @@ const UpdateFilm: React.FC = () => {
           console.log(data)
           setFormState({
             judul: data.judul,
-            kategori: data.kategori.id.toString(),
+            kategori: data.kategori.id,
             jadwal: new Date(data.jadwal * 1000).toISOString().split("T")[0],
             harga: data.harga,
             status: data.status,

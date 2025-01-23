@@ -16,6 +16,7 @@ import UpdateFilm from "./pages/Film/UpdateFilm";
 import SubKategori from "./pages/SubKategori";
 import LoginPage from "./pages/Login";
 import LandingPage from "./pages/UserPage/LandingPage";
+import CreateSubKategori from "./pages/SubKategori/CreateSubKategori";
 import PanduanPage from "./pages/UserPage/Panduan";
 import KontakPage from "./pages/UserPage/Kontak";
 
@@ -35,6 +36,7 @@ function App() {
               <Route path="kategori/create" element={<CreateKategori />} />
               <Route path="kategori/update/:id" element={<UpdateKategori />} />
               <Route path="subkategori" element={<SubKategori />} />
+              <Route path="subkategori/create" element={<CreateSubKategori />} />
               <Route path="film" element={<Film />} />
               <Route path="film/create" element={<CreateFilm />} />
               <Route path="film/update/:id" element={<UpdateFilm />} />
