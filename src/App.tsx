@@ -7,6 +7,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import LandingPage from "./pages/UserPage/LandingPage";
 import PanduanPage from "./pages/UserPage/Panduan";
+import TentangPage from "./pages/UserPage/Tentang";
 import KontakPage from "./pages/UserPage/Kontak";
 import VenueList from "./pages/UserPage/VenueUser";
 import PertandinganPage from "./pages/SuperAdmin/Pertandingan";
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/panduan" element={<PanduanPage />} />
+            <Route path="/tentang" element={<TentangPage />} />
             <Route path="/kontak" element={<KontakPage />} />
             <Route path="/venuelist" element={<VenueList />} />
             <Route path="/login" element={<LoginPage />} />
