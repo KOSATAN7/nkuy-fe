@@ -1,96 +1,83 @@
 import MainLayout from "../LandingPage/Layout";
 import React from "react";
-import { FaMapMarkerAlt, FaClock, FaHeadset } from "react-icons/fa";
-
-const truncateText = (text: string, maxWords: number): string => {
-    const words = text.split(" ");
-    return words.length > maxWords ? words.slice(0, maxWords).join(" ") + "..." : text;
-};
+import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaClock } from "react-icons/fa";
 
 const KontakPage: React.FC = () => {
     return (
         <MainLayout>
-            <div className="py-10 px-5 mt-20">
-                {/* Header Section */}
-                <h2 className="text-3xl font-bold text-center mb-8">Kontak Kami</h2>
+            <div className="py-10 px-5 mt-12 mb-12">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-16">
+                    {/* Bagian Kiri - Info Kontak */}
+                    <div className=" p-8 rounded-lg w-full md:w-1/3 text-left">
+                        <h3 className="text-2xl font-bold mb-8">Hubungi Kami !</h3>
 
-                {/* Info Cards */}
-                <div className="flex items-center justify-center text-center gap-20 mt-28">
-                    <div className="text-3xl font-bold text-left">
-                        <p className="normal-case">Hubungi</p>
-                        <p className="normal-case">Kami</p>
+                        <div className="flex flex-col gap-6 items-start justify-center">
+                            <div className="flex items-center gap-4">
+                                <FaMapMarkerAlt className="text-2xl text-blue-500" />
+                                <div>
+                                    <h4 className="font-bold">Alamat</h4>
+                                    <p className="text-gray-600">Lorem ipsum dolor sit amet.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <FaPhoneAlt className="text-2xl text-blue-500" />
+                                <div>
+                                    <h4 className="font-bold">No. Telepon</h4>
+                                    <p className="text-gray-600">Lorem ipsum dolor sit amet.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <FaEnvelope className="text-2xl text-blue-500" />
+                                <div>
+                                    <h4 className="font-bold">E-Mail</h4>
+                                    <p className="text-gray-600">Lorem ipsum dolor sit amet.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4 border-t pt-4">
+                                <FaClock className="text-2xl text-blue-500" />
+                                <div>
+                                    <h4 className="font-bold">Jam Kerja</h4>
+                                    <p className="text-gray-600">07.00 - 21.00 WIB</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="bg-white shadow-xl border border-gray-200 rounded-xl p-6 flex flex-col text-left">
-                        <FaMapMarkerAlt className="text-3xl text-black-500 mb-4" />
-                        <h3 className="font-bold text-lg mb-2">Lokasi Offline</h3>
-                        <p className="text-gray-600 text-sm mb-4">
-                            {truncateText("Lorem Ipsum is simply dummy text that might be longer than twenty words for demonstration purposes.", 4)}
-                        </p>
-                        <a href="#" className="text-blue-500 font-semibold">
-                            Lebih lanjut &rarr;
-                        </a>
-                    </div>
-                    <div className="bg-white shadow-xl border border-gray-200 rounded-xl p-6 flex flex-col text-left">
-                        <FaClock className="text-3xl text-black-500 mb-4" />
-                        <h3 className="font-bold text-lg mb-2">Jam Kerja</h3>
-                        <p className="text-gray-600 text-sm mb-4">
-                            {truncateText("Lorem Ipsum is simply dummy text that might be longer than twenty words for demonstration purposes.", 4)}
-                        </p>
-                        <a href="#" className="text-blue-500 font-semibold">
-                            Lebih lanjut &rarr;
-                        </a>
-                    </div>
-                    <div className="bg-white shadow-xl border border-gray-200 rounded-xl p-6 flex flex-col text-left">
-                        <FaHeadset className="text-3xl text-black-500 mb-4" />
-                        <h3 className="font-bold text-lg mb-2">Komunikasi</h3>
-                        <p className="text-gray-600 text-sm mb-4">
-                            {truncateText("Lorem Ipsum is simply dummy text that might be longer than twenty words for demonstration purposes.", 4)}
-                        </p>
-                        <a href="#" className="text-blue-500 font-semibold">
-                            Lebih lanjut &rarr;
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="flex flex-col md:flex-row justify-center gap-8 mb-32 mt-32 px-5">
-                <div className="bg-white p-6 rounded-xl shadow-xl w-full md:w-2/3 flex flex-col md:flex-row gap-8">
-                    {/* Form Bagian Kiri */}
-                    <div className="bg-primary1 text-white p-6 rounded-md w-full md:w-1/2">
+                    {/* Bagian Kanan - Formulir Kontak */}
+                    <div className="bg-white shadow-xl p-8 rounded-lg w-full md:w-1/3">
+                        <h3 className="text-xl font-bold mb-6 text-center">KIRIM PESAN</h3>
                         <form>
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-sm font-medium mb-1">
-                                    Masukkan nama lengkap anda
+                                    Nama
                                 </label>
                                 <input
                                     type="text"
                                     id="name"
                                     className="w-full px-4 py-2 border rounded-md text-black"
-                                    placeholder="Nama lengkap anda..."
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="phone" className="block text-sm font-medium mb-1">
-                                    No. Telp
-                                </label>
-                                <input
-                                    type="text"
-                                    id="phone"
-                                    className="w-full px-4 py-2 border rounded-md text-black"
-                                    placeholder="08XXXXXXXXXX"
+                                    placeholder="Nama lengkap..."
                                 />
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-sm font-medium mb-1">
-                                    Masukkan email anda
+                                    Alamat E-mail
                                 </label>
                                 <input
                                     type="email"
                                     id="email"
                                     className="w-full px-4 py-2 border rounded-md text-black"
                                     placeholder="Email anda..."
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="phone" className="block text-sm font-medium mb-1">
+                                    No. Telepon
+                                </label>
+                                <input
+                                    type="text"
+                                    id="phone"
+                                    className="w-full px-4 py-2 border rounded-md text-black"
+                                    placeholder="08XXXXXXXXXX"
                                 />
                             </div>
                             <div className="mb-4">
@@ -104,22 +91,16 @@ const KontakPage: React.FC = () => {
                                     placeholder="Pesan..."
                                 ></textarea>
                             </div>
+                            <p className="text-gray-500 text-sm mb-4">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            </p>
                             <button
                                 type="submit"
-                                className="bg-white text-blue-500 px-4 py-2 rounded-md font-semibold hover:bg-gray-200"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-600 w-full"
                             >
-                                Kirim Pesan
+                                Kirim
                             </button>
                         </form>
-                    </div>
-
-                    {/* Bagian Kanan */}
-                    <div className="w-full md:w-1/2 text-center md:text-left justify-center mt-32">
-                        <p className="text-gray-600 mb-2">Memiliki pertanyaan?</p>
-                        <h2 className="text-3xl font-bold text-gray-800">Kontak Kami!</h2>
-                        <p className="text-gray-600 mt-2">
-                            Lorem Ipsum is simply dummy text. Lorem Ipsum is simply dummy text.
-                        </p>
                     </div>
                 </div>
             </div>
