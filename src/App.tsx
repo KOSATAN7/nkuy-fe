@@ -20,6 +20,7 @@ import CreateSubKategori from "./pages/SubKategori/CreateSubKategori";
 import PanduanPage from "./pages/UserPage/Panduan";
 import KontakPage from "./pages/UserPage/Kontak";
 import VenueList from "./pages/UserPage/VenueUser";
+import ManageUser from "./pages/ManageUser";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
               <Route path="film/update/:id" element={<UpdateFilm />} />
               <Route path="venue" element={<Venue />} />
               <Route path="venue/create" element={<CreateVenue />} />
+              <Route path="manageuser" element={<ManageUser />} />
             </Route>
           </Routes>
         </HeaderProvider>
