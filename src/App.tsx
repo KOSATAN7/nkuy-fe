@@ -15,6 +15,7 @@ import CreateVenue from "./pages/Venue/CreateVenue";
 import UpdateFilm from "./pages/Film/UpdateFilm";
 import SubKategori from "./pages/SubKategori";
 import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 import LandingPage from "./pages/UserPage/LandingPage";
 import CreateSubKategori from "./pages/SubKategori/CreateSubKategori";
 import PanduanPage from "./pages/UserPage/Panduan";
@@ -33,6 +34,7 @@ function App() {
             <Route path="/kontak" element={<KontakPage />} />
             <Route path="/venuelist" element={<VenueList />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<Layout />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="kategori" element={<Kategori />} />
