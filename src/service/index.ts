@@ -1,62 +1,103 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_URL_NKUY_API;
 
 interface POSTFILM {
-    judul: string;
-    kategori: number;
-    jadwal: number;
-    harga: string;
-    status: string;
+  judul: string;
+  kategori: number;
+  jadwal: number;
+  harga: string;
+  status: string;
 }
+
+export const PostLogin = async (email: string, password: string) => {
+  const response = await axios.post(`${API_BASE_URL}/login`, {
+    email,
+    password,
+  });
+  return response.data;
+};
+
+export const Logout = async (token: string) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/logout`,
+    {},
+    {
+      headers: {
+        Accept: "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};
+
+export const checkLogin = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/check-login`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
 
 export const getKategori = async () => {
-    const response = await axios.get(`${API_BASE_URL}/kategori`);
-    return response;
-}
+  const response = await axios.get(`${API_BASE_URL}/kategori`);
+  return response;
+};
+
+export const getPertandingan = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/pertandingan/semua`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
 
 export const postKategori = async (nama: string) => {
-    const response = await axios.post(`${API_BASE_URL}/kategori`,{nama});
-    return response;
-}
+  const response = await axios.post(`${API_BASE_URL}/kategori`, { nama });
+  return response;
+};
 
 export const deleteKategori = async (id: number) => {
-    const response = await axios.delete(`${API_BASE_URL}/kategori/${id}`);
-    return response;
-}
+  const response = await axios.delete(`${API_BASE_URL}/kategori/${id}`);
+  return response;
+};
 
 export const getFilm = async () => {
-    const response = await axios.get(`${API_BASE_URL}/film`);
-    return response;
-}
+  const response = await axios.get(`${API_BASE_URL}/film`);
+  return response;
+};
 
 export const getFilmById = async (id: string) => {
-    const response = await axios.get(`${API_BASE_URL}/film/${id}`);
-    return response;
-}
+  const response = await axios.get(`${API_BASE_URL}/film/${id}`);
+  return response;
+};
 
 export const updateFilm = async (id: string, payload: any) => {
-    const response = await axios.put(`${API_BASE_URL}/film/${id}`, payload);
-    return response;
-  };
-  
+  const response = await axios.put(`${API_BASE_URL}/film/${id}`, payload);
+  return response;
+};
 
 export const postFilm = async (data: POSTFILM) => {
-    const response = await axios.post(`${API_BASE_URL}/film`,data)
-    return response;
-}
+  const response = await axios.post(`${API_BASE_URL}/film`, data);
+  return response;
+};
 
 export const deleteFilm = async (id: number) => {
-    const response = await axios.delete(`${API_BASE_URL}/film/${id}`);
-    return response;
-}
+  const response = await axios.delete(`${API_BASE_URL}/film/${id}`);
+  return response;
+};
 
 export const getVenue = async () => {
-    const response = await axios.get(`${API_BASE_URL}/venue`);
-    return response;
-}
+  const response = await axios.get(`${API_BASE_URL}/venue`);
+  return response;
+};
 
 export const deleteVenue = async (id: number) => {
-    const response = await axios.delete(`${API_BASE_URL}/venue/${id}`);
-    return response;
-}
+  const response = await axios.delete(`${API_BASE_URL}/venue/${id}`);
+  return response;
+};
