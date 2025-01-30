@@ -12,7 +12,7 @@ interface PanduanCardProps {
 
 const PanduanCard: React.FC<PanduanCardProps> = ({ title, steps }) => {
   return (
-    <Accordion className="w-full">
+    <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography className="font-semibold text-gray-800">{title}</Typography>
       </AccordionSummary>

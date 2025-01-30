@@ -62,7 +62,7 @@ const LandingPage = () => {
         description: "Ciamis Stadium",
       },
     ],
-    "LaLiga": [
+    LaLiga: [
       {
         day: "THU",
         date: "12",
@@ -71,7 +71,7 @@ const LandingPage = () => {
         description: "Madrid Cafe",
       },
     ],
-    "UCL": [
+    UCL: [
       {
         day: "FRI",
         date: "13",
@@ -80,7 +80,7 @@ const LandingPage = () => {
         description: "Munich Arena",
       },
     ],
-    "ACL": [
+    ACL: [
       {
         day: "SAT",
         date: "14",
@@ -94,17 +94,20 @@ const LandingPage = () => {
   const matches = allMatches[activeLeague];
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : matches.length - 1));
+    setCurrentIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : matches.length - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < matches.length - 1 ? prevIndex + 1 : 0));
+    setCurrentIndex((prevIndex) =>
+      prevIndex < matches.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   return (
     <MainLayout>
-      {/* Header Section */}
-      <div className="flex flex-col items-center justify-center pt-20 pb-10">
+      <div className="flex flex-col items-center justify-center">
         <p className="pb-4 text-4xl font-bold">Mau nonton apa hari ini?</p>
         <input
           type="text"
@@ -113,8 +116,7 @@ const LandingPage = () => {
         />
       </div>
 
-      {/* Filter Section */}
-      <div className="flex items-center justify-center space-x-4 py-5 relative">
+      <div className="flex items-center justify-center space-x-4 relative">
         <button className="absolute left-0 z-10 p-2  ">
           <FaChevronLeft className="w-5 h-5 ml-72 text-gray-700" />
         </button>
@@ -122,10 +124,11 @@ const LandingPage = () => {
           <button
             key={index}
             onClick={() => setActiveLeague(league)}
-            className={`px-8 py-2 rounded-full text-sm font-medium ${activeLeague === league
-              ? "bg-blue-500 text-white"
-              : "bg-gray-200 text-gray-700"
-              } hover:bg-blue-400 hover:text-white`}
+            className={`px-8 py-2 rounded-full text-sm font-medium ${
+              activeLeague === league
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            } hover:bg-blue-400 hover:text-white`}
           >
             {league}
           </button>
@@ -135,14 +138,10 @@ const LandingPage = () => {
         </button>
       </div>
 
-      {/* Popular Matches Section */}
-      <div className="p-10">
+      <div className="py-20">
         <p className="font-semibold text-xl pb-5">Paling ramai ditunggu!</p>
         <div className="relative flex items-center">
-          <button
-            onClick={handlePrev}
-            className="absolute left-0 z-10 p-2 "
-          >
+          <button onClick={handlePrev} className="absolute left-0 z-10 p-2 ">
             <FaChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
           <div className="flex overflow-hidden w-full">
@@ -152,27 +151,25 @@ const LandingPage = () => {
             >
               {matches.map((match, index) => (
                 <div
-                key={index}
-                className={`flex-none w-64 px-2 mb-4 ${index === 0 ? 'ml-16' : 'ml-2'}`} 
-              >
-                <MatchCard
-                  image={Gambar1}
-                  day={match.day}
-                  date={match.date}
-                  title={match.title}
-                  time={match.time}
-                  description={match.description}
-                  buttonText="Lihat Venue"
-                />
-              </div>
-              
+                  key={index}
+                  className={`flex-none w-64 px-2 mb-4 ${
+                    index === 0 ? "ml-16" : "ml-2"
+                  }`}
+                >
+                  <MatchCard
+                    image={Gambar1}
+                    day={match.day}
+                    date={match.date}
+                    title={match.title}
+                    time={match.time}
+                    description={match.description}
+                    buttonText="Lihat Venue"
+                  />
+                </div>
               ))}
             </div>
           </div>
-          <button
-            onClick={handleNext}
-            className="absolute right-0 z-10 p-2 "
-          >
+          <button onClick={handleNext} className="absolute right-0 z-10 p-2 ">
             <FaChevronRight className="w-6 h-6 text-gray-700" />
           </button>
         </div>
