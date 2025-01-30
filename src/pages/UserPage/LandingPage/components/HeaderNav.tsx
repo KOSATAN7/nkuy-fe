@@ -36,7 +36,7 @@ const HeaderNav = () => {
         hasShadow ? "shadow-md" : ""
       } z-50`}
     >
-      <div className="mx-20 p-3 flex justify-between items-center">
+      <div className="mx-20 my-3 flex justify-between items-center">
         {/* Div kiri (Logo) */}
         <div className="flex-1 flex justify-start">
           <img
@@ -69,7 +69,6 @@ const HeaderNav = () => {
           ))}
         </div>
 
-        {/* Div kanan (Tombol love, masuk, dan profil) */}
         <div className="flex-1 flex justify-end items-center gap-4 relative">
           {/* Tombol Love */}
           <button

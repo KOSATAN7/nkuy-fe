@@ -5,13 +5,10 @@ import Footer from "./components/Footer";
 const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
       <div className="flex flex-col min-h-screen">
-        {/* Header */}
         <HeaderNav />
   
-        {/* Main Content */}
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow mx-20 my-32">{children}</main>
   
-        {/* Footer */}
         <Footer />
       </div>
     );
