@@ -1,25 +1,24 @@
 import { ThemeProvider } from "@mui/material";
 import { theme } from "../src/components/utils/theme";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Kategori from "./pages/Kategori";
 import { HeaderProvider } from "./components/SideNav/components/HeaderContext";
-import Dashboard from "./pages/Dashboard";
-import Film from "./pages/Film";
-import Venue from "./pages/Venue";
-import CreateKategori from "./pages/Kategori/CreateKategori";
-import UpdateKategori from "./pages/Kategori/UpdateKategori";
-import CreateFilm from "./pages/Film/CreateFilm";
-import CreateVenue from "./pages/Venue/CreateVenue";
-import UpdateFilm from "./pages/Film/UpdateFilm";
-import SubKategori from "./pages/SubKategori";
 import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 import LandingPage from "./pages/UserPage/LandingPage";
 import PanduanPage from "./pages/UserPage/Panduan";
+import TentangPage from "./pages/UserPage/Tentang";
 import KontakPage from "./pages/UserPage/Kontak";
 import VenueList from "./pages/UserPage/VenueUser";
-import ManageUser from "./pages/ManageUser";
+import DetailVenue from "./pages/DetailVenue";
+import PertandinganPage from "./pages/SuperAdmin/Pertandingan";
+import CreatePertandingan from "./pages/SuperAdmin/Pertandingan/CreatePertandingan";
+import VenuePage from "./pages/SuperAdmin/Venue";
+import ReviewPage from "./pages/SuperAdmin/Review";
+import KelolaPenggunaPage from "./pages/SuperAdmin/KelolaPengguna";
+import UpdatePengguna from "./pages/SuperAdmin/KelolaPengguna/UpdatePengguna";
+import DashboardSuperAdmin from "./pages/SuperAdmin/Dashboard";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   return (
@@ -29,21 +28,69 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/panduan" element={<PanduanPage />} />
+            <Route path="/tentang" element={<TentangPage />} />
             <Route path="/kontak" element={<KontakPage />} />
             <Route path="/venuelist" element={<VenueList />} />
+            <Route path="/detailvenue" element={<DetailVenue />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<Layout />}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="kategori" element={<Kategori />} />
-              <Route path="kategori/create" element={<CreateKategori />} />
-              <Route path="kategori/update/:id" element={<UpdateKategori />} />
-              <Route path="subkategori" element={<SubKategori />} />
-              <Route path="film" element={<Film />} />
-              <Route path="film/create" element={<CreateFilm />} />
-              <Route path="film/update/:id" element={<UpdateFilm />} />
-              <Route path="venue" element={<Venue />} />
-              <Route path="venue/create" element={<CreateVenue />} />
-              <Route path="manageuser" element={<ManageUser />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <DashboardSuperAdmin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="pertandingan"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <PertandinganPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pertandingan/create"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <CreatePertandingan />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/venue"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <VenuePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/review"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <ReviewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pengguna"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <KelolaPenggunaPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pengguna/edit/:id"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <UpdatePengguna />
+                  </ProtectedRoute>
+                }
+              />
             </Route>
           </Routes>
         </HeaderProvider>
