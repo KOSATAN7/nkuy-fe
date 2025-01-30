@@ -24,7 +24,11 @@ const LoginPage = () => {
 
       console.log("Check login berhasil:", checkLoginResponse);
 
-      navigate("/dashboard");
+      if (role === "admin_venue") {
+        navigate("/admin_venue/dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Error saat login:", error);
       console.log("Terjadi kesalahan saat login.");

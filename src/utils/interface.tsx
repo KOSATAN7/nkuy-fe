@@ -14,7 +14,31 @@ export interface Pertandingan {
   updated_at: string;
 }
 
-export interface SuperAdminVenue {
-  userName: string;
-  
+export interface Venue {
+  id: number;
+  nama: string;
+  alamat: string;
+  kontak: string;
+  kota: string;
+  fasilitas: string[];
+  status: string;
+  kapasitas: number;
+  foto_utama: string;
+  foto_foto: string[];
+  video: string;
+}
+
+export interface KelolaUser {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface UpdateUser {
+  username: string;
+  email: string;
+  password: string;
 }
