@@ -43,7 +43,7 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8 ">
         {venue.images.slice(1).map((image, index) => (
           <img
             key={index}
@@ -60,7 +60,7 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
           alt="Map"
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-4 left-4 rounded-lg p-4 w-72">
+        <div className="absolute top-4 left-4 rounded-lg p-4 w-72 bg-white">
           <h2 className="text-lg font-bold text-gray-800">
             {venue.location.city}
           </h2>
