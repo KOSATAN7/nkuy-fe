@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-10">
+      <div className="min-h-screen flex flex-col items-center justify-center p-10 bg-[url('/src/assets/background.svg')] bg-cover">
         <AboutUs
           title={aboutUsData.title}
           subtitle={aboutUsData.subtitle}
