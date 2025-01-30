@@ -19,6 +19,8 @@ import KelolaPenggunaPage from "./pages/SuperAdmin/KelolaPengguna";
 import UpdatePengguna from "./pages/SuperAdmin/KelolaPengguna/UpdatePengguna";
 import DashboardSuperAdmin from "./pages/SuperAdmin/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import DashboardAdminVenue from "./pages/AdminVenue/Dashboard";
+import CreateVenue from "./pages/SuperAdmin/Venue/CreateVenue";
 
 function App() {
   return (
@@ -68,6 +70,14 @@ function App() {
                 }
               />
               <Route
+                path="/venue/create"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <CreateVenue />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/review"
                 element={
                   <ProtectedRoute requiredRole="super_admin">
@@ -88,6 +98,14 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="super_admin">
                     <UpdatePengguna />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin_venue/dashboard"
+                element={
+                  <ProtectedRoute requiredRole="admin_venue">
+                    <DashboardAdminVenue />
                   </ProtectedRoute>
                 }
               />

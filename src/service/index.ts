@@ -1,3 +1,4 @@
+import { UpdateUser } from "@/utils/interface";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_URL_NKUY_API;
@@ -42,11 +43,6 @@ export const checkLogin = async (token: string) => {
   return response;
 };
 
-export const getKategori = async () => {
-  const response = await axios.get(`${API_BASE_URL}/kategori`);
-  return response;
-};
-
 export const getPertandingan = async (token: string) => {
   const response = await axios.get(`${API_BASE_URL}/pertandingan/semua`, {
     headers: {
@@ -57,47 +53,70 @@ export const getPertandingan = async (token: string) => {
   return response;
 };
 
-export const postKategori = async (nama: string) => {
-  const response = await axios.post(`${API_BASE_URL}/kategori`, { nama });
+export const getVenue = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/venue/semua`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response;
 };
 
-export const deleteKategori = async (id: number) => {
-  const response = await axios.delete(`${API_BASE_URL}/kategori/${id}`);
+export const deleteVenue = async (id: number, token: string) => {
+  const response = await axios.delete(`${API_BASE_URL}/venue/hapus/${id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const getUser = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/user/semua-user`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response;
 };
 
-export const getFilm = async () => {
-  const response = await axios.get(`${API_BASE_URL}/film`);
+export const getUserById = async (id: number, token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/user/user-by-id/${id}`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response;
 };
 
-export const getFilmById = async (id: string) => {
-  const response = await axios.get(`${API_BASE_URL}/film/${id}`);
-  return response;
+export const putUser = async (
+  id: number,
+  data: UpdateUser | FormData,
+  token: string
+) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/user/ubah-user/${id}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
 };
 
-export const updateFilm = async (id: string, payload: any) => {
-  const response = await axios.put(`${API_BASE_URL}/film/${id}`, payload);
-  return response;
-};
-
-export const postFilm = async (data: POSTFILM) => {
-  const response = await axios.post(`${API_BASE_URL}/film`, data);
-  return response;
-};
-
-export const deleteFilm = async (id: number) => {
-  const response = await axios.delete(`${API_BASE_URL}/film/${id}`);
-  return response;
-};
-
-export const getVenue = async () => {
-  const response = await axios.get(`${API_BASE_URL}/venue`);
-  return response;
-};
-
-export const deleteVenue = async (id: number) => {
-  const response = await axios.delete(`${API_BASE_URL}/venue/${id}`);
-  return response;
+export const deleteUser = async (id: number, token: string) => {
+  const response = await axios.delete(`${API_BASE_URL}/user/hapus-user/${id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };

@@ -79,17 +79,17 @@ const SideNav = () => {
             <NavButton
               label="Kelola Konten"
               icon={<MdOutlineDashboardCustomize />}
-              to="/admin_venue/dashboard"
+              to="/admin_venue/kelola_konten"
             />
             <NavButton
               label="Kelola Menu"
               icon={<MdOutlineDashboardCustomize />}
-              to="/admin_venue/dashboard"
+              to="/admin_venue/kelola_menu"
             />
             <NavButton
               label="Kelola Ulasan"
               icon={<CiMonitor />}
-              to="/admin_venue/dashboard"
+              to="/admin_venue/kelola_ulasan"
             />
           </>
         )}
