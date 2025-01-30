@@ -10,6 +10,7 @@ import PanduanPage from "./pages/UserPage/Panduan";
 import TentangPage from "./pages/UserPage/Tentang";
 import KontakPage from "./pages/UserPage/Kontak";
 import VenueList from "./pages/UserPage/VenueUser";
+import DetailVenue from "./pages/DetailVenue";
 import PertandinganPage from "./pages/SuperAdmin/Pertandingan";
 import CreatePertandingan from "./pages/SuperAdmin/Pertandingan/CreatePertandingan";
 import VenuePage from "./pages/SuperAdmin/Venue";
@@ -30,6 +31,7 @@ function App() {
             <Route path="/tentang" element={<TentangPage />} />
             <Route path="/kontak" element={<KontakPage />} />
             <Route path="/venuelist" element={<VenueList />} />
+            <Route path="/detailvenue" element={<DetailVenue />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<Layout />}>
