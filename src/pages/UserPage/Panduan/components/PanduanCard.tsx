@@ -1,26 +1,29 @@
 import React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-
-interface PanduanCard {
+interface PanduanCardProps {
     title: string;
-    description: string;
-    icon: React.ReactNode; 
+    steps: string[];
 }
 
-const PanduanCard: React.FC<PanduanCard> = ({ title, description, icon }) => {
+const PanduanCard: React.FC<PanduanCardProps> = ({ title, steps }) => {
     return (
-        <div className="relative bg-white shadow-lg rounded-xl p-6 text-center w-80 mx-auto">
-            {/* Ikon di atas kartu */}
-            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white shadow-md rounded-xl flex items-center justify-center">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    {icon}
-                </div>
-            </div>
-
-            {/* Konten Kartu */}
-            <h2 className="mt-6 text-xl font-bold text-gray-800">{title}</h2>
-            <p className="mt-2 text-sm text-gray-600">{description}</p>
-        </div>
+        <Accordion className="w-full">
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} >
+                <Typography className="font-semibold text-gray-800">{title}</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+                <ul className="text-sm text-gray-600 list-decimal list-inside space-y-1">
+                    {steps.map((step, index) => (
+                        <li key={index}>{step}</li>
+                    ))}
+                </ul>
+            </AccordionDetails>
+        </Accordion>
     );
 };
 
