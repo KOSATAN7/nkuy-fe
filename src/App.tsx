@@ -21,6 +21,7 @@ import DashboardSuperAdmin from "./pages/SuperAdmin/Dashboard";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import DashboardAdminVenue from "./pages/AdminVenue/Dashboard";
 import CreateVenue from "./pages/SuperAdmin/Venue/CreateVenue";
+import UpdatePertandingan from "./pages/SuperAdmin/Pertandingan/UpdatePertandingan";
 
 function App() {
   return (
@@ -58,6 +59,14 @@ function App() {
                 element={
                   <ProtectedRoute requiredRole="super_admin">
                     <CreatePertandingan />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/pertandingan/update/:id"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <UpdatePertandingan />
                   </ProtectedRoute>
                 }
               />
