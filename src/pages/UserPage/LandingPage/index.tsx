@@ -1,17 +1,19 @@
+import { useRef, useState } from "react";
+import Slider, { Settings } from "react-slick";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import MatchCard from "./components/MatchCard";
 import MainLayout from "./Layout";
 import Gambar1 from "@/assets/Kuda1.jpg";
-import { useRef, useState, useEffect } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import Slider, { Settings } from "react-slick";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useEffect } from "react";
 
 const LandingPage = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
   const [activeLeague, setActiveLeague] = useState("Liga 1");
-  const slider = useRef<Slider | null>(null);
+  const leagueSliderRef = useRef<Slider | null>(null);
+  const matchSliderRefs = useRef<{ [key: string]: Slider | null }>({});
+  const sliderRefs = useRef<{ [key: string]: Slider | null }>({});
 
   type Match = {
     day: string;
@@ -21,11 +23,7 @@ const LandingPage = () => {
     description: string;
   };
 
-  type Matches = {
-    [key: string]: Match[];
-  };
-
-  const allMatches: Matches = {
+  const allMatches: { [key: string]: Match[] } = {
     "Liga 1": [
       {
         day: "SAT",
@@ -164,95 +162,138 @@ const LandingPage = () => {
         description: "Riyadh Stadium",
       },
     ],
+    ISC: [
+      {
+        day: "SAT",
+        date: "14",
+        title: "Al Hilal VS Urawa",
+        time: "20.00 - Selesai",
+        description: "Riyadh Stadium",
+      },
+    ],
   };
 
   const matches = allMatches[activeLeague];
 
   const settings: Settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
+    afterChange: (index) => setCurrentIndex((prev) => ({ ...prev, [activeLeague]: index })),
   };
 
   useEffect(() => {
-    console.log("Slider Ref:", slider.current);
-  }, []);
+    setCurrentIndex((prev) => ({ ...prev, [activeLeague]: 0 }));
+    sliderRefs.current[activeLeague]?.slickGoTo(0);
+  }, [activeLeague]);
 
   return (
     <MainLayout>
       <div className="container mx-auto px-4">
-        {/* Search Section */}
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <p className="text-4xl font-medium text-center">
-            Mau nonton apa hari ini?
-          </p>
+        <div className="flex flex-col items-center space-y-4">
+          <p className="text-4xl font-medium">Mau nonton apa hari ini?</p>
           <input
             type="text"
-            className="w-1/2 py-3 mt-6 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-1/2 py-3 mt-6 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400"
             placeholder="Timnas Indonesia vs Argentina"
           />
         </div>
+      </div>
 
-        {/* League Selector */}
-        <div className="flex items-center justify-center space-x-4 mt-10">
-          <button onClick={() => slider.current?.slickPrev()}>
+      {/* 🔥 League Selector */}
+      <div className="flex flex-col items-center mt-12 w-full">
+        <div className="flex items-center w-full max-w-4xl">
+          {/* Tombol navigasi kiri */}
+          <button
+            onClick={() => leagueSliderRef.current?.slickPrev()}
+            className="flex items-center justify-center mr-2"
+          >
             <FaChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-          {Object.keys(allMatches).map((league, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveLeague(league)}
-              className={`px-6 py-2 rounded-full text-sm font-medium ${
-                activeLeague === league
-                  ? "bg-primary1 text-white"
-                  : "bg-gray-200 text-gray-700"
-              } hover:bg-primary1koma2 hover:text-white`}
+
+          {/* Slider Liga */}
+          <div className="w-full overflow-hidden px-2">
+            <Slider
+              ref={(el) => (leagueSliderRef.current = el)}
+              {...{
+                slidesToShow: 6,
+                slidesToScroll: 1, 
+                infinite: false,
+                arrows: false,
+              }}
             >
-              {league}
-            </button>
-          ))}
-          <button onClick={() => slider.current?.slickNext()}>
+              {Object.keys(allMatches).map((league, index) => (
+                <div className="w-full">
+                <button
+                  key={index}
+                  onClick={() => setActiveLeague(league)}
+                  className={`px-6 w-full py-2 border-2 rounded-full text-sm font-medium transition ${activeLeague === league ? "bg-primary1 text-white" : "bg-white text-black"
+                    } hover:bg-primary1koma2 hover:text-white`}
+                >
+                  {league}
+                </button>
+                </div>
+              ))}
+            </Slider>
+          </div>
+
+          {/* Tombol navigasi kanan */}
+          <button
+            onClick={() => leagueSliderRef.current?.slickNext()}
+            className="flex items-center justify-center ml-2"
+          >
             <FaChevronRight className="w-6 h-6 text-gray-700" />
           </button>
         </div>
-
-        {/* Slider Section */}
-        <div className="relative w-full mx-auto mt-6">
-          <Slider ref={slider} {...settings}>
-            {matches.map((data, index) => (
-              <div key={index} className="w-full p-4">
-                <MatchCard
-                  image={Gambar1}
-                  day={data.day}
-                  date={data.date}
-                  title={data.title}
-                  time={data.time}
-                  description={data.description}
-                  buttonText="Tonton Sekarang"
-                />
-              </div>
-            ))}
-          </Slider>
-
-          {/* Slider Navigation Buttons */}
-          <button
-            onClick={() => slider.current?.slickPrev()}
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-          >
-            <KeyboardArrowLeft className="text-primary110" />
-          </button>
-          <button
-            onClick={() => slider.current?.slickNext()}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
-          >
-            <KeyboardArrowRight className="text-primary110" />
-          </button>
-        </div>
       </div>
-    </MainLayout>
+
+
+      {/*Slider Section */}
+      <div className="relative w-full mx-auto mt-12">
+        {currentIndex[activeLeague] > 0 && (
+          <button
+            onClick={() => (sliderRefs.current[activeLeague] as Slider)?.slickPrev()}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white to-transparent py-40 px-4" >
+            <FaChevronLeft className="text-black w-6 h-6" />
+          </button>
+        )}
+
+        <Slider
+          ref={(el) => {
+            if (el && !sliderRefs.current[activeLeague]) {
+              sliderRefs.current[activeLeague] = el;
+            }
+          }}
+          {...settings}
+        >
+          {matches.map((data, index) => (
+            <div key={index} className="w-full p-4">
+              <MatchCard
+                image={Gambar1}
+                day={data.day}
+                date={data.date}
+                title={data.title}
+                time={data.time}
+                description={data.description}
+                buttonText="Tonton Sekarang"
+              />
+            </div>
+          ))}
+        </Slider>
+
+        {currentIndex[activeLeague] < matches.length - 4 && (
+          <button
+            onClick={() => (sliderRefs.current[activeLeague] as Slider)?.slickNext()}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white to-transparent py-40 px-4">
+            <FaChevronRight className="text-black w-6 h-6" />
+          </button>
+        )}
+      </div>
+
+    </MainLayout >
   );
 };
 

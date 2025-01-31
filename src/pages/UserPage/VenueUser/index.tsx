@@ -1,18 +1,9 @@
 import { useState } from "react";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
-import { FaUsers, FaHeart } from "react-icons/fa";
-import { Rating } from "@mui/material";
 import MainLayout from "../LandingPage/Layout";
 import Gambar1 from "@/assets/Kuda1.jpg";
-
-interface Venue {
-  id: number;
-  name: string;
-  location: string;
-  rating: number;
-  capacity: number;
-  image: string;
-}
+import VenueCardPortrait from "./components/VenueCardPortrait";
+import VenueCardLandscape from "./components/VenueCardLanscape";
 
 const venues = [
   { id: 1, name: "Cafe De'u", location: "Bandung", rating: 4, capacity: 50, image: Gambar1 },
@@ -27,63 +18,6 @@ const venues = [
   { id: 10, name: "Golden Palace", location: "Bandung", rating: 4.9, capacity: 110, image: Gambar1 },
 ];
 
-const VenueCardPotrait = ({ venue }: { venue: Venue }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleHeartClick = () => {
-    setIsLiked(!isLiked);
-  };
-
-  return (
-    <div className="mx-10 my-8 relative w-64 h-80 bg-white shadow-lg rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
-      <img src={venue.image} alt={venue.name} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent p-4 flex flex-col justify-end text-white">
-        <h3 className="text-lg font-semibold">{venue.name}</h3>
-        <p className="text-sm">{venue.location}</p>
-        <div className="flex items-center text-white">
-          <FaUsers className="mr-2" />
-          <span>{venue.capacity} orang</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <Rating value={venue.rating} precision={0.5} readOnly sx={{ color: "#FFD700", fontSize: "1rem" }} />
-          <FaHeart
-            className={`cursor-pointer ${isLiked ? "text-red-500" : "text-gray-400"}`}
-            onClick={handleHeartClick}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const VenueCardLandscape = ({ venue }: { venue: Venue }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleHeartClick = () => {
-    setIsLiked(!isLiked);
-  };
-
-  return (
-    <div className="relative w-64 h-40 bg-white shadow-lg rounded-2xl overflow-hidden flex transition-transform duration-300 hover:scale-105 cursor-pointer">
-      <img src={venue.image} alt={venue.name} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparen p-4 flex flex-col justify-end text-white">
-        <h3 className="text-lg font-semibold">{venue.name}</h3>
-        <p className="text-white text-sm">{venue.location}</p>
-        <div className="flex items-center text-white">
-          <FaUsers className="mr-2" />
-          <span>{venue.capacity} orang</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <Rating value={venue.rating} precision={0.5} readOnly sx={{ color: "#FFD700", fontSize: "1rem" }} />
-          <FaHeart
-            className={`cursor-pointer ${isLiked ? "text-red-500" : "text-gray-400"}`}
-            onClick={handleHeartClick}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const VenueList = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -151,7 +85,7 @@ const VenueList = () => {
             }}
           >
             {venues.slice(currentIndex, currentIndex + 4).map((venue) => (
-              <VenueCardPotrait key={venue.id} venue={venue} />
+              <VenueCardPortrait key={venue.id} venue={venue} />
             ))}
           </div>
           {currentIndex < venues.length - 4 && (
@@ -174,5 +108,3 @@ const VenueList = () => {
 };
 
 export default VenueList;
-
-
