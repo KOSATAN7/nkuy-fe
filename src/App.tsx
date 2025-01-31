@@ -11,6 +11,7 @@ import TentangPage from "./pages/UserPage/Tentang";
 import KontakPage from "./pages/UserPage/Kontak";
 import VenueList from "./pages/UserPage/VenueUser";
 import DetailVenue from "./pages/DetailVenue";
+import MenuPage from "./pages/Menu";
 import PertandinganPage from "./pages/SuperAdmin/Pertandingan";
 import CreatePertandingan from "./pages/SuperAdmin/Pertandingan/CreatePertandingan";
 import VenuePage from "./pages/SuperAdmin/Venue";
@@ -34,6 +35,7 @@ function App() {
             <Route path="/kontak" element={<KontakPage />} />
             <Route path="/venuelist" element={<VenueList />} />
             <Route path="/detailvenue" element={<DetailVenue />} />
+            <Route path="/menu" element={<MenuPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/" element={<Layout />}>
