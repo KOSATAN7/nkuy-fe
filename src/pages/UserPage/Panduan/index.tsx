@@ -7,8 +7,8 @@ const PanduanPage = () => {
 
   return (
     <MainLayout>
-      <div className="py-24">
-        <div className="">
+      <div className="space-y-10">
+        <div>
           <h3 className="text-sm text-black-500 font-extrabold">Panduan</h3>
           <h1 className="font-extrabold text-3xl mt-1">
             ANDA BINGUNG UNTUK MEMULAI?
@@ -19,7 +19,7 @@ const PanduanPage = () => {
             login terlebih dahulu yaaa...
           </p>
         </div>
-        <div className="space-x-4 mt-10">
+        <div className="space-x-4">
           <button
             className={`px-6 py-2 rounded-full ${
               role === "Pengguna" ? "bg-primary1 text-white" : "bg-white"
@@ -28,7 +28,7 @@ const PanduanPage = () => {
           >
             Pengguna
           </button>
-          <button
+          <button 
             className={`px-6 py-2 rounded-full ${
               role === "Admin" ? "bg-primary1 text-white" : "bg-white"
             }`}
@@ -38,7 +38,7 @@ const PanduanPage = () => {
           </button>
         </div>
         {role === "Pengguna" ? (
-          <div className="w-full mt-10">
+          <div className="w-full">
             <PanduanCard
               title="Ingin Mencari Tontonan?"
               steps={[
