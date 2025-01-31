@@ -1,9 +1,10 @@
+import { useState } from "react";
 import NavButton from "./components/NavButton";
 import { FaSignOutAlt } from "react-icons/fa";
 import Logo from "@/assets/Logo.png";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { FaTrophy } from "react-icons/fa";
-import { CiLocationOn } from "react-icons/ci";
+import { IoLocationSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { MdCommentsDisabled } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
@@ -11,10 +12,12 @@ import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { CiMonitor } from "react-icons/ci";
 import { Logout } from "@/service/index";
 import { useNavigate } from "react-router-dom";
+import SweetAlert from "@/components/Alert/swal";
 
 const SideNav = () => {
   const navigate = useNavigate();
   const role = sessionStorage.getItem("role");
+  const [showLogoutAlert, setShowLogoutAlert] = useState(false);
 
   const handleLogout = async () => {
     const token = sessionStorage.getItem("token");
@@ -51,7 +54,7 @@ const SideNav = () => {
               icon={<FaTrophy />}
               to="/pertandingan"
             />
-            <NavButton label="Venue" icon={<CiLocationOn />} to="/venue" />
+            <NavButton label="Venue" icon={<IoLocationSharp />} to="/venue" />
             <NavButton
               label="Review"
               icon={<MdCommentsDisabled />}
@@ -99,12 +102,28 @@ const SideNav = () => {
 
       <div className="flex justify-around mt-4">
         <button
-          onClick={handleLogout}
+          onClick={() => setShowLogoutAlert(true)}
           className="text-xl p-3 bg-[#D9D9D9] rounded-full"
         >
           <FaSignOutAlt />
         </button>
       </div>
+      {showLogoutAlert && (
+        <SweetAlert
+          show={showLogoutAlert}
+          title="Apakah Kamu Yakin Ingin Keluar??"
+          text="Anda akan keluar dari akun ini."
+          type="warning"
+          confirmButtonText="Ya, Logout"
+          cancelButtonText="Batal"
+          showCancelButton
+          onConfirm={() => {
+            setShowLogoutAlert(false);
+            handleLogout();
+          }}
+          onCancel={() => setShowLogoutAlert(false)}
+        />
+      )}
     </div>
   );
 };
