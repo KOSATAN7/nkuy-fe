@@ -1,12 +1,17 @@
 import MatchCard from "./components/MatchCard";
 import MainLayout from "./Layout";
 import Gambar1 from "@/assets/Kuda1.jpg";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Slider, { Settings } from "react-slick";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeLeague, setActiveLeague] = useState("Liga 1");
+  const slider = useRef<Slider | null>(null);
 
   type Match = {
     day: string;
@@ -22,6 +27,76 @@ const LandingPage = () => {
 
   const allMatches: Matches = {
     "Liga 1": [
+      {
+        day: "SAT",
+        date: "7",
+        title: "Persib VS Persija",
+        time: "20.00 - Selesai",
+        description: "Coffee Toffee",
+      },
+      {
+        day: "SUN",
+        date: "8",
+        title: "Arema VS Persebaya",
+        time: "19.00 - Selesai",
+        description: "Stadion Malang",
+      },
+      {
+        day: "SAT",
+        date: "7",
+        title: "Persib VS Persija",
+        time: "20.00 - Selesai",
+        description: "Coffee Toffee",
+      },
+      {
+        day: "SUN",
+        date: "8",
+        title: "Arema VS Persebaya",
+        time: "19.00 - Selesai",
+        description: "Stadion Malang",
+      },
+      {
+        day: "SAT",
+        date: "7",
+        title: "Persib VS Persija",
+        time: "20.00 - Selesai",
+        description: "Coffee Toffee",
+      },
+      {
+        day: "SUN",
+        date: "8",
+        title: "Arema VS Persebaya",
+        time: "19.00 - Selesai",
+        description: "Stadion Malang",
+      },
+      {
+        day: "SAT",
+        date: "7",
+        title: "Persib VS Persija",
+        time: "20.00 - Selesai",
+        description: "Coffee Toffee",
+      },
+      {
+        day: "SUN",
+        date: "8",
+        title: "Arema VS Persebaya",
+        time: "19.00 - Selesai",
+        description: "Stadion Malang",
+      },
+      {
+        day: "SAT",
+        date: "7",
+        title: "Persib VS Persija",
+        time: "20.00 - Selesai",
+        description: "Coffee Toffee",
+      },
+      {
+        day: "SUN",
+        date: "8",
+        title: "Arema VS Persebaya",
+        time: "19.00 - Selesai",
+        description: "Stadion Malang",
+      },
       {
         day: "SAT",
         date: "7",
@@ -93,84 +168,87 @@ const LandingPage = () => {
 
   const matches = allMatches[activeLeague];
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : matches.length - 1
-    );
+  const settings: Settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    arrows: false,
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < matches.length - 1 ? prevIndex + 1 : 0
-    );
-  };
+  useEffect(() => {
+    console.log("Slider Ref:", slider.current);
+  }, []);
 
   return (
     <MainLayout>
-      <div className="flex flex-col items-center justify-center">
-        <p className="pb-4 text-4xl font-bold">Mau nonton apa hari ini?</p>
-        <input
-          type="text"
-          className="w-1/2 py-3 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Timnas Indonesia vs Argentina"
-        />
-      </div>
+      <div className="container mx-auto px-4">
+        {/* Search Section */}
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <p className="text-4xl font-medium text-center">
+            Mau nonton apa hari ini?
+          </p>
+          <input
+            type="text"
+            className="w-1/2 py-3 mt-6 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Timnas Indonesia vs Argentina"
+          />
+        </div>
 
-      <div className="flex items-center justify-center space-x-4 relative">
-        <button className="absolute left-0 z-10 p-2  ">
-          <FaChevronLeft className="w-5 h-5 ml-72 text-gray-700" />
-        </button>
-        {Object.keys(allMatches).map((league, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveLeague(league)}
-            className={`px-8 py-2 rounded-full text-sm font-medium ${
-              activeLeague === league
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            } hover:bg-blue-400 hover:text-white`}
-          >
-            {league}
-          </button>
-        ))}
-        <button className="absolute right-0 z-10 p-2">
-          <FaChevronRight className="w-5 h-5 mr-72 text-gray-700" />
-        </button>
-      </div>
-
-      <div className="py-20">
-        <p className="font-semibold text-xl pb-5">Paling ramai ditunggu!</p>
-        <div className="relative flex items-center">
-          <button onClick={handlePrev} className="absolute left-0 z-10 p-2 ">
+        {/* League Selector */}
+        <div className="flex items-center justify-center space-x-4 mt-10">
+          <button onClick={() => slider.current?.slickPrev()}>
             <FaChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <div className="flex overflow-hidden w-full">
-            <div
-              className="flex transition-transform ease-in-out duration-500"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          {Object.keys(allMatches).map((league, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveLeague(league)}
+              className={`px-6 py-2 rounded-full text-sm font-medium ${
+                activeLeague === league
+                  ? "bg-primary1 text-white"
+                  : "bg-gray-200 text-gray-700"
+              } hover:bg-primary1koma2 hover:text-white`}
             >
-              {matches.map((match, index) => (
-                <div
-                  key={index}
-                  className={`flex-none w-64 px-2 mb-4 ${
-                    index === 0 ? "ml-16" : "ml-2"
-                  }`}
-                >
-                  <MatchCard
-                    image={Gambar1}
-                    day={match.day}
-                    date={match.date}
-                    title={match.title}
-                    time={match.time}
-                    description={match.description}
-                    buttonText="Lihat Venue"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-          <button onClick={handleNext} className="absolute right-0 z-10 p-2 ">
+              {league}
+            </button>
+          ))}
+          <button onClick={() => slider.current?.slickNext()}>
             <FaChevronRight className="w-6 h-6 text-gray-700" />
+          </button>
+        </div>
+
+        {/* Slider Section */}
+        <div className="relative w-full mx-auto mt-6">
+          <Slider ref={slider} {...settings}>
+            {matches.map((data, index) => (
+              <div key={index} className="w-full p-4">
+                <MatchCard
+                  image={Gambar1}
+                  day={data.day}
+                  date={data.date}
+                  title={data.title}
+                  time={data.time}
+                  description={data.description}
+                  buttonText="Tonton Sekarang"
+                />
+              </div>
+            ))}
+          </Slider>
+
+          {/* Slider Navigation Buttons */}
+          <button
+            onClick={() => slider.current?.slickPrev()}
+            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+          >
+            <KeyboardArrowLeft className="text-primary110" />
+          </button>
+          <button
+            onClick={() => slider.current?.slickNext()}
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white p-2 shadow-md"
+          >
+            <KeyboardArrowRight className="text-primary110" />
           </button>
         </div>
       </div>

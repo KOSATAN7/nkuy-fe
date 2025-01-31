@@ -48,7 +48,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ id, name }) => {
 
 const TeamSection: React.FC<{ teamData: { id: string; name: string }[] }> = ({ teamData }) => {
   return (
-    <div className="grid grid-cols-3 gap-6 p-20">
+    <div>
       {teamData.map((member) => (
         <TeamCard key={member.id} id={member.id} name={member.name} />
       ))}

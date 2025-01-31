@@ -3,14 +3,6 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_URL_NKUY_API;
 
-interface POSTFILM {
-  judul: string;
-  kategori: number;
-  jadwal: number;
-  harga: string;
-  status: string;
-}
-
 export const PostLogin = async (email: string, password: string) => {
   const response = await axios.post(`${API_BASE_URL}/login`, {
     email,
@@ -53,6 +45,33 @@ export const getPertandingan = async (token: string) => {
   return response;
 };
 
+export const deletePertandingan = async (id: number, token: string) => {
+  const response = await axios.delete(
+    `${API_BASE_URL}/pertandingan/hapus/${id}`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const putStatusPertandingan = async (id: number, token: string) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/pertandingan/ubah-status/${id}`,
+    {},
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 export const getVenue = async (token: string) => {
   const response = await axios.get(`${API_BASE_URL}/venue/semua`, {
     headers: {
@@ -61,6 +80,20 @@ export const getVenue = async (token: string) => {
     },
   });
   return response;
+};
+
+export const putStatusVenue = async (id: number, token: string) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/venue/ubah-status/${id}`,
+    {},
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
 };
 
 export const deleteVenue = async (id: number, token: string) => {
