@@ -4,10 +4,10 @@ import TextField from "@/components/Field/TextField";
 import { useHeaderContext } from "@/components/SideNav/components/HeaderContext";
 import { useEffect } from "react";
 
-const CreatePertandingan = () => {
+const UpdatePertandingan = () => {
   const { setTitle, setButtonLabel, setButtonLink } = useHeaderContext();
   useEffect(() => {
-    setTitle("Tambah Pertandingan");
+    setTitle("Ubah Pertandingan");
     setButtonLabel("Kembali");
     setButtonLink("/pertandingan");
 
@@ -37,10 +37,10 @@ const CreatePertandingan = () => {
         </div>
       </div>
       <div className="flex justify-end mt-5">
-        <CustomButton label="Tambah Data" />
+        <CustomButton label="Ubah Data  " />
       </div>
     </div>
   );
 };
 
-export default CreatePertandingan;
+export default UpdatePertandingan;

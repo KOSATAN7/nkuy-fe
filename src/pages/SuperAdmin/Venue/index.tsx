@@ -1,6 +1,7 @@
 import ActionButton from "@/components/Button/ActionButton";
+import Toggle from "@/components/Button/Toggle";
 import { useHeaderContext } from "@/components/SideNav/components/HeaderContext";
-import { deleteVenue, getVenue } from "@/service/index";
+import { deleteVenue, getVenue, putStatusVenue } from "@/service/index";
 import { Venue } from "@/utils/interface";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -70,6 +71,32 @@ const VenuePage = () => {
     }
   };
 
+  const handleToggle = async (id: number, currentStatus: string) => {
+    try {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token tidak ditemukan. Silakan login ulang.");
+      }
+      const newStatus = currentStatus === "aktif" ? "tidak_aktif" : "aktif";
+
+      await putStatusVenue(id, token);
+
+      setVenueData((prevData) =>
+        prevData.map((venue) =>
+          venue.id === id ? { ...venue, status: newStatus } : venue
+        )
+      );
+    } catch (error) {
+      console.error("Gagal memperbarui status:", error);
+      Swal.fire({
+        title: "Gagal!",
+        text: "Terjadi kesalahan saat memperbarui status.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
   return (
     <div>
       <table className="min-w-full">
@@ -80,6 +107,7 @@ const VenuePage = () => {
             <th className="p-4">Alamat</th>
             <th className="p-4">Fasilitas</th>
             <th className="p-4">Kapasitas</th>
+            <th className="p-4">status</th>
             <th className="p-4">Aksi</th>
           </tr>
         </thead>
@@ -89,8 +117,14 @@ const VenuePage = () => {
               <td className="p-4">{index + 1}</td>
               <td className="p-4">{row.nama}</td>
               <td className="p-4">{row.alamat}</td>
-              <td className="p-4">{row.fasilitas}</td>
+              <td className="p-4">{row.fasilitas.join(", ")}</td>
               <td className="p-4">{row.kapasitas}</td>
+              <td className="flex justify-center p-4">
+                <Toggle
+                  isOn={row.status === "aktif"}
+                  onToggle={() => handleToggle(row.id, row.status)}
+                />
+              </td>
               <td className="p-4">
                 <ActionButton
                   updatePath={`/kategori/update/${row.id}`}
