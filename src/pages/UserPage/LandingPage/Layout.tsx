@@ -7,7 +7,7 @@ const MainLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <div className="flex flex-col min-h-screen">
         <HeaderNav />
   
-        <main className="flex-grow mx-20 my-32">{children}</main>
+        <main className="flex-grow mx-24 my-44">{children}</main>
   
         <Footer />
       </div>
