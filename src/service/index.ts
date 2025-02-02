@@ -36,7 +36,17 @@ export const checkLogin = async (token: string) => {
 };
 
 export const getPertandingan = async (token: string) => {
-  const response = await axios.get(`${API_BASE_URL}/pertandingan/semua`, {
+  const response = await axios.get(`${API_BASE_URL}/pertandingan`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const getCabangOlahraga = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/sports/categories`, {
     headers: {
       Accept: "Application/json",
       Authorization: `Bearer ${token}`,
@@ -60,7 +70,7 @@ export const deletePertandingan = async (id: number, token: string) => {
 
 export const putStatusPertandingan = async (id: number, token: string) => {
   const response = await axios.put(
-    `${API_BASE_URL}/pertandingan/ubah-status/${id}`,
+    `${API_BASE_URL}/pertandingan/status/${id}`,
     {},
     {
       headers: {
@@ -73,7 +83,7 @@ export const putStatusPertandingan = async (id: number, token: string) => {
 };
 
 export const getVenue = async (token: string) => {
-  const response = await axios.get(`${API_BASE_URL}/venue/semua`, {
+  const response = await axios.get(`${API_BASE_URL}/venue`, {
     headers: {
       Accept: "Application/json",
       Authorization: `Bearer ${token}`,
@@ -83,7 +93,7 @@ export const getVenue = async (token: string) => {
 };
 
 export const getVenueById = async (id: number, token: string) => {
-  const response = await axios.get(`${API_BASE_URL}/venue/detail/${id}`, {
+  const response = await axios.get(`${API_BASE_URL}/venue/${id}`, {
     headers: {
       Accept: "Application/json",
       Authorization: `Bearer ${token}`,
@@ -93,7 +103,7 @@ export const getVenueById = async (id: number, token: string) => {
 };
 
 export const postVenue = async (data: BuatVenue | FormData, token: string) => {
-  const response = await axios.post(`${API_BASE_URL}/venue/buat`, data, {
+  const response = await axios.post(`${API_BASE_URL}/venue`, data, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
@@ -103,7 +113,7 @@ export const postVenue = async (data: BuatVenue | FormData, token: string) => {
 };
 
 export const putVenue = async (id: number, data: UbahVenue, token: string) => {
-  const response = await axios.put(`${API_BASE_URL}/venue/ubah/${id}`, data, {
+  const response = await axios.put(`${API_BASE_URL}/venue/${id}`, data, {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
@@ -115,7 +125,7 @@ export const putVenue = async (id: number, data: UbahVenue, token: string) => {
 
 export const putStatusVenue = async (id: number, token: string) => {
   const response = await axios.put(
-    `${API_BASE_URL}/venue/ubah-status/${id}`,
+    `${API_BASE_URL}/venue/status/${id}`,
     {},
     {
       headers: {
@@ -128,7 +138,7 @@ export const putStatusVenue = async (id: number, token: string) => {
 };
 
 export const deleteVenue = async (id: number, token: string) => {
-  const response = await axios.delete(`${API_BASE_URL}/venue/hapus/${id}`, {
+  const response = await axios.delete(`${API_BASE_URL}/venue/${id}`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
@@ -138,7 +148,7 @@ export const deleteVenue = async (id: number, token: string) => {
 };
 
 export const getUser = async (token: string) => {
-  const response = await axios.get(`${API_BASE_URL}/user/semua-user`, {
+  const response = await axios.get(`${API_BASE_URL}/user/`, {
     headers: {
       Accept: "Application/json",
       Authorization: `Bearer ${token}`,
@@ -148,7 +158,7 @@ export const getUser = async (token: string) => {
 };
 
 export const getUserById = async (id: number, token: string) => {
-  const response = await axios.get(`${API_BASE_URL}/user/user-by-id/${id}`, {
+  const response = await axios.get(`${API_BASE_URL}/user/${id}`, {
     headers: {
       Accept: "Application/json",
       Authorization: `Bearer ${token}`,
@@ -162,21 +172,17 @@ export const putUser = async (
   data: UpdateUser | FormData,
   token: string
 ) => {
-  const response = await axios.put(
-    `${API_BASE_URL}/user/ubah-user/${id}`,
-    data,
-    {
-      headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await axios.put(`${API_BASE_URL}/user/${id}`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 
 export const deleteUser = async (id: number, token: string) => {
-  const response = await axios.delete(`${API_BASE_URL}/user/hapus-user/${id}`, {
+  const response = await axios.delete(`${API_BASE_URL}/user/${id}`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
