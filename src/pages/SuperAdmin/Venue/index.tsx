@@ -127,7 +127,7 @@ const VenuePage = () => {
               </td>
               <td className="p-4">
                 <ActionButton
-                  updatePath={`/kategori/update/${row.id}`}
+                  updatePath={`update/${row.id}`}
                   onDelete={() => handleDelete(row.id)}
                 />
               </td>

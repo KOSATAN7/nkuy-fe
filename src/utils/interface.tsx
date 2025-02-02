@@ -28,6 +28,37 @@ export interface Venue {
   video: string;
 }
 
+export interface BuatVenue {
+  username: string;
+  email:string;
+  password:string;
+  nama: string;
+  alamat: string;
+  kapasitas: number;
+  fasilitas: string[];
+  kota: string;
+  kontak: string;
+  foto_utama: string;
+  foto_foto: string[];
+  video: string;
+  latitude: string;
+  longitude: string;
+}
+
+export interface UbahVenue {
+  nama: string;
+  alamat: string;
+  kapasitas: number;
+  fasilitas: string[];
+  kota: string;
+  kontak: string;
+  // foto_utama: string;
+  // foto_foto: string[];
+  // video: string;
+  latitude: string;
+  longitude: string;
+}
+
 export interface KelolaUser {
   id: number;
   username: string;
