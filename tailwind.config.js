@@ -17,6 +17,7 @@ export default {
         primary2: "#216BFE",
         warning1: "#FFAE00",
         danger1: "#FD6980",
+        red: "#F90101",
       },
     },
   },

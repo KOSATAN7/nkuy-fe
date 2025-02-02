@@ -1,4 +1,4 @@
-import { UpdateUser } from "@/utils/interface";
+import { BuatVenue, UbahVenue, UpdateUser } from "@/utils/interface";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_URL_NKUY_API;
@@ -80,6 +80,37 @@ export const getVenue = async (token: string) => {
     },
   });
   return response;
+};
+
+export const getVenueById = async (id: number, token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/venue/detail/${id}`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const postVenue = async (data: BuatVenue | FormData, token: string) => {
+  const response = await axios.post(`${API_BASE_URL}/venue/buat`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const putVenue = async (id: number, data: UbahVenue, token: string) => {
+  const response = await axios.put(`${API_BASE_URL}/venue/ubah/${id}`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
 };
 
 export const putStatusVenue = async (id: number, token: string) => {
