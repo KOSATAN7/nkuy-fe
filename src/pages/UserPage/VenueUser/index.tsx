@@ -1,9 +1,15 @@
-import { useState } from "react";
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import { SetStateAction, useState } from "react";
+import Slider from "react-slick";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import MainLayout from "../LandingPage/Layout";
-import Gambar1 from "@/assets/Kuda1.jpg";
+import Gambar1 from "@/assets/1.png";
+import Gambar2 from "@/assets/Kuda1.jpg";
 import VenueCardPortrait from "./components/VenueCardPortrait";
 import VenueCardLandscape from "./components/VenueCardLanscape";
+import Pagination from "@mui/material/Pagination";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useEffect } from "react";
 
 const venues = [
   { id: 1, name: "Cafe De'u", location: "Bandung", rating: 4, capacity: 50, image: Gambar1 },
@@ -16,22 +22,159 @@ const venues = [
   { id: 8, name: "Garden View", location: "Semarang", rating: 4.3, capacity: 65, image: Gambar1 },
   { id: 9, name: "Seaside Pavilion", location: "Makassar", rating: 4.6, capacity: 85, image: Gambar1 },
   { id: 10, name: "Golden Palace", location: "Bandung", rating: 4.9, capacity: 110, image: Gambar1 },
+  { id: 11, name: "Seaside Pavilion", location: "Makassar", rating: 4.6, capacity: 85, image: Gambar1 },
+  { id: 12, name: "Golden Palace", location: "Bandung", rating: 4.9, capacity: 110, image: Gambar1 },
+  { id: 13, name: "Seaside Pavilion", location: "Makassar", rating: 4.6, capacity: 85, image: Gambar1 },
+  { id: 14, name: "Golden Palace", location: "Bandung", rating: 4.9, capacity: 110, image: Gambar1 },
+  { id: 15, name: "Seaside Pavilion", location: "Makassar", rating: 4.6, capacity: 85, image: Gambar1 },
+  { id: 16, name: "Golden Palace", location: "Bandung", rating: 4.9, capacity: 110, image: Gambar1 },
 ];
+
+const CustomPrevArrow = (props: { className: any; style: any; onClick: any; currentSlide: number; }) => {
+  const { className, style, onClick, currentSlide } = props;
+  return (
+    currentSlide !== 0 && (
+      <HiChevronLeft
+        className={`${className} text-black w-8 h-8 absolute z-10 cursor-pointer`}
+        style={{ ...style, left: "-40px", top: "50%", transform: "translateY(-50%)" }}
+        onClick={onClick}
+      />
+    )
+  );
+};
+
+const CustomNextArrow = (props: { className: any; style: any; onClick: any; slideCount: number; currentSlide: number; slidesToShow: number; }) => {
+  const { className, style, onClick, slideCount, currentSlide, slidesToShow } = props;
+  return (
+    currentSlide < slideCount - slidesToShow && (
+      <HiChevronRight
+        className={`${className} text-black w-8 h-8 absolute z-10 cursor-pointer`}
+        style={{ ...style, right: "-40px", top: "50%", transform: "translateY(-50%)" }}
+        onClick={onClick}
+      />
+    )
+  );
+};
 
 
 const VenueList = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerPage = 12;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [availableVenues, setAvailableVenues] = useState(venues.slice(0, itemsPerPage));
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  const nextSlide = () => {
-    if (currentIndex < venues.length - 4) {
-      setCurrentIndex(currentIndex + 1);
-    }
+  const totalPages = Math.ceil(venues.length / itemsPerPage);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = currentPage * itemsPerPage;
+    setAvailableVenues(venues.slice(startIndex, endIndex));
+  }, [currentPage]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setCurrentPage(value);
   };
 
-  const prevSlide = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    nextArrow: (
+      <CustomNextArrow
+        currentSlide={currentSlide}
+        slideCount={venues.length}
+        slidesToShow={4}
+        className={undefined}
+        style={undefined}
+        onClick={undefined}
+      />
+    ),
+    prevArrow: (
+      <CustomPrevArrow
+        currentSlide={currentSlide}
+        className={undefined}
+        style={undefined}
+        onClick={undefined}
+      />
+    ),
+    beforeChange: (_: any, next: SetStateAction<number>) => setCurrentSlide(next),
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          nextArrow: (
+            <CustomNextArrow
+              currentSlide={currentSlide}
+              slideCount={venues.length}
+              slidesToShow={3}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+          prevArrow: (
+            <CustomPrevArrow
+              currentSlide={currentSlide}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          nextArrow: (
+            <CustomNextArrow
+              currentSlide={currentSlide}
+              slideCount={venues.length}
+              slidesToShow={2}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+          prevArrow: (
+            <CustomPrevArrow
+              currentSlide={currentSlide}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          nextArrow: (
+            <CustomNextArrow
+              currentSlide={currentSlide}
+              slideCount={venues.length}
+              slidesToShow={1}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+          prevArrow: (
+            <CustomPrevArrow
+              currentSlide={currentSlide}
+              className={undefined}
+              style={undefined}
+              onClick={undefined}
+            />
+          ),
+        },
+      },
+    ],
   };
 
   return (
@@ -40,7 +183,7 @@ const VenueList = () => {
       <div className="relative w-full h-64 mt-10">
         {/* Gambar Latar */}
         <img
-          src={Gambar1}
+          src={Gambar2}
           alt="Event Venue"
           className="w-full h-full object-cover rounded-xl"
         />
@@ -68,39 +211,34 @@ const VenueList = () => {
         </div>
       </div>
 
-      {/* Daftar Venue */}
+      {/* Section Terdekat */}
       <div className="p-8 mt-20">
-        {/* Section Terdekat */}
         <h2 className="text-xl ml-12 font-bold mb-2">Terdekatmu!</h2>
-        <div className="relative flex items-center ml-12">
-          {currentIndex > 0 && (
-            <button onClick={prevSlide} className="absolute -left-6 z-10 p-2 bg-white rounded-full shadow-md">
-              <HiChevronDoubleLeft className="text-gray-600 w-6 h-6" />
-            </button>
-          )}
-          <div
-            className="flex gap-4 overflow-hidden w-full transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * (100 / 4)}%)`,
-            }}
-          >
-            {venues.slice(currentIndex, currentIndex + 4).map((venue) => (
-              <VenueCardPortrait key={venue.id} venue={venue} />
-            ))}
-          </div>
-          {currentIndex < venues.length - 4 && (
-            <button onClick={nextSlide} className="absolute -right-6 z-10 p-2 bg-white rounded-full shadow-md">
-              <HiChevronDoubleRight className="text-gray-600 w-6 h-6" />
-            </button>
-          )}
-        </div>
+        <Slider {...settings} className="relative">
+          {venues.map((venue) => (
+            <div key={venue.id} className="px-2">
+              <VenueCardPortrait venue={venue} />
+            </div>
+          ))}
+        </Slider>
 
         {/* Section Tersedia */}
         <h2 className="text-xl ml-12 font-bold mt-8 mb-4">Tersedia</h2>
-        <div className="grid grid-cols-4 sm:grid-cols-3 lg:grid-cols-4 gap-6 ml-12">
-          {venues.map((venue) => (
+        <div className="mx-4 grid grid-cols-4 sm:grid-cols-3 lg:grid-cols-4 gap-6 ml-12">
+          {availableVenues.map((venue) => (
             <VenueCardLandscape key={venue.id} venue={venue} />
           ))}
+        </div>
+
+        <div className="flex justify-center mt-4">
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+            siblingCount={1}
+            boundaryCount={1}
+          />
         </div>
       </div>
     </MainLayout>
