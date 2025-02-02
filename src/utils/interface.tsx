@@ -15,7 +15,6 @@ export interface Pertandingan {
 }
 
 export interface Venue {
-  [x: string]: string | undefined;
   id: number;
   nama: string;
   alamat: string;
