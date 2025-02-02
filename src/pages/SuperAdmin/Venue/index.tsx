@@ -129,6 +129,7 @@ const VenuePage = () => {
                 <ActionButton
                   updatePath={`update/${row.id}`}
                   onDelete={() => handleDelete(row.id)}
+                  detailPath={`detail/${row.id}`}
                 />
               </td>
             </tr>

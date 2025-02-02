@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { HiOutlineEye, HiOutlineTrash, HiOutlinePencil } from "react-icons/hi";
 
 interface ActionButtonProps {
-//   detailPath: string;
+  detailPath?: string;
   updatePath?: string;
   onUpdate?: () => void;
   onDelete?: () => void;
@@ -11,7 +11,7 @@ interface ActionButtonProps {
 }
 
 const ActionButton: React.FC<ActionButtonProps> = ({
-//   detailPath,
+  detailPath,
   updatePath,
   onUpdate,
   onDelete,
@@ -19,25 +19,20 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 }) => {
   const navigate = useNavigate();
 
-//   const handleDetailClick = () => {
-//     navigate(detailPath);
-//     if (onClick) onClick();
-//   };
-
   const handleDelete = () => {
     if (onDelete) onDelete();
   };
 
   return (
     <div className="flex gap-2 justify-center">
-    {/* {detailPath && (
+    {detailPath && (
       <button
-        onClick={handleDetailClick}
+        onClick={() => navigate(detailPath)}
         className="bg-gray-200 p-2 rounded-lg hover:bg-gray-300"
       >
         <HiOutlineEye className="text-gray-600" />
       </button>
-    )} */}
+    )}
 
       {updatePath && (
         <button

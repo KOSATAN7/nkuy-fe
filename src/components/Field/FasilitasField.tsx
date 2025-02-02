@@ -13,16 +13,16 @@ const FasilitasField: React.FC<FasilitasFieldProps> = ({
   value,
   onChange,
 }) => {
-  const [fasilitas, setFasilitas] = useState<string[]>(value); // Gunakan value sebagai state awal
+  const [fasilitas, setFasilitas] = useState<string[]>(value);
 
   useEffect(() => {
-    setFasilitas(value); // Update state saat value berubah
+    setFasilitas(value); 
   }, [value]);
 
   const handleAddForm = () => {
     setFasilitas((prev) => {
       const newFasilitas = [...prev, ""];
-      onChange(newFasilitas); // Pastikan meng-update parent state
+      onChange(newFasilitas);
       return newFasilitas;
     });
   };
@@ -57,7 +57,7 @@ const FasilitasField: React.FC<FasilitasFieldProps> = ({
         {fasilitas.map((item, index) => (
           <div key={index} className="flex items-center gap-2">
             <input
-              className="w-full border-2 focus:outline-primary1 rounded-xl px-4 py-2"
+              className="w-full border-2 focus:outline-primary1 rounded-lg px-4 py-2"
               type="text"
               placeholder={placeholder}
               value={item}
