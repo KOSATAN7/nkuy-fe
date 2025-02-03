@@ -27,7 +27,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-sm rounded-xl shadow-lg bg-white">
+    <div className="my-4 max-w-sm rounded-xl shadow-lg bg-white">
       <div className="relative">
         <img src={image} alt={title} className="rounded-t-xl w-full" />
       </div>
