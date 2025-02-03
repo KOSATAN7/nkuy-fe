@@ -35,6 +35,9 @@ import ShowVenue from "./pages/SuperAdmin/Venue/DetailVenue";
 import KelolaProfile from "./pages/AdminVenue/KelolaProfile";
 import KelolaKonten from "./pages/AdminVenue/KelolaKonten";
 import CreateKonten from "./pages/AdminVenue/KelolaKonten/CreateKonten";
+import KelolaMenu from "./pages/AdminVenue/KelolaMenu";
+import CreateMenu from "./pages/AdminVenue/KelolaMenu/CreateMenu";
+import UpdateMenu from "./pages/AdminVenue/KelolaMenu/UpdateMenue";
 
 function App() {
   return (
@@ -175,6 +178,30 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
                       <CreateKonten />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_menu"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <KelolaMenu />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_menu/create"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <CreateMenu />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_menu/update/:id"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <UpdateMenu />
                     </ProtectedRoute>
                   }
                 />
