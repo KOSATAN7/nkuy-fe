@@ -21,8 +21,8 @@ const DetailPembayaran = () => {
   };
 
   return (
-    <div className="border border-gray-300 rounded-lg p-6 w-96">
-      <h2 className="font-bold text-xl mb-4">Detail Pemesan</h2>
+    <div className="border border-gray-300 rounded-lg p-6 w-96 sticky top-8">
+      <h2 className="font-bold text-xl mb-4">Detail Pemesanan</h2>
 
       <div className="flex justify-between text-sm mb-4">
         <div className="flex items-center gap-1">

@@ -3,7 +3,7 @@ import StepperComponent from "./components/Stepper";
 import PembayaranCard from "./components/PembayaranCard";
 import DetailPembayaran from "./components/DetailPembayaran";
 import { BsCreditCardFill } from "react-icons/bs";
-import { BiSolidWallet } from "react-icons/bi";
+import { BiSolidWallet,BiLeftArrowCircle } from "react-icons/bi";
 import { useState } from "react";
 
 const PembayaranPage = () => {
@@ -30,7 +30,11 @@ const PembayaranPage = () => {
             <StepperComponent activeStep={1} />
           </Stack>
         </div>
-        <div className="ml-32 mt-24 p-4">
+        <div className="flex items-center cursor-pointer ml-10 mt-8">
+          <BiLeftArrowCircle className="mr-2 text-2xl" />
+          <span className="text-lg">Kembali</span>
+        </div>
+        <div className="ml-10 mt-8">
           <div className="cursor-pointer">
             <h1 className="font-bold text-3xl">Pembayaran</h1>
             <p className="font-sm text-sm">
