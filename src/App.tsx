@@ -38,6 +38,7 @@ import CreateKonten from "./pages/AdminVenue/KelolaKonten/CreateKonten";
 import KelolaMenu from "./pages/AdminVenue/KelolaMenu";
 import CreateMenu from "./pages/AdminVenue/KelolaMenu/CreateMenu";
 import UpdateMenu from "./pages/AdminVenue/KelolaMenu/UpdateMenue";
+import KelolaUlasan from "./pages/AdminVenue/KelolaUlasan";
 
 function App() {
   return (
@@ -202,6 +203,14 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
                       <UpdateMenu />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_ulasan"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <KelolaUlasan />
                     </ProtectedRoute>
                   }
                 />
