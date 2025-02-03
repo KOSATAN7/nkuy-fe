@@ -31,6 +31,8 @@ import UpdatePertandingan from "./pages/SuperAdmin/Pertandingan/UpdatePertanding
 import UpdateVenue from "./pages/SuperAdmin/Venue/UpdateVenue";
 import ShowVenue from "./pages/SuperAdmin/Venue/DetailVenue";
 import KelolaProfile from "./pages/AdminVenue/KelolaProfile";
+import KelolaKonten from "./pages/AdminVenue/KelolaKonten";
+import CreateKonten from "./pages/AdminVenue/KelolaKonten/CreateKonten";
 
 function App() {
   return (
@@ -153,6 +155,22 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
                       <KelolaProfile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_konten"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <KelolaKonten />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_konten/create"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <CreateKonten />
                     </ProtectedRoute>
                   }
                 />
