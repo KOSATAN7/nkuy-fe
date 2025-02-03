@@ -14,9 +14,12 @@ export default {
       colors: {
         primary1: "#7EC7FF",
         primary1koma2: "#3A82B3",
+        neutral1: "#CACED8",
+        text1: "#083A50",
         primary2: "#216BFE",
         warning1: "#FFAE00",
         danger1: "#FD6980",
+        succes: "#4CAF50",
         red: "#F90101",
       },
     },

@@ -30,6 +30,7 @@ import CreateVenue from "./pages/SuperAdmin/Venue/CreateVenue";
 import UpdatePertandingan from "./pages/SuperAdmin/Pertandingan/UpdatePertandingan";
 import UpdateVenue from "./pages/SuperAdmin/Venue/UpdateVenue";
 import ShowVenue from "./pages/SuperAdmin/Venue/DetailVenue";
+import KelolaProfile from "./pages/AdminVenue/KelolaProfile";
 
 function App() {
   return (
@@ -144,6 +145,14 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
                       <DashboardAdminVenue />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_profile"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <KelolaProfile />
                     </ProtectedRoute>
                   }
                 />
