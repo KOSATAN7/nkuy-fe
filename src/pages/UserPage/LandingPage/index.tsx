@@ -6,43 +6,48 @@ import MainLayout from "./Layout";
 import Gambar1 from "@/assets/Kuda1.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { getPertandinganAktif } from "@/service/ServiceInfobar"; // Import API service
+import { getPertandinganAktif } from "@/service/ServiceInfobar";
+import { useNavigate } from "react-router-dom";
+import { Pertandingan, MatchCardData } from "@/utils/interface";
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
-  const [activeLeague, setActiveLeague] = useState<string | null>(null);
-  const [matches, setMatches] = useState<{ [key: string]: any[] }>({});
+  const [activeLeague, setActiveLeague] = useState("Liga 1");
+  const [matches, setMatches] = useState<{ [key: string]: MatchCardData[] }>({});
   const leagueSliderRef = useRef<Slider | null>(null);
-  const matchSliderRef = useRef<Slider | null>(null);
+  const sliderRefs = useRef<{ [key: string]: Slider | null }>({});
+  const navigate = useNavigate();
+
+  const mapPertandinganToMatchCardData = (match: Pertandingan): MatchCardData => {
+    return {
+      id: match.id,
+      image: Gambar1,
+      day: new Date(match.tanggal_pertandingan).toLocaleDateString("id-ID", { weekday: "long" }),
+      date: match.tanggal_pertandingan,
+      time: match.waktu_pertandingan,
+      title: `${match.tim_tuan_rumah} vs ${match.tim_tamu}`,
+      description: `Pertandingan antara ${match.tim_tuan_rumah} dan ${match.tim_tamu} di ${match.liga}`,
+    };
+  };
 
   useEffect(() => {
     const fetchMatches = async () => {
       try {
         const response = await getPertandinganAktif();
-        console.log(response.data);
         const data = response.data.data;
-        const groupedMatches: { [key: string]: any[] } = {};
+        const groupedMatches: { [key: string]: MatchCardData[] } = {};
 
-        data.forEach((match: any) => {
+        data.forEach((match: Pertandingan) => {
           const league = match.liga || "Unknown League";
 
           if (!groupedMatches[league]) {
             groupedMatches[league] = [];
           }
 
-          groupedMatches[league].push({
-            day: new Date(match.tanggal_pertandingan).toLocaleDateString("id-ID", { weekday: "long" }),
-            date: match.tanggal_pertandingan,
-            time: match.waktu_pertandingan,
-            title: `${match.tim_tuan_rumah} vs ${match.tim_tamu}`,
-            description: `Pertandingan antara ${match.tim_tuan_rumah} dan ${match.tim_tamu} di ${match.liga}`,
-            homeTeamLogo: match.logo_tuan_rumah,
-            awayTeamLogo: match.logo_tamu,
-          });
+          groupedMatches[league].push(mapPertandinganToMatchCardData(match));
         });
 
         setMatches(groupedMatches);
-        setActiveLeague(null); // Menampilkan semua liga secara default
       } catch (error) {
         console.error("Error fetching matches:", error);
       }
@@ -58,13 +63,13 @@ const LandingPage = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
-    afterChange: (index) => setCurrentIndex((prev) => ({ ...prev, [activeLeague || "all"]: index })),
+    afterChange: (index) => setCurrentIndex((prev) => ({ ...prev, [activeLeague]: index })),
   };
 
-  const handleLeagueClick = (league: string | null) => {
-    setActiveLeague(activeLeague === league ? null : league);
-    matchSliderRef.current?.slickGoTo(0);
-  };
+  useEffect(() => {
+    setCurrentIndex((prev) => ({ ...prev, [activeLeague]: 0 }));
+    sliderRefs.current[activeLeague]?.slickGoTo(0);
+  }, [activeLeague]);
 
   return (
     <MainLayout>
@@ -79,7 +84,6 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* 🔥 League Selector */}
       <div className="flex flex-col items-center mt-12 w-full">
         <div className="flex items-center w-full max-w-4xl">
           <button
@@ -92,17 +96,15 @@ const LandingPage = () => {
           <div className="w-full overflow-hidden px-2">
             <Slider
               ref={(el) => (leagueSliderRef.current = el)}
-              {...{
-                slidesToShow: 6,
-                slidesToScroll: 1,
-                infinite: false,
-                arrows: false,
-              }}
+              slidesToShow={6}
+              slidesToScroll={1}
+              infinite={false}
+              arrows={false}
             >
               {Object.keys(matches).map((league, index) => (
                 <div key={index} className="w-full">
                   <button
-                    onClick={() => handleLeagueClick(league)}
+                    onClick={() => setActiveLeague(league)}
                     className={`px-6 w-full py-2 border-2 rounded-full text-sm font-medium transition ${activeLeague === league ? "bg-primary1 text-white" : "bg-white text-black"
                       } hover:bg-primary1koma2 hover:text-white`}
                   >
@@ -122,20 +124,25 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* 🔥 Matches Slider */}
       <div className="relative w-full mx-auto mt-12">
-        {/* Left Arrow */}
-        {currentIndex[activeLeague || "all"] > 0 && (
+        {currentIndex[activeLeague] > 0 && (
           <button
-            onClick={() => matchSliderRef.current?.slickPrev()}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white to-transparent py-60 px-4"
+            onClick={() => sliderRefs.current[activeLeague]?.slickPrev()}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white to-transparent py-40 px-4"
           >
             <FaChevronLeft className="text-black w-6 h-6" />
           </button>
         )}
 
-        <Slider ref={(el) => (matchSliderRef.current = el)} {...settings}>
-          {(activeLeague ? matches[activeLeague] : Object.values(matches).flat()).map((data, index) => (
+        <Slider
+          ref={(el) => {
+            if (el && !sliderRefs.current[activeLeague]) {
+              sliderRefs.current[activeLeague] = el;
+            }
+          }}
+          {...settings}
+        >
+          {(matches[activeLeague] || []).map((data, index) => (
             <div key={index} className="w-full p-4">
               <MatchCard
                 image={Gambar1}
@@ -145,16 +152,16 @@ const LandingPage = () => {
                 time={data.time}
                 description={data.description}
                 buttonText="Tonton Sekarang"
+                onClick={() => navigate(`/venuelist/${data.id}`)}
               />
             </div>
           ))}
         </Slider>
 
-        {/* Right Arrow */}
-        {currentIndex[activeLeague || "all"] < (activeLeague ? matches[activeLeague]?.length : Object.values(matches).flat().length) - 4 && (
+        {currentIndex[activeLeague] < (matches[activeLeague]?.length || 0) - 4 && (
           <button
-            onClick={() => matchSliderRef.current?.slickNext()}
-            className="absolute  right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white to-transparent py-60 px-4"
+            onClick={() => sliderRefs.current[activeLeague]?.slickNext()}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white to-transparent py-40 px-4"
           >
             <FaChevronRight className="text-black w-6 h-6" />
           </button>

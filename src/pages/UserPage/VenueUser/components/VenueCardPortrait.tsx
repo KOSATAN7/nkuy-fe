@@ -1,7 +1,7 @@
 import { FaUsers, FaHeart } from "react-icons/fa";
 import { Rating } from "@mui/material";
 import React from "react";
-import { useFavorite } from "../../Favorite/components/FavoriteContext"; 
+import { useFavorite } from "../../Favorite/components/FavoriteContext";
 
 interface Venue {
   id: number;
@@ -18,7 +18,7 @@ interface VenueCardPortraitProps {
 
 const VenueCardPortrait: React.FC<VenueCardPortraitProps> = ({ venue }) => {
   const { favorites, toggleFavorite } = useFavorite();
-  const isLiked = favorites.some((fav: { id: number; }) => fav.id === venue.id);
+  const isLiked = favorites.some((fav) => fav.id === venue.id);
 
   return (
     <div className="mx-6 my-8 relative w-64 h-80 bg-white shadow-lg rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
