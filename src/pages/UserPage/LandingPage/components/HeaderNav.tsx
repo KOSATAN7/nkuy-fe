@@ -32,9 +32,8 @@ const HeaderNav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full bg-white transition-shadow ${
-        hasShadow ? "shadow-md" : ""
-      } z-50`}
+      className={`fixed top-0 left-0 w-full bg-white transition-shadow ${hasShadow ? "shadow-md" : ""
+        } z-50`}
     >
       <div className="mx-20 my-3 flex justify-between items-center">
         {/* Div kiri (Logo) */}
@@ -57,11 +56,10 @@ const HeaderNav = () => {
           ].map((item) => (
             <p
               key={item.path}
-              className={`cursor-pointer hover:text-primary1 transition ${
-                location.pathname === item.path
-                  ? "text-primary1 font-semibold"
-                  : "text-black"
-              }`}
+              className={`cursor-pointer hover:text-primary1 transition ${location.pathname === item.path
+                ? "text-primary1 font-semibold"
+                : "text-black"
+                }`}
               onClick={() => navigate(item.path)}
             >
               {item.name}
@@ -72,16 +70,15 @@ const HeaderNav = () => {
         <div className="flex-1 flex justify-end items-center gap-4 relative">
           {/* Tombol Love */}
           <button
-            onClick={() => navigate("/favorite")}
-            className={`flex items-center justify-center gap-1 transition ${
-              location.pathname === "/favorite"
-                ? "text-primary1"
-                : "text-gray-600 hover:text-primary1"
-            }`}
+            onClick={() => navigate("/favorite-venue")}
+            className={`flex items-center justify-center gap-1 transition ${location.pathname === "/favorite-venue"
+              ? "text-primary1"
+              : "text-gray-600 hover:text-primary1"
+              }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {isHovered || location.pathname === "/favorite" ? (
+            {isHovered || location.pathname === "/favorite-venue" ? (
               <AiFillHeart size={23} className="text-primary1" />
             ) : (
               <AiOutlineHeart size={23} />

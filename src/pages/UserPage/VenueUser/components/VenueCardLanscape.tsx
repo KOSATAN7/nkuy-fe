@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { FaUsers, FaHeart } from "react-icons/fa";
 import { Rating } from "@mui/material";
-import React from 'react';
+import React from "react";
+import { useFavorite } from "../../Favorite/components/FavoriteContext";
 
 interface Venue {
   id: number;
@@ -11,17 +12,14 @@ interface Venue {
   capacity: number;
   image: string;
 }
+
 interface VenueCardLanscapeProps {
   venue: Venue;
 }
 
 const VenueCardLanscape: React.FC<VenueCardLanscapeProps> = ({ venue }) => {
-
-  const [isLiked, setIsLiked] = useState(false);
-
-  const handleHeartClick = () => {
-    setIsLiked(!isLiked);
-  }
+  const { favorites, toggleFavorite } = useFavorite();
+  const isLiked = favorites.some((fav) => fav.id === venue.id);
 
   return (
     <div className="relative w-64 h-40 bg-white shadow-lg rounded-2xl overflow-hidden flex transition-transform duration-300 hover:scale-105 cursor-pointer">
@@ -36,8 +34,8 @@ const VenueCardLanscape: React.FC<VenueCardLanscapeProps> = ({ venue }) => {
         <div className="flex justify-between items-center">
           <Rating value={venue.rating} precision={0.5} readOnly sx={{ color: "#FFD700", fontSize: "1rem" }} />
           <FaHeart
-            className={`cursor-pointer ${isLiked ? "text-red-500" : "text-white"}`}
-            onClick={handleHeartClick}
+            className={`cursor-pointer ${isLiked ? "text-red" : "text-white"}`}
+            onClick={() => toggleFavorite(venue)}
           />
         </div>
       </div>
