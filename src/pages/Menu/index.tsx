@@ -16,87 +16,125 @@ import Button from "@mui/material/Button";
 const MenuPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [sortBy, setSortBy] = useState<"lowToHigh" | "highToLow" | null>(null);
+  const [cartItems] = useState([
+    { name: "Spagetti", quantity: 2, price: 55000 },
+    { name: "Pizza", quantity: 1, price: 90000 },
+    { name: "Dimsum", quantity: 1, price: 15000 },
+  ]);
   const isSortByOpen = Boolean(anchorEl);
 
   const MenuData = [
     {
-      name: "Spagetti",
+      name: "Coffe Latte",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 25,
+      images: ["/src/assets/Coffe Latte.jpg"],
+    },
+    {
+      name: "Croffle",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 30,
+      images: ["/src/assets/Croffle.jpg"],
+    },
+    {
+      name: "Cinnamon Roll",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 30,
+      images: ["/src/assets/Cinnamon Roll.jpg"],
+    },
+    {
+      name: "Beef Bowl",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 40,
+      images: ["/src/assets/Beef Bowl.jpg"],
+    },
+    {
+      name: "Potato Wedges",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
       harga: 50,
-      images: ["/src/assets/spagetti.png"],
+      images: ["/src/assets/Potato Wedges.jpg"],
+    },
+    {
+      name: "Smoothies",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 30,
+      images: ["/src/assets/Smoothies.jpg"],
+    },
+    {
+      name: "Spagetti",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 55,
+      images: ["/src/assets/Spagetti.png"],
     },
     {
       name: "Pizza",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 80,
-      images: ["/src/assets/pizza.jpg"],
-    },
-    {
-      name: "Kawa-Kawa Hijau",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 80,
-      images: ["/src/assets/kajo.jpg"],
+      harga: 90,
+      images: ["/src/assets/Pizza.jpg"],
     },
     {
       name: "Donat",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 50,
-      images: ["/src/assets/donat.jpg"],
-    },
-    {
-      name: "Nasi Goreng",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 80,
-      images: ["/src/assets/nasi goreng.jpeg"],
+      harga: 10,
+      images: ["/src/assets/Donat.jpg"],
     },
     {
       name: "Dimsum",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 80,
-      images: ["/src/assets/dimsum.jpg"],
+      harga: 15,
+      images: ["/src/assets/Dimsum.jpg"],
     },
     {
-        name: "Pecel Madiun",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        harga: 50,
-        images: ["/src/assets/pecel madiun.jpg"],
-      },
-      {
-        name: "Intisari",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        harga: 80,
-        images: ["/src/assets/intisari.jpg"],
-      },
-      {
-        name: "Pink Lady",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-        harga: 80,
-        images: ["/src/assets/pink lady.jpg"],
-      },
-  ];
-
-  const cartItems = [
-    { name: "Spagetti", quantity: 2, price: 20000 },
-    { name: "Pizza", quantity: 1, price: 80000 },
-    { name: "Kawa-Kawa Hijau", quantity: 1, price: 95000 },
+      name: "Nasi Goreng",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 27,
+      images: ["/src/assets/Nasi Goreng.jpg"],
+    },
+    {
+      name: "Pecel Madiun",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 16,
+      images: ["/src/assets/Pecel Madiun.jpg"],
+    },
+    {
+      name: "Pisang Goreng",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 20,
+      images: ["/src/assets/Pisang Goreng.jpg"],
+    },
+    {
+      name: "Roti Bakar",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 20,
+      images: ["/src/assets/Roti Bakar.jpg"],
+    },
+    {
+      name: "Onion Ring",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      harga: 40,
+      images: ["/src/assets/Onion Ring.jpg"],
+    },
   ];
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-
-  const filteredMenuData = MenuData.filter((menu) =>
-    menu.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const handleSortByClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -106,8 +144,32 @@ const MenuPage = () => {
     setAnchorEl(null);
   };
 
+  const handleSort = (sortType: "lowToHigh" | "highToLow") => {
+    setSortBy(sortType);
+    handleSortByClose();
+  };
+
+  const filteredMenuData = MenuData.filter((menu) =>
+    menu.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const sortedMenuData = [...filteredMenuData].sort((a, b) => {
+    if (sortBy === "lowToHigh") {
+      return a.harga - b.harga;
+    } else if (sortBy === "highToLow") {
+      return b.harga - a.harga;
+    } else {
+      return 0;
+    }
+  });
+
+  const total = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
   return (
-    <div style={{ overflow: "hidden", height: "100vh" }}>
+    <div style={{ minHeight: "100vh" }}>
       <div className="m-20">
         <div className="flex justify-center items-center">
           <Stack sx={{ width: "100%" }} spacing={4}>
@@ -150,7 +212,7 @@ const MenuPage = () => {
               }}
               onClick={handleSortByClick}
             >
-              <h3 className="text-black">Sort By</h3>
+              <h3 className="text-black">Urutkan</h3>
               {isSortByOpen ? (
                 <BiSolidUpArrow className="text-lg text-black" />
               ) : (
@@ -171,31 +233,28 @@ const MenuPage = () => {
                 horizontal: "right",
               }}
             >
-              <MenuItem onClick={handleSortByClose}>Option 1</MenuItem>
-              <MenuItem onClick={handleSortByClose}>Option 2</MenuItem>
-              <MenuItem onClick={handleSortByClose}>Option 3</MenuItem>
+              <MenuItem onClick={() => handleSort("lowToHigh")}>
+                Rendah ke Tinggi
+              </MenuItem>
+              <MenuItem onClick={() => handleSort("highToLow")}>
+                Tinggi ke Rendah
+              </MenuItem>
             </Menu>
           </div>
         </div>
 
-        <div
-          className="flex ml-10 py-8 items-start"
-          style={{ height: "calc(100vh - 300px)" }}
-        >
-          <div
-            className="grid grid-cols-3 gap-4 flex-1 "
-            style={{ overflowY: "auto", maxHeight: "100%" }}
-          >
-            {filteredMenuData.map((menu) => (
+        <div className="flex ml-10 py-8 items-start">
+          <div className="grid grid-cols-3 gap-4 flex-1">
+            {sortedMenuData.map((menu) => (
               <MenuCard key={menu.name} venue={menu} />
             ))}
           </div>
 
           <div
-            className="w-1/4 ml-8"
-            style={{ overflowY: "auto", maxHeight: "100%" }}
+            className="w-1/4 ml-8 sticky top-8"
+            style={{ alignSelf: "flex-start" }}
           >
-            <Cart items={cartItems} />
+            <Cart items={cartItems} total={total} />
           </div>
         </div>
       </div>

@@ -13,9 +13,10 @@ interface CartItem {
 
 interface CartProps {
   items: CartItem[];
+  total: number;
 }
 
-const Cart: React.FC<CartProps> = ({ items }) => {
+const Cart: React.FC<CartProps> = ({ items, total }) => {
   return (
     <div className="border border-gray-300 rounded-xl p-4 shadow-lg">
       <h2 className="text-lg font-bold text-gray-800">Keranjang</h2>
@@ -48,7 +49,7 @@ const Cart: React.FC<CartProps> = ({ items }) => {
           </Accordion>
         ))}
       </div>
-      <h2 className="text-lg p-4 mt-10">Total : Rp 40.000</h2>
+      <h2 className="text-lg p-4 mt-10">Total : Rp {total.toLocaleString()}</h2>
       <div className="flex justify-center items-center">
         <button className="w-9/12 py-2 bg-primary1 text-white rounded-lg text-sm">
           Pesan Sekarang
