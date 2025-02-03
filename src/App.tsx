@@ -3,7 +3,7 @@ import { theme } from "../src/components/utils/theme";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import { HeaderProvider } from "./components/SideNav/components/HeaderContext";
-import { FavoriteProvider } from "./pages/UserPage/Favorite/components/FavoriteContext"; 
+import { FavoriteProvider } from "./pages/UserPage/Favorite/components/FavoriteContext";
 
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
@@ -36,119 +36,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <HeaderProvider>
-<<<<<<< Updated upstream
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/panduan" element={<PanduanPage />} />
-            <Route path="/tentang" element={<TentangPage />} />
-            <Route path="/kontak" element={<KontakPage />} />
-            <Route path="/venuelist" element={<VenueList />} />
-            <Route path="/detailvenue" element={<DetailVenue />} />
-            <Route path="/pembayaran" element={<PembayaranPage />} />
-            <Route path="/buktipemesan" element={<BuktiPemesanPage />} />
-            <Route path="/menu" element={<MenuPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/" element={<Layout />}>
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <DashboardSuperAdmin />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="pertandingan"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <PertandinganPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/pertandingan/create"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <CreatePertandingan />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/pertandingan/update/:id"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <UpdatePertandingan />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/venue"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <VenuePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/venue/create"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <CreateVenue />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/venue/update/:id"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <UpdateVenue />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/venue/detail/:id"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <ShowVenue />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/review"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <ReviewPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/pengguna"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <KelolaPenggunaPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/pengguna/edit/:id"
-                element={
-                  <ProtectedRoute requiredRole="super_admin">
-                    <UpdatePengguna />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin_venue/dashboard"
-                element={
-                  <ProtectedRoute requiredRole="admin_venue">
-                    <DashboardAdminVenue />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-          </Routes>
-=======
           <FavoriteProvider>
             <Routes>
               <Route path="/" element={<LandingPage />} />
@@ -245,6 +132,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/venue/detail/:id"
+                  element={
+                    <ProtectedRoute requiredRole="super_admin">
+                      <ShowVenue />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/admin_venue/dashboard"
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
@@ -255,7 +150,6 @@ function App() {
               </Route>
             </Routes>
           </FavoriteProvider>
->>>>>>> Stashed changes
         </HeaderProvider>
       </BrowserRouter>
     </ThemeProvider>
