@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaUsers, FaHeart } from "react-icons/fa";
 import { Rating } from "@mui/material";
 import React from "react";
