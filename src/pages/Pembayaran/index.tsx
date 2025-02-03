@@ -42,7 +42,7 @@ const PembayaranPage = () => {
             </p>
           </div>
 
-          <div className="flex mt-8 gap-12">
+          <div className="flex mt-8 gap-32">
             <div className="w-1/2">
               <PembayaranCard
                 icon={<BsCreditCardFill className="text-2xl mb-2" />}
