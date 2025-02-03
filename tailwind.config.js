@@ -15,6 +15,7 @@ export default {
         primary1: "#7EC7FF",
         primary1koma2: "#3A82B3",
         neutral1: "#CACED8",
+        neutral2: "#F6F6F6",
         text1: "#083A50",
         primary2: "#216BFE",
         warning1: "#FFAE00",
