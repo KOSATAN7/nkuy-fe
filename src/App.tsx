@@ -51,7 +51,7 @@ function App() {
               <Route path="/panduan" element={<PanduanPage />} />
               <Route path="/tentang" element={<TentangPage />} />
               <Route path="/kontak" element={<KontakPage />} />
-              <Route path="/venuelist" element={<VenueList />} />
+              <Route path="/venuelist/:pertandinganId" element={<VenueList />} />
               <Route path="/favorite-venue" element={<FavoriteVenue />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/profile/password" element={<PasswordPage />} />
@@ -61,7 +61,7 @@ function App() {
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/" element={<Layout />}>
+              <Route path="/" element={<Layout />}>z
                 <Route
                   path="/dashboard"
                   element={
