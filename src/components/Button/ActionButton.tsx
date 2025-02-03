@@ -37,7 +37,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
       {updatePath && (
         <button
           onClick={() => navigate(updatePath)}
-          className="bg-primary2 p-2 rounded-lg hover:bg-blue-400"
+          className="bg-primary1 p-2 rounded-lg hover:bg-blue-400"
         >
           <HiOutlinePencil className="text-white" />
         </button>

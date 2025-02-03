@@ -39,6 +39,10 @@ import KelolaMenu from "./pages/AdminVenue/KelolaMenu";
 import CreateMenu from "./pages/AdminVenue/KelolaMenu/CreateMenu";
 import UpdateMenu from "./pages/AdminVenue/KelolaMenu/UpdateMenue";
 import KelolaUlasan from "./pages/AdminVenue/KelolaUlasan";
+import KelolaProvider from "./pages/AdminVenue/KelolaProvider";
+import CreateProvider from "./pages/AdminVenue/KelolaProvider/CreateProvider";
+import UpdateProvider from "./pages/AdminVenue/KelolaProvider/UpdateProvider";
+
 
 function App() {
   return (
@@ -211,6 +215,30 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="admin_venue">
                       <KelolaUlasan />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_provider"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <KelolaProvider />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_provider/create"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <CreateProvider />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin_venue/kelola_provider/update/:id"
+                  element={
+                    <ProtectedRoute requiredRole="admin_venue">
+                      <UpdateProvider />
                     </ProtectedRoute>
                   }
                 />

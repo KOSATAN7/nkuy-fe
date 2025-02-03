@@ -13,6 +13,8 @@ import { CiMonitor } from "react-icons/ci";
 import { Logout } from "@/service/index";
 import { useNavigate } from "react-router-dom";
 import SweetAlert from "@/components/Alert/swal";
+import { FaCashRegister } from "react-icons/fa6";
+
 
 const SideNav = () => {
   const navigate = useNavigate();
@@ -93,6 +95,11 @@ const SideNav = () => {
               label="Kelola Ulasan"
               icon={<CiMonitor />}
               to="/admin_venue/kelola_ulasan"
+            />
+            <NavButton
+              label="Kelola Provider"
+              icon={<FaCashRegister />}
+              to="/admin_venue/kelola_provider"
             />
           </>
         )}
