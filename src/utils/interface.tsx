@@ -14,6 +14,16 @@ export interface Pertandingan {
   updated_at: string;
 }
 
+export interface MatchCardData {
+  id: number;
+  image: string;
+  day: string;
+  date: string;
+  title: string;
+  time: string;
+  description: string;
+}
+
 export interface Venue {
   id: number;
   nama: string;

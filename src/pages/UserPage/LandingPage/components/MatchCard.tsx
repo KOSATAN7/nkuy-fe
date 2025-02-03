@@ -1,7 +1,5 @@
 import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 
-// Definisikan tipe props
 interface MatchCardProps {
   image: string;
   day: string;
@@ -10,6 +8,7 @@ interface MatchCardProps {
   time: string;
   description: string;
   buttonText: string;
+  onClick: () => void;
 }
 
 const MatchCard: React.FC<MatchCardProps> = ({
@@ -18,14 +17,9 @@ const MatchCard: React.FC<MatchCardProps> = ({
   date,
   title,
   time,
-  description,
   buttonText,
-
-
+  onClick,
 }) => {
-
-  const navigate = useNavigate();
-
   return (
     <div className="my-4 max-w-sm rounded-xl shadow-lg bg-white">
       <div className="relative">
@@ -43,10 +37,9 @@ const MatchCard: React.FC<MatchCardProps> = ({
             <p className="text-gray-600 text-[14px]">{time}</p>
           </div>
         </div>
-        {/* <p className="text-gray-600 text-sm pb-4">{description}</p> */}
-        <div className="flex justify-center mt-2">
-          <button onClick={() => navigate("/venuelist")} className=" bg-primary1 text-white text-sm py-2 w-full rounded-lg hover:bg-primary1koma2 transition">
 
+        <div className="flex justify-center mt-2">
+          <button onClick={onClick} className=" bg-primary1 text-white text-sm py-2 w-full rounded-lg hover:bg-primary1koma2 transition">
             {buttonText}
           </button>
         </div>

@@ -11,16 +11,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getListVenue } from "@/service/ServiceVenue";
 import { useParams } from "react-router-dom";
-
-interface Venue {
-  id: number;
-  nama: string;
-  alamat: string;
-  kapasitas: number;
-  fasilitas: string[];
-  kota: string;
-  foto_utama: string | null;
-}
+import { Venue, Pertandingan } from "@/utils/interface";
+import { getPertandinganAktif } from "@/service/ServiceInfobar";
 
 interface ArrowProps {
   className?: string;
@@ -90,6 +82,7 @@ const VenueList = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pertandingan, setPertandingan] = useState<Pertandingan | null>(null);
 
   const totalPages = Math.ceil(availableVenues.length / itemsPerPage);
 
@@ -118,7 +111,21 @@ const VenueList = () => {
       }
     };
 
+    const fetchPertandingan = async () => {
+      try {
+        const response = await getPertandinganAktif();
+        const data = response.data.data;
+        const match = data.find((match: Pertandingan) => match.id === parsedId);
+        if (match) {
+          setPertandingan(match);
+        }
+      } catch (error) {
+        console.error("Error fetching pertandingan:", error);
+      }
+    };
+
     fetchVenues();
+    fetchPertandingan();
   }, [parsedId]);
 
   useEffect(() => {
@@ -210,9 +217,11 @@ const VenueList = () => {
         <div className="absolute inset-5 flex flex-col justify-between text-white">
           <div>
             <h2 className="text-4xl font-bold drop-shadow-lg">
-              Persib VS Persija
+              {pertandingan ? `${pertandingan.tim_tuan_rumah} vs ${pertandingan.tim_tamu}` : "Persib vs Persija"}
             </h2>
-            <p className="mt-2 text-lg">Jam Tayang 06.00 WIB</p>
+            <p className="mt-2 text-lg">
+              Jam Tayang {pertandingan ? pertandingan.waktu_pertandingan : "06.00 WIB"}
+            </p>
           </div>
 
           <div className="mt-28 mx-auto w-1/2 bg-white rounded-xl px-4 py-2 flex flex-col items-start border border-gray-300">
@@ -225,7 +234,14 @@ const VenueList = () => {
               Kota
             </button>
             <div className="mt-[181px] absolute inset-0 flex flex-col justify-between text-white">
-              <p>Sabtu, 27 Januari 2024</p>
+              <p>
+                {pertandingan ? new Date(pertandingan.tanggal_pertandingan).toLocaleDateString("id-ID", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }) : "Sabtu, 27 Januari 2024"}
+              </p>
             </div>
           </div>
         </div>
