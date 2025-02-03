@@ -28,7 +28,7 @@ const CustomTextarea: React.FC<CustomTextareaProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full border-2 focus:outline-primary1 px-4 py-2 h-full"
+        className="w-full border-2 rounded-lg focus:outline-primary1 px-4 py-2 h-full"
         {...props}
       />
     </div>

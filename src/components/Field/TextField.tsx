@@ -5,14 +5,16 @@ interface TextFieldProps {
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string; 
+  type?: string;
   name?: string;
   className?: string;
+  titleClassName?: string;
 }
 
 const TextField: React.FC<TextFieldProps> = ({
   title,
   placeholder = "",
+  titleClassName = "",
   value,
   onChange,
   type = "text",
@@ -22,7 +24,7 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   return (
     <div className={`w-full ${className}`}>
-      <h1 className="mb-2">{title}</h1>
+      <h1 className={`mb-2 ${titleClassName}`}>{title}</h1>
       <input
         type={type}
         name={name}
