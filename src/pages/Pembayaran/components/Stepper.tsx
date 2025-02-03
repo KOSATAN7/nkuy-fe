@@ -74,7 +74,7 @@ interface StepperProps {
   activeStep: number;
 }
 
-const steps = ['Daftar Menu', 'Pembayaran', 'Bukti Pesan'];
+const steps = ['Daftar Menu', 'Pembayaran', 'Bukti Pemesanan'];
 
 const StepperComponent: React.FC<StepperProps> = ({ activeStep }) => {
   return (
