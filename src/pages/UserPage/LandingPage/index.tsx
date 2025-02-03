@@ -10,18 +10,19 @@ import { getPertandinganAktif } from "@/service/ServiceInfobar"; // Import API s
 
 const LandingPage = () => {
   const [currentIndex, setCurrentIndex] = useState<{ [key: string]: number }>({});
-  const [activeLeague, setActiveLeague] = useState("Liga 1");
+  const [activeLeague, setActiveLeague] = useState<string | null>(null);
   const [matches, setMatches] = useState<{ [key: string]: any[] }>({});
   const leagueSliderRef = useRef<Slider | null>(null);
-  const sliderRefs = useRef<{ [key: string]: Slider | null }>({});
+  const matchSliderRef = useRef<Slider | null>(null);
 
   useEffect(() => {
     const fetchMatches = async () => {
       try {
         const response = await getPertandinganAktif();
         console.log(response.data);
-        const data = response.data.data; 
+        const data = response.data.data;
         const groupedMatches: { [key: string]: any[] } = {};
+
         data.forEach((match: any) => {
           const league = match.liga || "Unknown League";
 
@@ -41,6 +42,7 @@ const LandingPage = () => {
         });
 
         setMatches(groupedMatches);
+        setActiveLeague(null); // Menampilkan semua liga secara default
       } catch (error) {
         console.error("Error fetching matches:", error);
       }
@@ -49,7 +51,6 @@ const LandingPage = () => {
     fetchMatches();
   }, []);
 
-
   const settings: Settings = {
     dots: true,
     infinite: false,
@@ -57,13 +58,13 @@ const LandingPage = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     arrows: false,
-    afterChange: (index) => setCurrentIndex((prev) => ({ ...prev, [activeLeague]: index })),
+    afterChange: (index) => setCurrentIndex((prev) => ({ ...prev, [activeLeague || "all"]: index })),
   };
 
-  useEffect(() => {
-    setCurrentIndex((prev) => ({ ...prev, [activeLeague]: 0 }));
-    sliderRefs.current[activeLeague]?.slickGoTo(0);
-  }, [activeLeague]);
+  const handleLeagueClick = (league: string | null) => {
+    setActiveLeague(activeLeague === league ? null : league);
+    matchSliderRef.current?.slickGoTo(0);
+  };
 
   return (
     <MainLayout>
@@ -101,7 +102,7 @@ const LandingPage = () => {
               {Object.keys(matches).map((league, index) => (
                 <div key={index} className="w-full">
                   <button
-                    onClick={() => setActiveLeague(league)}
+                    onClick={() => handleLeagueClick(league)}
                     className={`px-6 w-full py-2 border-2 rounded-full text-sm font-medium transition ${activeLeague === league ? "bg-primary1 text-white" : "bg-white text-black"
                       } hover:bg-primary1koma2 hover:text-white`}
                   >
@@ -123,43 +124,37 @@ const LandingPage = () => {
 
       {/* 🔥 Matches Slider */}
       <div className="relative w-full mx-auto mt-12">
-        {currentIndex[activeLeague] > 0 && (
+        {/* Left Arrow */}
+        {currentIndex[activeLeague || "all"] > 0 && (
           <button
-            onClick={() => sliderRefs.current[activeLeague]?.slickPrev()}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white to-transparent py-40 px-4"
+            onClick={() => matchSliderRef.current?.slickPrev()}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-white to-transparent py-60 px-4"
           >
             <FaChevronLeft className="text-black w-6 h-6" />
           </button>
         )}
 
-        <Slider
-          ref={(el) => {
-            if (el && !sliderRefs.current[activeLeague]) {
-              sliderRefs.current[activeLeague] = el;
-            }
-          }}
-          {...settings}
-        >
-          {(matches[activeLeague] || []).map((data, index) => (
+        <Slider ref={(el) => (matchSliderRef.current = el)} {...settings}>
+          {(activeLeague ? matches[activeLeague] : Object.values(matches).flat()).map((data, index) => (
             <div key={index} className="w-full p-4">
               <MatchCard
-                image={Gambar1} 
+                image={Gambar1}
                 day={data.day}
                 date={data.date}
                 title={data.title}
                 time={data.time}
                 description={data.description}
-                buttonText="Tonton Sekarang" 
+                buttonText="Tonton Sekarang"
               />
-
             </div>
           ))}
         </Slider>
 
-        {currentIndex[activeLeague] < (matches[activeLeague]?.length || 0) - 4 && (
+        {/* Right Arrow */}
+        {currentIndex[activeLeague || "all"] < (activeLeague ? matches[activeLeague]?.length : Object.values(matches).flat().length) - 4 && (
           <button
-            onClick={() => sliderRefs.current[activeLeague]?.slickNext()}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white to-transparent py-40 px-4"
+            onClick={() => matchSliderRef.current?.slickNext()}
+            className="absolute  right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-l from-white to-transparent py-60 px-4"
           >
             <FaChevronRight className="text-black w-6 h-6" />
           </button>
