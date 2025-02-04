@@ -1,5 +1,5 @@
 import React from "react";
-import MainLayout from "../UserPage/LandingPage/Layout";
+import MainLayout from "../LandingPage/Layout";
 import DetailVenueCard from "./components/DetailVenueCard";
 
 const venueData = {
