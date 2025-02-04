@@ -30,11 +30,11 @@ const MatchCard: React.FC<MatchCardProps> = ({
         <div className="flex items-center text-center gap-4 pb-2">
           <div className="text-center">
             <p className="font-bold text-lg">{day}</p>
-            <p className="text-xl font-semibold">{date}</p>
+            <p className="text-lg font-semibold">{time}</p>
           </div>
           <div className="text-left border-l border-black px-3">
             <p className="font-semibold line-clamp-1 text-[16px]">{title}</p>
-            <p className="text-gray-600 text-[14px]">{time}</p>
+            <p className="text-gray-600 text-[14px]">{date}</p>
           </div>
         </div>
 
