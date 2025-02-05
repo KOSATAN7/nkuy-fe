@@ -109,7 +109,7 @@ export const deletePertandingan = async (id: number, token: string) => {
 };
 
 export const putStatusPertandingan = async (id: number, token: string) => {
-  const response = await axios.put(
+  const response = await axios.patch(
     `${API_BASE_URL}/pertandingan/status/${id}`,
     {},
     {
@@ -201,7 +201,7 @@ export const putVenue = async (id: number, data: UbahVenue, token: string) => {
 };
 
 export const putStatusVenue = async (id: number, token: string) => {
-  const response = await axios.put(
+  const response = await axios.patch(
     `${API_BASE_URL}/venue/status/${id}`,
     {},
     {
