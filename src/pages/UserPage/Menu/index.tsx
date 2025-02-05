@@ -1,264 +1,244 @@
-import React, { useState } from "react";
-import Stack from "@mui/material/Stack";
-import StepperComponent from "./components/Stepper";
+import { useParams } from "react-router-dom";
+import MainLayout from "../LandingPage/Layout";
+import { useEffect, useState } from "react";
+import { MenuKanjut } from "@/utils/interface";
+import { getListMenuTersedia, postBooking } from "@/service/index";
 import MenuCard from "./components/MenuCard";
-import Cart from "./components/Cart";
-import {
-  BiLeftArrowCircle,
-  BiSearch,
-  BiSolidDownArrow,
-  BiSolidUpArrow,
-} from "react-icons/bi";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import { formatRupiah } from "@/utils/FormatRupiah";
+import TextField from "@/components/Field/TextField";
+import UploadField from "@/components/Field/UploadField";
+import SelectField from "@/components/Field/SelectField";
+import { getProvider } from "@/service/index";
+import CustomButton from "@/components/Button/CustomButton";
+
+interface CartItem {
+  id: number;
+  jumlah: number;
+}
 
 const MenuPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [sortBy, setSortBy] = useState<"lowToHigh" | "highToLow" | null>(null);
-  const [cartItems] = useState([
-    { name: "Spagetti", quantity: 2, price: 55000 },
-    { name: "Pizza", quantity: 1, price: 90000 },
-    { name: "Dimsum", quantity: 1, price: 15000 },
-  ]);
-  const isSortByOpen = Boolean(anchorEl);
+  const { venueId } = useParams<{ venueId: string }>();
+  const [menuData, setMenuData] = useState<MenuKanjut[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedProvider, setSelectedProvider] = useState<string>("");
+  const [selectedNoRek, setSelectedNoRek] = useState<string>("");
+  const [providers, setProviders] = useState<
+    { value: string; label: string; no_rek: string }[]
+  >([]);
+  const [jumlahOrang, setJumlahOrang] = useState<number>(1);
+  const [buktiPembayaran] = useState<File | null>(null);
 
-  const MenuData = [
-    {
-      name: "Coffe Latte",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 25,
-      images: ["/src/assets/Coffe Latte.jpg"],
-    },
-    {
-      name: "Croffle",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 30,
-      images: ["/src/assets/Croffle.jpg"],
-    },
-    {
-      name: "Cinnamon Roll",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 30,
-      images: ["/src/assets/Cinnamon Roll.jpg"],
-    },
-    {
-      name: "Beef Bowl",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 40,
-      images: ["/src/assets/Beef Bowl.jpg"],
-    },
-    {
-      name: "Potato Wedges",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 50,
-      images: ["/src/assets/Potato Wedges.jpg"],
-    },
-    {
-      name: "Smoothies",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 30,
-      images: ["/src/assets/Smoothies.jpg"],
-    },
-    {
-      name: "Spagetti",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 55,
-      images: ["/src/assets/Spagetti.png"],
-    },
-    {
-      name: "Pizza",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 90,
-      images: ["/src/assets/Pizza.jpg"],
-    },
-    {
-      name: "Donat",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 10,
-      images: ["/src/assets/Donat.jpg"],
-    },
-    {
-      name: "Dimsum",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 15,
-      images: ["/src/assets/Dimsum.jpg"],
-    },
-    {
-      name: "Nasi Goreng",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 27,
-      images: ["/src/assets/Nasi Goreng.jpg"],
-    },
-    {
-      name: "Pecel Madiun",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 16,
-      images: ["/src/assets/Pecel Madiun.jpg"],
-    },
-    {
-      name: "Pisang Goreng",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 20,
-      images: ["/src/assets/Pisang Goreng.jpg"],
-    },
-    {
-      name: "Roti Bakar",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 20,
-      images: ["/src/assets/Roti Bakar.jpg"],
-    },
-    {
-      name: "Onion Ring",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-      harga: 40,
-      images: ["/src/assets/Onion Ring.jpg"],
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("Login Mas");
+      }
+      const response = await getListMenuTersedia(Number(venueId), token);
+      setMenuData(response.data);
+    };
+    fetchData();
+  }, []);
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
+  useEffect(() => {
+    const fetchProviders = async () => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("Login Mas");
+      }
+      const response = await getProvider(Number(venueId), token);
+
+      const formattedProviders = response.data.map((item: any) => ({
+        value: item.provider.id.toString(),
+        label: `${item.provider.nama} - ${item["metode-pembayaran"].metode_pembayaran}`,
+        no_rek: item.provider.no_rek,
+      }));
+
+      setProviders(formattedProviders);
+    };
+
+    fetchProviders();
+  }, []);
+
+  const handleProviderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = e.target.value;
+    setSelectedProvider(selectedValue);
+    console.log(selectedValue);
+
+    const selectedData = providers.find((item) => item.value === selectedValue);
+    setSelectedNoRek(selectedData ? selectedData.no_rek : "");
   };
 
-  const handleSortByClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleAddToCart = (id: number) => {
+    console.log(`Menambahkan item dengan ID: ${id} ke dalam keranjang`);
+    setCartItems((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === id);
+      if (existingItem) {
+        return prevCart.map((item) =>
+          item.id === id ? { ...item, jumlah: item.jumlah + 1 } : item
+        );
+      } else {
+        return [...prevCart, { id, jumlah: 1 }];
+      }
+    });
   };
 
-  const handleSortByClose = () => {
-    setAnchorEl(null);
+  const handleRemoveFromCart = (id: number) => {
+    console.log(`Mengurangi item dengan ID: ${id} dari keranjang`);
+    setCartItems((prevCart) => {
+      return prevCart
+        .map((item) =>
+          item.id === id ? { ...item, jumlah: item.jumlah - 1 } : item
+        )
+        .filter((item) => item.jumlah > 0);
+    });
   };
 
-  const handleSort = (sortType: "lowToHigh" | "highToLow") => {
-    setSortBy(sortType);
-    handleSortByClose();
-  };
-
-  const filteredMenuData = MenuData.filter((menu) =>
-    menu.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const sortedMenuData = [...filteredMenuData].sort((a, b) => {
-    if (sortBy === "lowToHigh") {
-      return a.harga - b.harga;
-    } else if (sortBy === "highToLow") {
-      return b.harga - a.harga;
-    } else {
-      return 0;
+  const totalHarga = cartItems.reduce((total, item) => {
+    const menu = menuData.find((data) => data.id === item.id);
+    if (menu) {
+      return total + Number(menu.harga) * item.jumlah;
     }
-  });
+    return total;
+  }, 0);
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  // const menuPesanan = cartItems.map((item) => ({
+  //   id: item.id,
+  //   jumlah: item.jumlah,
+  // }));
+
+  const handleJumlahOrangChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setJumlahOrang(Number(e.target.value));
+  };
+
+  // const handleBuktiPembayaranChange = (file: File) => {
+  //   setBuktiPembayaran(file);
+  // };
+
+  const handleBooking = async () => {
+    const token = sessionStorage.getItem("token");
+    if (!token || !venueId) {
+      alert("Anda harus login terlebih dahulu.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("provider_id", selectedProvider);
+    formData.append("venue_id", venueId);
+    formData.append("jumlah_orang", jumlahOrang.toString());
+
+    const menuPesananIds = cartItems.map((item) => item.id);
+    formData.append("menu_pesanan", JSON.stringify(menuPesananIds));
+
+    if (buktiPembayaran) {
+      formData.append("bukti_pembayaran", buktiPembayaran);
+    }
+
+    try {
+      const response = await postBooking(formData, token);
+      console.log("Booking berhasil:", response);
+      alert("Booking berhasil!");
+    } catch (error) {
+      console.error("Gagal melakukan booking:", error);
+      alert("Gagal melakukan booking. Silakan coba lagi.");
+    }
+  };
 
   return (
-    <div style={{ minHeight: "100vh" }}>
-      <div className="m-20">
-        <div className="flex justify-center items-center">
-          <Stack sx={{ width: "100%" }} spacing={4}>
-            <StepperComponent activeStep={0} />
-          </Stack>
-        </div>
-
-        <div className="flex items-center cursor-pointer ml-10 mt-8">
-          <BiLeftArrowCircle className="mr-2 text-2xl" />
-          <span className="text-lg">Kembali</span>
-        </div>
-
-        <div className="flex justify-between items-center ml-10 mt-8">
-          <div className="w-72 p-2 border rounded-lg border-gray-300 justify-between flex items-center">
-            <input
-              type="text"
-              placeholder="Cari Menu..."
-              className="text-lg text-gray-500 outline-none flex-1"
-              value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
+    <MainLayout>
+      <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          {menuData.map((data) => (
+            <MenuCard
+              key={data.id}
+              nama={data.nama}
+              deskripsi={data.deskripsi}
+              harga={data.harga}
+              onAddToCart={() => handleAddToCart(data.id)}
+              onRemoveFromCart={() => handleRemoveFromCart(data.id)}
             />
-            <BiSearch className="text-xl text-black" />
-          </div>
-
-          <div className="w-36">
-            <Button
-              className="p-2 border rounded-lg border-gray-300 justify-between flex items-center cursor-pointer w-full"
-              sx={{
-                border: "1px solid #D1D5DB",
-                borderRadius: "0.5rem",
-                textTransform: "none",
-                color: "black",
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-                "&:active": {
-                  backgroundColor: "transparent",
-                },
-              }}
-              onClick={handleSortByClick}
-            >
-              <h3 className="text-black">Urutkan</h3>
-              {isSortByOpen ? (
-                <BiSolidUpArrow className="text-lg text-black" />
-              ) : (
-                <BiSolidDownArrow className="text-lg text-black" />
-              )}
-            </Button>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={isSortByOpen}
-              onClose={handleSortByClose}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right",
-              }}
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-            >
-              <MenuItem onClick={() => handleSort("lowToHigh")}>
-                Rendah ke Tinggi
-              </MenuItem>
-              <MenuItem onClick={() => handleSort("highToLow")}>
-                Tinggi ke Rendah
-              </MenuItem>
-            </Menu>
-          </div>
+          ))}
         </div>
 
-        <div className="flex ml-10 py-8 items-start">
-          <div className="grid grid-cols-3 gap-4 flex-1">
-            {sortedMenuData.map((menu) => (
-              <MenuCard key={menu.name} venue={menu} />
-            ))}
-          </div>
+        <div className="w-full lg:w-96 border-2 p-4 rounded-lg">
+          <h1 className="text-lg font-semibold mb-4">Pesanan Anda</h1>
+          {cartItems.length === 0 ? (
+            <p className="text-gray-500">Belum ada pesanan.</p>
+          ) : (
+            <>
+              <ul className="space-y-3">
+                {cartItems.map((item) => (
+                  <li
+                    key={item.id}
+                    className="flex justify-between items-center border-b pb-2"
+                  >
+                    <div>
+                      <p className="font-semibold">
+                        {menuData.find((menu) => menu.id === item.id)?.nama}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {item.jumlah} x{" "}
+                        {formatRupiah(
+                          Number(
+                            menuData.find((menu) => menu.id === item.id)
+                              ?.harga || 0
+                          )
+                        )}
+                      </p>
+                    </div>
+                    <p className="font-semibold">
+                      {formatRupiah(
+                        Number(
+                          menuData.find((menu) => menu.id === item.id)?.harga ||
+                            0
+                        ) * item.jumlah
+                      )}
+                    </p>
+                  </li>
+                ))}
+              </ul>
 
-          <div
-            className="w-1/4 ml-8 sticky top-8"
-            style={{ alignSelf: "flex-start" }}
-          >
-            <Cart items={cartItems} total={total} />
+              <div className="mt-4 pt-4 border-t flex justify-between font-semibold text-lg">
+                <p>Total Harga:</p>
+                <p>{formatRupiah(totalHarga)}</p>
+              </div>
+            </>
+          )}
+          <div className="border-t-2 pt-4 mt-4 space-y-3">
+            <TextField
+              title="Jumlah Orang"
+              type="number"
+              value={jumlahOrang.toString()}
+              onChange={handleJumlahOrangChange}
+            />
+
+            <UploadField
+              title="Bukti Pembayaran"
+              onFileChange={function (file: File | null): void {
+                throw new Error("Function not implemented.");
+              }}
+            />
+
+            <SelectField
+              title="Metode Pembayaran"
+              options={providers}
+              value={selectedProvider}
+              onChange={handleProviderChange}
+            />
+
+            {selectedNoRek && (
+              <p className="mt-2 text-gray-700">
+                No Rekening:{" "}
+                <span className="font-semibold">{selectedNoRek}</span>
+              </p>
+            )}
+            <div>
+              <CustomButton label="Booking Sekarang" onClick={handleBooking} />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 

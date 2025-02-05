@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface UploadFieldProps {
   title: string;
   maxFileSize?: string;
+  onFileChange: (file: File | null) => void;
 }
 
-const UploadField: React.FC<UploadFieldProps> = ({ title, maxFileSize }) => {
+const UploadField: React.FC<UploadFieldProps> = ({ title, maxFileSize, onFileChange }) => {
   const [fileName, setFileName] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setFileName(event.target.files[0].name);
+    const file = event.target.files?.[0] || null;
+    setFileName(file ? file.name : "");
+    onFileChange(file);
+  };
+
+  const handleBrowseClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
+
   return (
     <div>
       <div className="flex justify-between">
@@ -20,9 +29,19 @@ const UploadField: React.FC<UploadFieldProps> = ({ title, maxFileSize }) => {
         <h1 className="text-red">{maxFileSize}</h1>
       </div>
       <div className="flex items-center border-2 rounded-lg overflow-hidden cursor-pointer w-full">
-        <span className="flex-grow px-4 py-2 text-gray-400">{fileName}</span>
-        <span className="bg-primary1 px-4 py-2 text-white">Browse</span>
-        <input type="file" className="hidden" onChange={handleFileChange} />
+        <span className="flex-grow px-4 py-2 text-gray-400">{fileName || "Pilih file..."}</span>
+        <span
+          className="bg-primary1 px-4 py-2 text-white cursor-pointer"
+          onClick={handleBrowseClick}
+        >
+          Browse
+        </span>
+        <input
+          ref={fileInputRef}
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+        />
       </div>
     </div>
   );

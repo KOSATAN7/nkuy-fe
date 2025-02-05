@@ -1,8 +1,10 @@
 import {
+  buatBooking,
   buatMenu,
   BuatPertandingan,
   buatProvider,
   BuatVenue,
+  Register,
   UbahVenue,
   UpdateUser,
 } from "@/utils/interface";
@@ -14,6 +16,15 @@ export const PostLogin = async (email: string, password: string) => {
   const response = await axios.post(`${API_BASE_URL}/login`, {
     email,
     password,
+  });
+  return response.data;
+};
+
+export const postRegister = async (data: Register | FormData) => {
+  const response = await axios.post(`${API_BASE_URL}/register-infobar`, data, {
+    headers: {
+      Accept: "application/json",
+    },
   });
   return response.data;
 };
@@ -588,5 +599,32 @@ export const deleteProvider = async (
       },
     }
   );
+  return response.data;
+};
+
+export const getListMenuTersedia = async (venueId: number, token: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/menus/venue/${venueId}/tersedia`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const postBooking = async (
+  data: buatBooking | FormData,
+  token: string
+) => {
+  const response = await axios.post(`${API_BASE_URL}/booking`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
   return response.data;
 };

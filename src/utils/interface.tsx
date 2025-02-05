@@ -1,3 +1,10 @@
+export interface Register {
+  username: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
 export interface Pertandingan {
   id: number;
   cabang_olahraga: string;
@@ -172,4 +179,26 @@ export interface buatProvider {
   penerima: string;
   deskripsi: string;
   foto: string;
+}
+
+export interface MenuKanjut {
+  id: number;
+  nama: string;
+  deskripsi: string;
+  harga: string;
+  foto: string;
+  kategori: string;
+  kesediaan: string;
+}
+
+export interface buatBooking {
+  provider_id: string;
+  venue_id: string;
+  jumlah_orang: number;
+  menu_pesanan: [
+    id: number,
+    jumlah: number
+  ];
+  bukti_pembayaran: string
+
 }

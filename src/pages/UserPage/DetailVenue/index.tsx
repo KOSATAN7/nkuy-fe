@@ -11,8 +11,8 @@ const DetailVenue: React.FC = () => {
     const fetchVenue = async () => {
       try {
         const response = await getDetailVenue(parseInt(venueId!));
-        console.log("Data venue yang diterima:", response); // Debugging
-        setVenueData(response.payload); // 🔥 Fix di sini
+        console.log("Data venue yang diterima:", response);
+        setVenueData(response.payload);
       } catch (error) {
         console.error("Gagal mengambil data venue:", error);
       }
@@ -21,9 +21,7 @@ const DetailVenue: React.FC = () => {
     if (venueId) fetchVenue();
   }, [venueId]);
 
-
   if (!venueData) return <p>Loading...</p>;
-
 
   return (
     <MainLayout>
