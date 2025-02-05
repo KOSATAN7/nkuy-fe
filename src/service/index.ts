@@ -1,6 +1,7 @@
 import {
   buatMenu,
   BuatPertandingan,
+  buatProvider,
   BuatVenue,
   UbahVenue,
   UpdateUser,
@@ -468,6 +469,118 @@ export const putStatusMenu = async (
   const response = await axios.patch(
     `${API_BASE_URL}/menu/venue/${venueId}/status/${id}`,
     {},
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getProvider = async (venueId: number, token: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/venue/${venueId}/provider`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const putStatusProvider = async (
+  venueId: number,
+  id: number,
+  token: string
+) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/venue/${venueId}/provider/${id}/status`,
+    {},
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getListMetodePembayaran = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/list-metode`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const getProviderById = async (
+  venueId: number,
+  id: number,
+  token: string
+) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/venue/${venueId}/provider/${id}`,
+    {
+      headers: {
+        Accept: "Application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};
+
+export const postProvider = async (
+  venueId: number,
+  data: buatProvider | FormData,
+  token: string
+) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/venue/${venueId}/provider`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const putProvider = async (
+  venueId: number,
+  id: number,
+  data: buatProvider | FormData,
+  token: string
+) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/venue/${venueId}/provider/${id}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const deleteProvider = async (
+  venueId: number,
+  id: number,
+  token: string
+) => {
+  const response = await axios.delete(
+    `${API_BASE_URL}/venue/${venueId}/provider/${id}`,
     {
       headers: {
         Accept: "application/json",
