@@ -11,7 +11,7 @@ import LandingPage from "./pages/UserPage/LandingPage";
 import PanduanPage from "./pages/UserPage/Panduan";
 import TentangPage from "./pages/UserPage/Tentang";
 import KontakPage from "./pages/UserPage/Kontak";
-import VenueList from "./pages/UserPage/VenueUser";
+import VenueList from "./pages/UserPage/VenueList";
 import DetailVenue from "./pages/UserPage/DetailVenue";
 import FavoriteVenue from "./pages/UserPage/Favorite";
 import UserProfile from "./pages/UserPage/Profile";
@@ -59,7 +59,7 @@ function App() {
               <Route path="/favorite-venue" element={<FavoriteVenue />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/profile/password" element={<PasswordPage />} />
-              <Route path="/detailvenue" element={<DetailVenue />} />
+              <Route path="/detailvenue/:venueId" element={<DetailVenue />} />
               <Route path="/pembayaran" element={<PembayaranPage />} />
               <Route path="/buktipemesan" element={<BuktiPemesanPage />} />
               <Route path="/menu" element={<MenuPage />} />

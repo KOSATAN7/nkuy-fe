@@ -1,7 +1,7 @@
 import MainLayout from "../LandingPage/Layout";
 import React, { useState } from "react";
 import { useFavorite } from "../Favorite/components/FavoriteContext";
-import VenueCardPortrait from "../VenueUser/components/VenueCardPortrait";
+import VenueCardPortrait from "../VenueList/components/VenueCardPortrait";
 import { useNavigate } from "react-router-dom";
 import { BiLeftArrowCircle } from "react-icons/bi";
 import { AiFillHeart } from "react-icons/ai";
@@ -36,7 +36,7 @@ const FavoriteVenue: React.FC = () => {
 
         <h2 className="flex items-center ml-10 mt-8 text-2xl">
           Tempat Favoritmu!
-          <AiFillHeart size={25}  className="text-black ml-2" /> 
+          <AiFillHeart size={25} className="text-black ml-2" />
         </h2>
 
         {favorites.length === 0 ? (
