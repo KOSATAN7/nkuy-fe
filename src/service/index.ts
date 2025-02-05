@@ -1,4 +1,5 @@
 import {
+  buatMenu,
   BuatPertandingan,
   BuatVenue,
   UbahVenue,
@@ -385,6 +386,88 @@ export const postPertandinganToVenue = async (
   const response = await axios.post(
     `${API_BASE_URL}/konten/venue/${venueId}`,
     data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getMenubyVenueId = async (venueId: number, token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/menu/venue/${venueId}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const getMenubyId = async (
+  venueId: number,
+  id: number,
+  token: string
+) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/menu/venue/${venueId}/${id}`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const postMenu = async (
+  venueId: number,
+  data: buatMenu | FormData,
+  token: string
+) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/menu/venue/${venueId}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const putMenu = async (
+  venueId: number,
+  id: number,
+  data: buatMenu | FormData,
+  token: string
+) => {
+  const response = await axios.put(
+    `${API_BASE_URL}/menu/venue/${venueId}/${id}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const putStatusMenu = async (
+  venueId: number,
+  id: number,
+  token: string
+) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/menu/venue/${venueId}/status/${id}`,
+    {},
     {
       headers: {
         Accept: "application/json",
