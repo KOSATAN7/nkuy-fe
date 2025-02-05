@@ -117,7 +117,7 @@ const VenuePage = () => {
               <td className="p-4">{index + 1}</td>
               <td className="p-4">{row.nama}</td>
               <td className="p-4">{row.alamat}</td>
-              <td className="p-4">{row.fasilitas.join(", ")}</td>
+              <td className="p-4">{row.fasilitas?.join(", ") || "-"}</td>
               <td className="p-4">{row.kapasitas}</td>
               <td className="flex justify-center p-4">
                 <Toggle
