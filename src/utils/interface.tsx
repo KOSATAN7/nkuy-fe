@@ -55,6 +55,17 @@ export interface BuatVenue {
   longitude: string;
 }
 
+export interface BuatPertandingan {
+  cabang_olahraga: string;
+  liga: string;
+  tim_tuan_rumah: string;
+  logo_tuan_rumah: string;
+  tim_tamu: string;
+  logo_tamu: string;
+  tanggal_pertandingan: string;
+  waktu_pertandingan: string;
+}
+
 export interface UbahVenue {
   nama: string;
   alamat: string;

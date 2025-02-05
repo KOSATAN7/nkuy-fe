@@ -1,4 +1,9 @@
-import { BuatVenue, UbahVenue, UpdateUser } from "@/utils/interface";
+import {
+  BuatPertandingan,
+  BuatVenue,
+  UbahVenue,
+  UpdateUser,
+} from "@/utils/interface";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_URL_NKUY_API;
@@ -45,26 +50,61 @@ export const getPertandingan = async (token: string) => {
   return response;
 };
 
-export const getCabangOlahraga = async (token: string) => {
+export const getCabangOlahraga = async () => {
   const response = await axios.get(`${API_BASE_URL}/sports/categories`, {
     headers: {
       Accept: "Application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
   return response;
 };
 
-export const deletePertandingan = async (id: number, token: string) => {
-  const response = await axios.delete(
-    `${API_BASE_URL}/pertandingan/hapus/${id}`,
+export const getNegaraByKategori = async (category: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/sports/${category}/countries`,
     {
       headers: {
-        Accept: "application/json",
-        Authorization: `Bearer ${token}`,
+        Accept: "Application/json",
       },
     }
   );
+  return response;
+};
+
+export const getLigaByKaterogi = async (
+  category: string,
+  country_code: string
+) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/sports/${category}/leagues?season=2023&country_code=${country_code}`,
+    {
+      headers: {
+        Accept: "Application/json",
+      },
+    }
+  );
+  return response;
+};
+
+export const getTimByliga = async (category: string, league_id: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/sports/${category}/teams?league_id=${league_id}&season=2023`,
+    {
+      headers: {
+        Accept: "Application/json",
+      },
+    }
+  );
+  return response;
+};
+
+export const deletePertandingan = async (id: number, token: string) => {
+  const response = await axios.delete(`${API_BASE_URL}/pertandingan/${id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 
@@ -79,6 +119,43 @@ export const putStatusPertandingan = async (id: number, token: string) => {
       },
     }
   );
+  return response.data;
+};
+
+export const getPertandinganbyId = async (id: number, token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/konten/${id}`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const postPertandingan = async (
+  data: BuatPertandingan | FormData,
+  token: string
+) => {
+  const response = await axios.post(`${API_BASE_URL}/pertandingan`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const putPertandingan = async (
+  id: number,
+  data: BuatPertandingan | FormData,
+  token: string
+) => {
+  const response = await axios.put(`${API_BASE_URL}/pertandingan/${id}`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return response.data;
 };
 
