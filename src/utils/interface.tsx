@@ -137,3 +137,39 @@ export interface buatMenu {
   deskripsi: string;
   foto: string;
 }
+
+export interface MetodePembayaran {
+  metode_pembayaran_id: number;
+  metode_pembayaran: string;
+}
+
+export interface Provider {
+  id: number;
+  nama: string;
+  no_rek: string;
+  penerima: string;
+  deskripsi: string;
+  foto: string;
+  status: string;
+}
+
+export interface PaymentData {
+  metode_pembayaran: MetodePembayaran;
+  provider: Provider;
+}
+
+export interface ListMetode {
+  id: number;
+  nama: string;
+  deskripsi: string;
+  status: string;
+}
+
+export interface buatProvider {
+  metode_pembayaran_id: number;
+  nama: string;
+  no_rek: string;
+  penerima: string;
+  deskripsi: string;
+  foto: string;
+}
