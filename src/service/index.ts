@@ -333,11 +333,64 @@ export const putMetodePembayaran = async (
   data: { nama: string; deskripsi: string } | FormData,
   token: string
 ) => {
-  const response = await axios.put(`${API_BASE_URL}/metode-pembayaran/${id}`, data, {
+  const response = await axios.put(
+    `${API_BASE_URL}/metode-pembayaran/${id}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getPertandinganByVenue = async (
+  venueId: number,
+  token: string
+) => {
+  const response = await axios.get(`${API_BASE_URL}/konten/venue/${venueId}`, {
     headers: {
       Accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+  return response.data;
+};
+
+export const deletePertandinganByVenue = async (
+  venueId: number,
+  token: string
+) => {
+  const response = await axios.get(`${API_BASE_URL}/konten/venue/${venueId}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const getPertandinganAktif = async () => {
+  const response = await axios.get(`${API_BASE_URL}/konten/aktif`);
+  return response.data;
+};
+
+export const postPertandinganToVenue = async (
+  venueId: number,
+  data: { pertandingan_id: number } | FormData,
+  token: string
+) => {
+  const response = await axios.post(
+    `${API_BASE_URL}/konten/venue/${venueId}`,
+    data,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response.data;
 };

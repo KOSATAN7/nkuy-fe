@@ -30,7 +30,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
           className="w-full focus:outline-none bg-transparent"
         >
           {placeholder && (
-            <option value="" disabled>
+            <option value="">
               {placeholder}
             </option>
           )}
