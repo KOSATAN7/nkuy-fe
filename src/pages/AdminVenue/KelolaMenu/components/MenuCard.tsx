@@ -1,3 +1,4 @@
+import Toggle from "@/components/Button/Toggle";
 import { useNavigate } from "react-router-dom";
 
 interface MenuCardProps {
@@ -6,6 +7,9 @@ interface MenuCardProps {
   harga: string;
   updatePath?: number;
   description: string;
+  kesediaan: string;
+  id: number;
+  onToggleStatus: (id: number, status: string) => void;
 }
 
 const MenuCard: React.FC<MenuCardProps> = ({
@@ -14,12 +18,24 @@ const MenuCard: React.FC<MenuCardProps> = ({
   harga,
   description,
   updatePath,
+  kesediaan,
+  id,
+  onToggleStatus,
 }) => {
   const navigate = useNavigate();
+  const isAvailable = kesediaan === "aktif";
+
+  const defaultImage =
+    "https://dummyimage.com/600x400/caced8/000000.png&text=Gambar+Tidak+Tersedia";
+  const imageToShow = image || defaultImage;
+
   return (
     <div className="w-full">
       <div className="flex flex-col bg-neutral2 rounded-xl w-full h-full">
-        <img src={image} className="rounded-t-xl w-full h-40 object-cover" />
+        <img
+          src={imageToShow}
+          className="rounded-t-xl w-full h-40 object-cover"
+        />
         <div className="p-5 flex flex-col h-full justify-between">
           <div className="space-y-5">
             <div>
@@ -28,16 +44,17 @@ const MenuCard: React.FC<MenuCardProps> = ({
             </div>
             <p>{description}</p>
           </div>
-          <div className="flex justify-end space-x-5 mt-10">
+          <div className="flex justify-end items-center space-x-5 mt-10">
             <button
               className="bg-primary1 rounded-full hover:bg-white border-2 border-primary1 hover:text-primary1 px-4 py-2 text-white transition-all duration-300"
               onClick={() => navigate(`update/${updatePath}`)}
             >
               Ubah Menu
             </button>
-            <button className="bg-red rounded-full hover:bg-white border-2 border-red hover:text-red px-4 py-2 text-white transition-all duration-300">
-              Hapus Content
-            </button>
+            <Toggle
+              isOn={isAvailable}
+              onToggle={() => onToggleStatus(id, kesediaan)}
+            />
           </div>
         </div>
       </div>

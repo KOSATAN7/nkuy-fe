@@ -102,7 +102,6 @@ export interface getMetodePembayarans {
   status: string;
 }
 
-
 export interface Konten {
   id: number;
   cabang_olahraga: string;
@@ -117,8 +116,24 @@ export interface Konten {
   status: string;
   created_at: string;
   updated_at: string;
-  pivot: [
-    venue_id: number,
-    pertandingan_id: number
-  ]
-} 
+  pivot: [venue_id: number, pertandingan_id: number];
+}
+
+export interface Menu {
+  status: string;
+  kesediaan: string;
+  id: number;
+  nama: string;
+  deskripsi: string;
+  harga: string;
+  foto: string;
+  kategori: string;
+}
+
+export interface buatMenu {
+  nama: string;
+  kategori: string;
+  harga: string;
+  deskripsi: string;
+  foto: string;
+}

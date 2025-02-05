@@ -1,11 +1,13 @@
 import { useHeaderContext } from "@/components/SideNav/components/HeaderContext";
-import { useEffect } from "react";
-import foto from "@/assets/Nasi Goreng.jpg";
+import { useEffect, useState } from "react";
 import MenuCard from "./components/MenuCard";
 import { formatRupiah } from "@/utils/FormatRupiah";
+import { Menu } from "@/utils/interface";
+import { getMenubyVenueId, putStatusMenu } from "@/service/index";
 
 const KelolaMenu = () => {
   const { setTitle, setButtonLabel, setButtonLink } = useHeaderContext();
+  const [menuData, setMenuData] = useState<Menu[]>([]);
 
   useEffect(() => {
     setTitle("Kelola Menu");
@@ -19,52 +21,76 @@ const KelolaMenu = () => {
     };
   }, [setTitle, setButtonLabel, setButtonLink]);
 
-  const DummyData = [
-    {
-      id: 1,
-      image: foto,
-      nama: "Nasi Goreng",
-      harga: 250000,
-      description: "Nasi Goreng Enak Sekali",
-    },
-    {
-      id: 2,
-      image: foto,
-      nama: "Nasi Goreng",
-      harga: 250000,
-      description: "Nasi Goreng Enak Sekali",
-    },
-    {
-      id: 3,
-      image: foto,
-      nama: "Nasi Goreng",
-      harga: 250000,
-      description: "Nasi Goreng Enak Sekali",
-    },
-    {
-      id: 4,
-      image: foto,
-      nama: "Nasi Goreng",
-      harga: 250000,
-      description: "Nasi Goreng Enak Sekali",
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = sessionStorage.getItem("token");
+      const venueId = sessionStorage.getItem("venueId");
+
+      if (!venueId || !token) {
+        throw new Error("Login Goblogg!!!");
+      }
+
+      const response = await getMenubyVenueId(Number(venueId), token);
+      setMenuData(response.data);
+    };
+    fetchData();
+  }, []);
+
+  const handleToggleStatus = async (id: number, currentStatus: string) => {
+    setMenuData((prevData) =>
+      prevData.map((menu) =>
+        menu.id === id
+          ? {
+              ...menu,
+              status: currentStatus === "aktif" ? "tidak_aktif" : "aktif",
+            }
+          : menu
+      )
+    );
+
+    try {
+      const token = sessionStorage.getItem("token");
+      const venueId = sessionStorage.getItem("venueId");
+
+      if (!venueId || !token) {
+        throw new Error("Login Goblogg!!!");
+      }
+      await putStatusMenu(Number(venueId), id, token);
+    } catch (error) {
+      console.error("Gagal memperbarui status menu:", error);
+
+      setMenuData((prevData) =>
+        prevData.map((menu) =>
+          menu.id === id
+            ? {
+                ...menu,
+                status: currentStatus,
+              }
+            : menu
+        )
+      );
+    }
+  };
 
   return (
     <div>
       <div className="grid grid-cols-3 gap-5">
-        {DummyData.map((data, index) => (
+        {menuData.map((data, index) => (
           <MenuCard
             key={index}
-            image={data.image}
+            image=""
             nama={data.nama}
-            harga={formatRupiah(data.harga)}
-            description={data.description}
+            harga={formatRupiah(Number(data.harga))}
+            description={data.deskripsi}
+            kesediaan={data.status}
+            id={data.id}
             updatePath={data.id}
+            onToggleStatus={handleToggleStatus}
           />
         ))}
       </div>
     </div>
   );
 };
+
 export default KelolaMenu;
