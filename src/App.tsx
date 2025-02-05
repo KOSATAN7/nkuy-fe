@@ -42,7 +42,9 @@ import KelolaUlasan from "./pages/AdminVenue/KelolaUlasan";
 import KelolaProvider from "./pages/AdminVenue/KelolaProvider";
 import CreateProvider from "./pages/AdminVenue/KelolaProvider/CreateProvider";
 import UpdateProvider from "./pages/AdminVenue/KelolaProvider/UpdateProvider";
-
+import MetodePembayaran from "./pages/SuperAdmin/MetodePembayaran";
+import CreateMetodePembayaran from "./pages/SuperAdmin/MetodePembayaran/CreateMetodePembayaran";
+import UpdateMetodePembayaran from "./pages/SuperAdmin/MetodePembayaran/UpdateMetodePembayaran";
 
 function App() {
   return (
@@ -55,7 +57,10 @@ function App() {
               <Route path="/panduan" element={<PanduanPage />} />
               <Route path="/tentang" element={<TentangPage />} />
               <Route path="/kontak" element={<KontakPage />} />
-              <Route path="/venuelist/:pertandinganId" element={<VenueList />} />
+              <Route
+                path="/venuelist/:pertandinganId"
+                element={<VenueList />}
+              />
               <Route path="/favorite-venue" element={<FavoriteVenue />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/profile/password" element={<PasswordPage />} />
@@ -65,7 +70,8 @@ function App() {
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              <Route path="/" element={<Layout />}>z
+              <Route path="/" element={<Layout />}>
+                z
                 <Route
                   path="/dashboard"
                   element={
@@ -151,6 +157,30 @@ function App() {
                   element={
                     <ProtectedRoute requiredRole="super_admin">
                       <ShowVenue />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/metode_pembayaran"
+                  element={
+                    <ProtectedRoute requiredRole="super_admin">
+                      <MetodePembayaran />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/metode_pembayaran/create"
+                  element={
+                    <ProtectedRoute requiredRole="super_admin">
+                      <CreateMetodePembayaran />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/metode_pembayaran/update/:id"
+                  element={
+                    <ProtectedRoute requiredRole="super_admin">
+                      <UpdateMetodePembayaran />
                     </ProtectedRoute>
                   }
                 />

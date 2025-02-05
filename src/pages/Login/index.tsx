@@ -21,10 +21,11 @@ const LoginPage = () => {
       const { username, role } = checkLoginResponse.data.user;
       sessionStorage.setItem("username", username);
       sessionStorage.setItem("role", role);
-
       console.log("Check login berhasil:", checkLoginResponse);
 
       if (role === "admin_venue") {
+        const { venueId } = checkLoginResponse.data.venue;
+        sessionStorage.setItem("venueId", venueId);
         navigate("/admin_venue/dashboard");
       } else {
         navigate("/dashboard");

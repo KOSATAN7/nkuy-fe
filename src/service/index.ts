@@ -267,3 +267,77 @@ export const deleteUser = async (id: number, token: string) => {
   });
   return response.data;
 };
+
+export const getMetodePembayaran = async (token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/metode-pembayaran/`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const getMetodePembayaranById = async (id: number, token: string) => {
+  const response = await axios.get(`${API_BASE_URL}/metode-pembayaran/${id}`, {
+    headers: {
+      Accept: "Application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+};
+
+export const putStatusPembayaran = async (id: number, token: string) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/metode-pembayaran/${id}/status`,
+    {},
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const deleteMetodePembayaran = async (id: number, token: string) => {
+  const response = await axios.delete(
+    `${API_BASE_URL}/metode-pembayaran/${id}`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const postMetodePembayaran = async (
+  data: { nama: string; deskripsi: string } | FormData,
+  token: string
+) => {
+  const response = await axios.post(`${API_BASE_URL}/metode-pembayaran`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export const putMetodePembayaran = async (
+  id: number,
+  data: { nama: string; deskripsi: string } | FormData,
+  token: string
+) => {
+  const response = await axios.put(`${API_BASE_URL}/metode-pembayaran/${id}`, data, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
