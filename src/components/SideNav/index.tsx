@@ -14,7 +14,7 @@ import { Logout } from "@/service/index";
 import { useNavigate } from "react-router-dom";
 import SweetAlert from "@/components/Alert/swal";
 import { FaCashRegister } from "react-icons/fa6";
-
+import { AiOutlineDollar } from "react-icons/ai";
 
 const SideNav = () => {
   const navigate = useNavigate();
@@ -66,6 +66,11 @@ const SideNav = () => {
               label="Kelola Pengguna"
               icon={<FaUser />}
               to="/pengguna"
+            />
+            <NavButton
+              label="Metode Pembayaran"
+              icon={<AiOutlineDollar />}
+              to="/metode_pembayaran"
             />
           </>
         )}

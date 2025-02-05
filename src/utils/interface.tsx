@@ -40,8 +40,8 @@ export interface Venue {
 
 export interface BuatVenue {
   username: string;
-  email:string;
-  password:string;
+  email: string;
+  password: string;
   nama: string;
   alamat: string;
   kapasitas: number;
@@ -93,4 +93,11 @@ export interface UpdateUser {
   username: string;
   email: string;
   password: string;
+}
+
+export interface getMetodePembayarans {
+  id: number;
+  nama: string;
+  deskripsi: string;
+  status: string;
 }
