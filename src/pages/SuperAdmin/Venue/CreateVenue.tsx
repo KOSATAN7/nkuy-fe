@@ -5,20 +5,35 @@ import TextField from "@/components/Field/TextField";
 import UploadField from "@/components/Field/UploadField";
 import { useHeaderContext } from "@/components/SideNav/components/HeaderContext";
 import { postVenue } from "@/service/index";
-import { BuatVenue } from "@/utils/interface";
-import { useNavigate } from "react-router-dom";
 import SweetAlert from "@/components/Alert/swal";
 import CustomButton from "@/components/Button/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 const CreateVenue = () => {
   const { setTitle, setButtonLabel, setButtonLink } = useHeaderContext();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
-  const [errorAlert, setErrorAlert] = useState<{
-    show: boolean;
-    message: string;
-  }>({ show: false, message: "" });
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState({ show: false, message: "" });
+
+  const [formData, setFormData] = useState({
+    nama: "",
+    username: "",
+    alamat: "",
+    kapasitas: "",
+    fasilitas: [""],
+    kota: "",
+    kontak: "",
+    foto_utama: null,
+    foto_foto: [] as File[],
+    video: null,
+    latitude: "",
+    longitude: "",
+    email: "",
+    role: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   useEffect(() => {
     setTitle("Tambah Data Venue");
@@ -31,62 +46,59 @@ const CreateVenue = () => {
     };
   }, [setTitle, setButtonLabel, setButtonLink]);
 
-  const [formData, setFormData] = useState({
-    nama: "",
-    username: "",
-    alamat: "",
-    kapasitas: "",
-    fasilitas: [""],
-    kota: "",
-    kontak: "",
-    foto_utama: null,
-    foto_foto: [],
-    video: null,
-    latitude: "",
-    longitude: "",
-    email: "",
-    role: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (field: string, value: string | string[]) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (field: string, value: any) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const handleFasilitasChange = useCallback((newFasilitas: string[]) => {
-    setFormData((prev) => ({ ...prev, fasilitas: newFasilitas }));
+    setFormData((prev) => ({
+      ...prev,
+      fasilitas: newFasilitas,
+    }));
   }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
       const token = sessionStorage.getItem("token");
-      if (!token) {
-        throw new Error("Login Gobloggg");
+      if (!token) throw new Error("Login diperlukan");
+
+      const payload = new FormData();
+      payload.append("username", formData.username);
+      payload.append("email", formData.email);
+      payload.append("password", formData.password);
+      payload.append("nama", formData.nama);
+      payload.append("alamat", formData.alamat);
+      payload.append("kapasitas", formData.kapasitas);
+      payload.append("kota", formData.kota);
+      payload.append("kontak", formData.kontak);
+      payload.append("latitude", formData.latitude);
+      payload.append("longitude", formData.longitude);
+
+      formData.fasilitas.forEach((item) => {
+        payload.append("fasilitas[]", item);
+      });
+
+      if (formData.foto_utama) {
+        payload.append("foto_utama", formData.foto_utama);
       }
-      const payload: BuatVenue = {
-        nama: formData.nama,
-        alamat: formData.alamat,
-        kapasitas: Number(formData.kapasitas),
-        fasilitas: formData.fasilitas,
-        kota: formData.kota,
-        kontak: formData.kontak,
-        latitude: formData.latitude,
-        longitude: formData.longitude,
-        email: formData.email,
-        // role: formData.role,
-        password: formData.confirmPassword,
-        // confirmPassword: formData.confirmPassword,
-        foto_utama: formData.foto_utama ?? "",
-        foto_foto: formData.foto_foto.length > 0 ? formData.foto_foto : [],
-        video: formData.video ?? "",
-        username: formData.username,
-      };
+
+      if (formData.foto_foto.length > 0) {
+        formData.foto_foto.forEach((file) => {
+          payload.append("foto_foto[]", file);
+        });
+      }
+
+      if (formData.video) {
+        payload.append("video", formData.video);
+      }
+
       await postVenue(payload, token);
       setShowSuccessAlert(true);
     } catch (error: any) {
-      console.error("Error Menambah Data Venue :", error);
       setErrorAlert({
         show: true,
         message: error.response?.data?.message || "Error Menambah Data Venue",
@@ -125,13 +137,21 @@ const CreateVenue = () => {
           placeholder="Tambah Alamat"
           onChange={(e) => handleChange("alamat", e.target.value)}
         />
-        <UploadField title="Foto Utama" maxFileSize="Maksimal 1 mb*" />
+        <UploadField
+          title="Foto Utama"
+          maxFileSize="Maksimal 1 mb*"
+          onFileChange={(file) => handleChange("foto_utama", file)}
+        />
         <TextField
           title="Kontak"
           placeholder="Tambah Kontak"
           onChange={(e) => handleChange("kontak", e.target.value)}
         />
-        <UploadField title="Video" maxFileSize="Maksimal 30 mb*" />
+        <UploadField
+          title="Video"
+          maxFileSize="Maksimal 30 mb*"
+          onFileChange={(file) => handleChange("video", file)}
+        />
         <TextField
           title="Kota"
           placeholder="Tambah Kota"
@@ -152,10 +172,15 @@ const CreateVenue = () => {
         <FasilitasField
           title="Fasilitas"
           placeholder="Tambah Fasilitas"
-          onChange={handleFasilitasChange}
           value={formData.fasilitas}
+          onChange={handleFasilitasChange}
         />
-        <ManyFoto title="Foto Foto" />
+        <ManyFoto
+          title="Foto Foto"
+          placeholder="Tambah Foto"
+          value={formData.foto_foto}
+          onChange={(files) => handleChange("foto_foto", files)}
+        />
       </div>
 
       <h1 className="text-2xl font-semibold mb-5 mt-5">Akun Venue</h1>

@@ -68,13 +68,15 @@ const ImageDrag: React.FC<ImageDragProps> = ({
       <label className="">{title}</label>
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-md w-full h-full p-4 flex flex-col items-center justify-center text-center space-y-2 cursor-pointer transition ${
+        className={`border-2 border-dashed rounded-md w-full min-h-64 p-4 flex flex-col items-center justify-center text-center space-y-2 cursor-pointer transition bg-center bg-no-repeat bg-cover ${
           isDragActive ? "" : ""
-        } bg-center bg-no-repeat bg-cover w-full h-64`}
+        }`}
         style={{
           backgroundImage: backgroundImage
             ? `url(${backgroundImage})`
             : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <input {...getInputProps()} />
@@ -91,14 +93,14 @@ const ImageDrag: React.FC<ImageDragProps> = ({
           </>
         )}
       </div>
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-3">
         <p className="text-xs text-gray-500">
           Only support .jpg and .png files
         </p>
         {backgroundImage && (
           <button
             onClick={handleRemoveFile}
-            className="bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition"
+            className="bg-red text-white rounded-full p-1 hover:bg-red-600 transition"
           >
             <AiOutlineClose size={14} />
           </button>

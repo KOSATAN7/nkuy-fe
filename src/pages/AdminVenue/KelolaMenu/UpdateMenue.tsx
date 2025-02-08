@@ -66,17 +66,21 @@ const UpdateMenu = () => {
         throw new Error("Login Goblogg!!");
       }
 
-      const payload = {
-        nama,
-        kategori,
-        harga,
-        deskripsi,
-        foto: "",
-      };
+      const formData = new FormData();
+      formData.append("nama", nama);
+      formData.append("kategori", kategori);
+      formData.append("harga", harga);
+      formData.append("deskripsi", deskripsi);
 
-      console.log("Data yang dikirim:", payload);
+      if (foto) {
+        formData.append("foto", foto);
+      }
 
-      await putMenu(Number(venueId), Number(id), payload, token);
+      console.log("Foto yang dikirim:", formData.get("foto"));
+
+      console.log("Data yang dikirim:", formData);
+
+      await putMenu(Number(venueId), Number(id), formData, token);
       setShowSuccessAlert(true);
     } catch (error: any) {
       console.error("Error Mengubah Menu :", error);
@@ -105,7 +109,7 @@ const UpdateMenu = () => {
 
   return (
     <div className="p-10">
-      <div className="grid grid-cols-2 w-9/12 gap-5 h-[400px]">
+      <div className="grid grid-cols-2 w-9/12 gap-5 h-full">
         <TextField
           title="Nama Makanan"
           value={nama}
@@ -130,7 +134,7 @@ const UpdateMenu = () => {
         />
         <ImageDrag
           title="Foto Menu"
-          file={foto}
+          file={`https://nobarkuy.icraftds.id/storage/${foto}`}
           onFileChange={(file) => setFoto(file)}
         />
       </div>

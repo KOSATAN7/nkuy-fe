@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Tooltip, ZoomControl, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Tooltip,
+  ZoomControl,
+  useMap,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { CiHeart } from "react-icons/ci";
 import L from "leaflet";
 import "leaflet-routing-machine";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import gambar from "@/assets/1.png";
 
 interface VenueProps {
   venue?: {
@@ -25,7 +36,9 @@ interface VenueProps {
 
 const RoutingControl = ({ venue }: { venue: VenueProps["venue"] }) => {
   const map = useMap();
-  const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
+  const [userLocation, setUserLocation] = useState<[number, number] | null>(
+    null
+  );
 
   useEffect(() => {
     if (!venue) return;
@@ -48,7 +61,7 @@ const RoutingControl = ({ venue }: { venue: VenueProps["venue"] }) => {
           lineOptions: {
             styles: [{ color: "blue", weight: 5 }],
             extendToWaypoints: false,
-            missingRouteTolerance: 0
+            missingRouteTolerance: 0,
           },
           // Hapus marker default
         }).addTo(map);
@@ -82,15 +95,37 @@ const RoutingControl = ({ venue }: { venue: VenueProps["venue"] }) => {
 
 const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
   if (!venue) {
-    return <p className="text-center text-gray-500">Data venue tidak tersedia</p>;
+    return (
+      <p className="text-center text-gray-500">Data venue tidak tersedia</p>
+    );
   }
+
+  const navigate = useNavigate();
+
+  const handlePesanClick = () => {
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+      Swal.fire({
+        icon: "error",
+        title: "Anda Harus Login Terlebih Dahulu",
+        text: "Silakan login untuk melanjutkan pemesanan.",
+        confirmButtonText: "Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    } else {
+      navigate(`/menu/${venue.id}`);
+    }
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto p-8 rounded-xl mt-8">
       <div className="flex flex-col lg:flex-row items-start lg:items-center">
         <img
-          src={venue?.foto_utama || "/fallback-image.jpg"}
-          alt="Venue"
+          src={gambar}
           className="w-full lg:w-1/2 h-96 object-cover rounded-xl"
         />
         <div className="mt-6 lg:mt-0 lg:ml-8 lg:w-1/2">
@@ -106,7 +141,10 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
 
           <div className="flex items-center mt-8">
             <CiHeart className="w-8 h-8 text-gray-500 hover:text-blue-500 cursor-pointer mr-52" />
-            <button className="px-8 py-3 bg-primary1 text-white font-semibold rounded-lg">
+            <button
+              className="px-8 py-3 bg-primary1 text-white font-semibold rounded-lg"
+              onClick={handlePesanClick}
+            >
               Pesan Sekarang
             </button>
           </div>
@@ -135,12 +173,15 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
           center={[parseFloat(venue.latitude), parseFloat(venue.longitude)]}
           zoom={15}
           className="w-full h-full"
-          zoomControl={false}>
+          zoomControl={false}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[parseFloat(venue.latitude), parseFloat(venue.longitude)]}>
+          <Marker
+            position={[parseFloat(venue.latitude), parseFloat(venue.longitude)]}
+          >
             <Popup>{venue.nama}</Popup>
             <Tooltip sticky>{venue.nama}</Tooltip>
           </Marker>

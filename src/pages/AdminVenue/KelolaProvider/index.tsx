@@ -152,7 +152,7 @@ const KelolaProvider = () => {
             <tr key={row.id}>
               <td className="p-4">{index + 1}</td>
               <td className="flex justify-center p-4">
-                <img src={row.foto} className="w-28 h-12" />
+                <img src={`https://nobarkuy.icraftds.id/storage/${row.foto}`} className="w-28 h-12 object-cover " />
               </td>
               <td className="p-4">{row.nama}</td>
               <td className="p-4">{row.no_rek}</td>

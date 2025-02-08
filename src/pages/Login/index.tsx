@@ -77,7 +77,10 @@ const LoginPage = () => {
           </button>
         </form>
         <div className="flex items-center justify-center">
-          <button className="mt-5 hover:text-primary1 ">
+          <button
+            className="mt-5 hover:text-primary1 "
+            onClick={() => navigate("/register")}
+          >
             Belum Punya Akun? buat sekarang
           </button>
         </div>

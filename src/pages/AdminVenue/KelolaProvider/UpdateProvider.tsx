@@ -20,7 +20,7 @@ const UpdateProvider = () => {
     { value: string; label: string }[]
   >([]);
   const [payment, setPayment] = useState("");
-  const [nama, setNama] = useState("");
+  const [nama, setNama] = useState(""); 
   const [noRek, setNorek] = useState("");
   const [namaProvider, setNamaProvider] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
@@ -173,7 +173,12 @@ const UpdateProvider = () => {
             value={deskripsi}
             onChange={(e) => setDeskripsi(e.target.value)}
           />
-          <UploadField title={"Foto Provider"} />
+          <UploadField
+            title={"Foto Provider"}
+            onFileChange={function (file: File | null): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
         </div>
         <div>
           <CustomButton label="Ubah Provider" onClick={handleSubmit} />

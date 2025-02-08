@@ -1,9 +1,8 @@
 import SweetAlert from "@/components/Alert/swal";
 import CustomButton from "@/components/Button/CustomButton";
-import ImageUpload from "@/components/Field/ImageUpload";
+import UploadField from "@/components/Field/UploadField";
 import SelectField from "@/components/Field/SelectField";
 import TextField from "@/components/Field/TextField";
-import UploadField from "@/components/Field/UploadField";
 import { useHeaderContext } from "@/components/SideNav/components/HeaderContext";
 import { getListMetodePembayaran, postProvider } from "@/service/index";
 import { useEffect, useState } from "react";
@@ -19,6 +18,7 @@ const CreateProvider = () => {
   const [noRek, setNorek] = useState("");
   const [namaProvider, setNamaProvider] = useState("");
   const [deskripsi, setDeskripsi] = useState("");
+  const [foto, setFoto] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showSuccessAlert, setShowSuccessAlert] = useState<boolean>(false);
@@ -47,12 +47,10 @@ const CreateProvider = () => {
       }
       const response = await getListMetodePembayaran(token);
       setSelectedPayment(
-        response.data.data
-          .filter((payment: { id: string }) => payment.id)
-          .map((country: { id: number; nama: string }) => ({
-            value: country.id,
-            label: country.nama,
-          }))
+        response.data.data.map((payment: { id: number; nama: string }) => ({
+          value: payment.id,
+          label: payment.nama,
+        }))
       );
     };
     fetchPayment();
@@ -60,23 +58,24 @@ const CreateProvider = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-
-    const payload = {
-      metode_pembayaran_id: Number(payment),
-      nama: namaProvider,
-      no_rek: noRek,
-      penerima: nama,
-      deskripsi: deskripsi,
-      foto: "",
-    };
-
     try {
       const token = sessionStorage.getItem("token");
       const venueId = sessionStorage.getItem("venueId");
       if (!token || !venueId) {
-        throw new Error("Login Goblogggg!!!!");
+        throw new Error("Silakan login terlebih dahulu!");
       }
-      await postProvider(Number(venueId), payload, token);
+
+      const formData = new FormData();
+      formData.append("metode_pembayaran_id", payment);
+      formData.append("nama", namaProvider);
+      formData.append("no_rek", noRek);
+      formData.append("penerima", nama);
+      formData.append("deskripsi", deskripsi);
+      if (foto) {
+        formData.append("foto", foto);
+      }
+
+      await postProvider(Number(venueId), formData, token);
       setShowSuccessAlert(true);
     } catch (error: any) {
       console.error("Error Menambah Data Provider :", error);
@@ -109,32 +108,20 @@ const CreateProvider = () => {
             options={selectedPayment}
             onChange={(e) => setPayment(e.target.value)}
           />
-          <TextField
-            title="Nama Provider"
-            onChange={(e) => setNamaProvider(e.target.value)}
-          />
-          <TextField
-            title="Nomor Rekening"
-            onChange={(e) => setNorek(e.target.value)}
-          />
-          <TextField
-            title="Nama Penerima"
-            onChange={(e) => setNama(e.target.value)}
-          />
-          <TextField
-            title="Deskripsi"
-            onChange={(e) => setDeskripsi(e.target.value)}
-          />
-          <UploadField title={"Foto Provider"} />
+          <TextField title="Nama Provider" onChange={(e) => setNamaProvider(e.target.value)} />
+          <TextField title="Nomor Rekening" onChange={(e) => setNorek(e.target.value)} />
+          <TextField title="Nama Penerima" onChange={(e) => setNama(e.target.value)} />
+          <TextField title="Deskripsi" onChange={(e) => setDeskripsi(e.target.value)} />
+          <UploadField title="Foto Provider" onFileChange={(file) => setFoto(file)} />
         </div>
         <div>
-          <CustomButton label="Tambah Provider" onClick={handleSubmit} />
+          <CustomButton label="Tambah Provider" onClick={handleSubmit} disabled={loading} />
         </div>
       </div>
       <SweetAlert
         show={showSuccessAlert}
         title="Success"
-        text="Berhasil Menambah Menu"
+        text="Berhasil Menambah Provider"
         type="success"
         confirmButtonText="OK"
         onConfirm={handleSuccessAlertConfirm}

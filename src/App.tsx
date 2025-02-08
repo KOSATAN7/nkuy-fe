@@ -16,9 +16,6 @@ import DetailVenue from "./pages/UserPage/DetailVenue";
 import FavoriteVenue from "./pages/UserPage/Favorite";
 import UserProfile from "./pages/UserPage/Profile";
 import PasswordPage from "./pages/UserPage/Profile/components/PasswordPage";
-import MenuPage from "./pages/UserPage/Menu";
-import PembayaranPage from "./pages/Pembayaran";
-import BuktiPemesanPage from "./pages/UserPage/BuktiPemesan";
 import PertandinganPage from "./pages/SuperAdmin/Pertandingan";
 import CreatePertandingan from "./pages/SuperAdmin/Pertandingan/CreatePertandingan";
 import VenuePage from "./pages/SuperAdmin/Venue";
@@ -45,6 +42,7 @@ import UpdateProvider from "./pages/AdminVenue/KelolaProvider/UpdateProvider";
 import MetodePembayaran from "./pages/SuperAdmin/MetodePembayaran";
 import CreateMetodePembayaran from "./pages/SuperAdmin/MetodePembayaran/CreateMetodePembayaran";
 import UpdateMetodePembayaran from "./pages/SuperAdmin/MetodePembayaran/UpdateMetodePembayaran";
+import MenuPage from "./pages/UserPage/Menu";
 
 function App() {
   return (
@@ -65,9 +63,7 @@ function App() {
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/profile/password" element={<PasswordPage />} />
               <Route path="/detailvenue/:venueId" element={<DetailVenue />} />
-              <Route path="/pembayaran" element={<PembayaranPage />} />
-              <Route path="/buktipemesan" element={<BuktiPemesanPage />} />
-              <Route path="/menu" element={<MenuPage />} />
+              <Route path="/menu/:venueId" element={<MenuPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/" element={<Layout />}>
