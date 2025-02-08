@@ -37,7 +37,7 @@ export interface Venue {
   alamat: string;
   kontak: string;
   kota: string;
-  fasilitas: string[];
+  fasilitas: string | string[];
   status: string;
   kapasitas: number;
   foto_utama: string;

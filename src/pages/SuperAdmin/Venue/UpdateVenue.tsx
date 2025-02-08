@@ -138,13 +138,17 @@ const UpdateVenue = () => {
           value={formData.alamat}
           onChange={(e) => handleChange("alamat", e.target.value)}
         />
-        <UploadField title="Foto Utama" maxFileSize="1MB" />
+        <UploadField title="Foto Utama" maxFileSize="1MB" onFileChange={function (file: File | null): void {
+          throw new Error("Function not implemented.");
+        } } />
         <TextField
           title="Kontak"
           value={formData.kontak}
           onChange={(e) => handleChange("kontak", e.target.value)}
         />
-        <UploadField title="Video" maxFileSize="30MB" />
+        <UploadField title="Video" maxFileSize="30MB" onFileChange={function (file: File | null): void {
+          throw new Error("Function not implemented.");
+        } } />
         <TextField
           title="Kota"
           value={formData.kota}
@@ -167,7 +171,9 @@ const UpdateVenue = () => {
           value={formData.fasilitas}
           onChange={handleFasilitasChange}
         />
-        <ManyFoto title="Foto Foto" />
+        <ManyFoto title="Foto Foto" value={[]} onChange={function (data: File[]): void {
+          throw new Error("Function not implemented.");
+        } } />
       </div>
 
       <div className="mt-5">

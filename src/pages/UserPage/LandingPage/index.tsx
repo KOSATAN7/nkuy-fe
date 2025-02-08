@@ -36,7 +36,7 @@ const LandingPage = () => {
 
           const matchData: MatchCardData = {
             id: match.id,
-            image: Gambar1,
+            image: match.logo_tamu,
             day: new Date(match.tanggal_pertandingan).toLocaleDateString("id-ID", { weekday: "long" }),
             date: match.tanggal_pertandingan,
             time: match.waktu_pertandingan,
@@ -86,19 +86,16 @@ const LandingPage = () => {
     arrows: false,
   };
 
-  // 🔍 **Filter liga berdasarkan pencarian**
   const filteredLeagues = leagues.filter((league) =>
     league.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 🔍 **Filter pertandingan berdasarkan pencarian & liga**
   const filteredMatches = allMatches.filter(
     (match) =>
-      match.title.toLowerCase().includes(searchTerm.toLowerCase()) || // Cocokkan dengan pertandingan
-      filteredLeagues.includes(match.description.split(" di ")[1]) // Cocokkan dengan liga
+      match.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      filteredLeagues.includes(match.description.split(" di ")[1])
   );
 
-  // Jika pencarian kosong, tampilkan semua pertandingan
   const displayedMatches = searchTerm ? filteredMatches : allMatches;
 
   const showLeftArrow = currentIndex > 0;
@@ -112,15 +109,14 @@ const LandingPage = () => {
           <p className="text-4xl font-medium">Mau nonton apa hari ini?</p>
           <input
             type="text"
-            value={searchTerm} // 🔍 Menampilkan input pencarian
-            onChange={(e) => setSearchTerm(e.target.value)} // 🔄 Update saat diketik
-            className="w-1/2 py-3 mt-6 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400"
+            value={searchTerm} //
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-1/2 py-3 mt-6 rounded-full px-6 text-lg border border-gray-300 shadow-sm focus:outline-primary1"
             placeholder="Cari pertandingan atau liga..."
           />
         </div>
       </div>
 
-      {/* League Selector */}
       <div className="flex flex-col items-center mt-12 w-full">
         <div className="flex items-center w-full max-w-4xl">
           <button onClick={() => leagueSliderRef.current?.slickPrev()} className="mr-2">
@@ -149,7 +145,6 @@ const LandingPage = () => {
         </div>
       </div>
 
-      {/* Matches Slider */}
       <div className="relative w-full mx-auto mt-12">
         {displayedMatches.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">Tidak Ada Pertandingan</p>
@@ -165,7 +160,7 @@ const LandingPage = () => {
               {displayedMatches.map((data, index) => (
                 <div key={index} className="w-full p-4">
                   <MatchCard
-                    image={Gambar1}
+                    image={data.image}
                     day={data.day}
                     date={data.date}
                     title={data.title}

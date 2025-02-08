@@ -14,6 +14,7 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import gambar from "@/assets/1.png";
 
 interface VenueProps {
   venue?: {
@@ -124,8 +125,7 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
     <div className="max-w-screen-xl mx-auto p-8 rounded-xl mt-8">
       <div className="flex flex-col lg:flex-row items-start lg:items-center">
         <img
-          src={venue?.foto_utama || "/fallback-image.jpg"}
-          alt="Venue"
+          src={gambar}
           className="w-full lg:w-1/2 h-96 object-cover rounded-xl"
         />
         <div className="mt-6 lg:mt-0 lg:ml-8 lg:w-1/2">

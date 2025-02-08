@@ -374,14 +374,21 @@ export const getPertandinganByVenue = async (
 
 export const deletePertandinganByVenue = async (
   venueId: number,
-  token: string
+  token: string,
+  pertandinganId: number
 ) => {
-  const response = await axios.get(`${API_BASE_URL}/konten/venue/${venueId}`, {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await axios.delete(
+    `${API_BASE_URL}/konten/venue/${venueId}`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: {
+        pertandingan_id: pertandinganId,
+      },
+    }
+  );
   return response.data;
 };
 

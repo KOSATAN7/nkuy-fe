@@ -47,9 +47,12 @@ const CreateMenu = () => {
       formData.append("kategori", kategori);
       formData.append("harga", harga);
       formData.append("deskripsi", deskripsi);
+
       if (foto) {
         formData.append("foto", foto);
       }
+
+      console.log("Foto yang dikirim:", formData.get("foto"));
 
       if (!venueId || !token) {
         throw new Error("Login Goblogg!!");
@@ -84,7 +87,7 @@ const CreateMenu = () => {
 
   return (
     <div className="p-10">
-      <div className="grid grid-cols-2 w-9/12 gap-5 h-[400px]">
+      <div className="grid grid-cols-2 w-9/12 gap-5 h-full  ">
         <TextField
           title="Nama Makanan"
           value={nama}
@@ -105,11 +108,13 @@ const CreateMenu = () => {
           value={deskripsi}
           onChange={(e) => setDeskripsi(e.target.value)}
         />
-        <ImageDrag
-          title="Foto Menu"
-          file={foto}
-          onFileChange={(file) => setFoto(file)}
-        />
+        <div>
+          <ImageDrag
+            title="Foto Menu"
+            file={foto}
+            onFileChange={(file) => setFoto(file)}
+          />
+        </div>
       </div>
       <div className="mt-10">
         <CustomButton label="Tambah Menu" onClick={handleSubmit} />
