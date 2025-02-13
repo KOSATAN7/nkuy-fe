@@ -125,7 +125,7 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
     <div className="max-w-screen-xl mx-auto p-8 rounded-xl mt-8">
       <div className="flex flex-col lg:flex-row items-start lg:items-center">
         <img
-          src={gambar}
+          src={venue.foto_utama || gambar}
           className="w-full lg:w-1/2 h-96 object-cover rounded-xl"
         />
         <div className="mt-6 lg:mt-0 lg:ml-8 lg:w-1/2">

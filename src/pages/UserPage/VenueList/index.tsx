@@ -209,7 +209,7 @@ const VenueList = () => {
     <MainLayout>
       <div className="relative w-full h-64 mt-10">
         <img
-          src={Gambar2}
+          src={`https://nobarkuy.icraftds.id/storage/${pertandingan?.foto}`}
           alt="Event Venue"
           className="w-full h-full object-cover rounded-xl"
         />
@@ -217,10 +217,13 @@ const VenueList = () => {
         <div className="absolute inset-5 flex flex-col justify-between text-white">
           <div>
             <h2 className="text-4xl font-bold drop-shadow-lg">
-              {pertandingan ? `${pertandingan.tim_tuan_rumah} vs ${pertandingan.tim_tamu}` : "Persib vs Persija"}
+              {pertandingan
+                ? `${pertandingan.tim_tuan_rumah} vs ${pertandingan.tim_tamu}`
+                : "Persib vs Persija"}
             </h2>
             <p className="mt-2 text-lg">
-              Jam Tayang {pertandingan ? pertandingan.waktu_pertandingan : "06.00 WIB"}
+              Jam Tayang{" "}
+              {pertandingan ? pertandingan.waktu_pertandingan : "06.00 WIB"}
             </p>
           </div>
 
@@ -235,12 +238,16 @@ const VenueList = () => {
             </button>
             <div className="mt-[181px] absolute inset-0 flex flex-col justify-between text-white">
               <p>
-                {pertandingan ? new Date(pertandingan.tanggal_pertandingan).toLocaleDateString("id-ID", {
-                  weekday: "long",
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }) : "Sabtu, 27 Januari 2024"}
+                {pertandingan
+                  ? new Date(
+                      pertandingan.tanggal_pertandingan
+                    ).toLocaleDateString("id-ID", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "Sabtu, 27 Januari 2024"}
               </p>
             </div>
           </div>

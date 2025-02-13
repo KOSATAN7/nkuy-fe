@@ -36,7 +36,7 @@ const LandingPage = () => {
 
           const matchData: MatchCardData = {
             id: match.id,
-            image: match.logo_tamu,
+            image: match.foto,
             day: new Date(match.tanggal_pertandingan).toLocaleDateString("id-ID", { weekday: "long" }),
             date: match.tanggal_pertandingan,
             time: match.waktu_pertandingan,
@@ -160,7 +160,7 @@ const LandingPage = () => {
               {displayedMatches.map((data, index) => (
                 <div key={index} className="w-full p-4">
                   <MatchCard
-                    image={data.image}
+                    image={`https://nobarkuy.icraftds.id/storage/${data.image}`}
                     day={data.day}
                     date={data.date}
                     title={data.title}

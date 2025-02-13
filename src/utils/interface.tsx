@@ -6,6 +6,7 @@ export interface Register {
 }
 
 export interface Pertandingan {
+  foto: string;
   id: number;
   cabang_olahraga: string;
   liga: string;
