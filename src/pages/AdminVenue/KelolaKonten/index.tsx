@@ -95,7 +95,7 @@ const KelolaKonten = () => {
           <ContentCard
             key={data.id}
             id={data.id}
-            image={""}
+            image={`https://nobarkuy.icraftds.id/storage/${data.foto}`}
             title={`${data.tim_tuan_rumah} VS ${data.tim_tamu}`}
             time={data.tanggal_pertandingan}
             cabor={data.cabang_olahraga}

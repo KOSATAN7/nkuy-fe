@@ -635,3 +635,35 @@ export const postBooking = async (
   });
   return response.data;
 };
+
+export const getListBooking = async (venueId: number, token: string) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/booking/venue/${venueId}/booking`,
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const patchStatusPesanan = async (
+  venueId: number,
+  id: number,
+  status: string,
+  token: string
+) => {
+  const response = await axios.patch(
+    `${API_BASE_URL}/booking/venue/${venueId}/booking/${id}/status`,
+    { status },
+    {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};
