@@ -97,9 +97,9 @@ const SideNav = () => {
               to="/admin_venue/kelola_menu"
             />
             <NavButton
-              label="Kelola Ulasan"
+              label="Kelola Booking"
               icon={<CiMonitor />}
-              to="/admin_venue/kelola_ulasan"
+              to="/admin_venue/kelola_Booking"
             />
             <NavButton
               label="Kelola Provider"
