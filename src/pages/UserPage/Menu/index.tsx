@@ -26,7 +26,7 @@ const MenuPage = () => {
     { value: string; label: string; no_rek: string }[]
   >([]);
   const [jumlahOrang, setJumlahOrang] = useState<number>(1);
-  const [buktiPembayaran] = useState<File | null>(null);
+  const [buktiPembayaran, setBuktiPembayaran] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,18 +102,9 @@ const MenuPage = () => {
     return total;
   }, 0);
 
-  // const menuPesanan = cartItems.map((item) => ({
-  //   id: item.id,
-  //   jumlah: item.jumlah,
-  // }));
-
   const handleJumlahOrangChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setJumlahOrang(Number(e.target.value));
   };
-
-  // const handleBuktiPembayaranChange = (file: File) => {
-  //   setBuktiPembayaran(file);
-  // };
 
   const handleBooking = async () => {
     const token = sessionStorage.getItem("token");
@@ -121,19 +112,24 @@ const MenuPage = () => {
       alert("Anda harus login terlebih dahulu.");
       return;
     }
-
+  
     const formData = new FormData();
     formData.append("provider_id", selectedProvider);
     formData.append("venue_id", venueId);
     formData.append("jumlah_orang", jumlahOrang.toString());
 
-    const menuPesananIds = cartItems.map((item) => item.id);
-    formData.append("menu_pesanan", JSON.stringify(menuPesananIds));
-
+    cartItems.forEach((item) => {
+      formData.append("menu_pesanan[]", item.id.toString());
+    });
+    
+  
     if (buktiPembayaran) {
       formData.append("bukti_pembayaran", buktiPembayaran);
+    } else {
+      alert("Harap unggah bukti pembayaran terlebih dahulu.");
+      return;
     }
-
+  
     try {
       const response = await postBooking(formData, token);
       console.log("Booking berhasil:", response);
@@ -143,6 +139,7 @@ const MenuPage = () => {
       alert("Gagal melakukan booking. Silakan coba lagi.");
     }
   };
+  
 
   return (
     <MainLayout>
@@ -151,6 +148,7 @@ const MenuPage = () => {
           {menuData.map((data) => (
             <MenuCard
               key={data.id}
+              foto={`https://nobarkuy.icraftds.id/storage/${data.foto}`}
               nama={data.nama}
               deskripsi={data.deskripsi}
               harga={data.harga}
@@ -214,9 +212,7 @@ const MenuPage = () => {
 
             <UploadField
               title="Bukti Pembayaran"
-              onFileChange={function (file: File | null): void {
-                throw new Error("Function not implemented.");
-              }}
+              onFileChange={(file) => setBuktiPembayaran(file)}
             />
 
             <SelectField
