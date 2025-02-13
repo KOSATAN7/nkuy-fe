@@ -99,7 +99,7 @@ const SideNav = () => {
             <NavButton
               label="Kelola Booking"
               icon={<CiMonitor />}
-              to="/admin_venue/kelola_Booking"
+              to="/admin_venue/kelola_booking"
             />
             <NavButton
               label="Kelola Provider"

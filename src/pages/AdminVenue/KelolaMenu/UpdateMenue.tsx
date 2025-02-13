@@ -134,7 +134,7 @@ const UpdateMenu = () => {
         />
         <ImageDrag
           title="Foto Menu"
-          file={`https://nobarkuy.icraftds.id/storage/${foto}`}
+          file={foto}
           onFileChange={(file) => setFoto(file)}
         />
       </div>

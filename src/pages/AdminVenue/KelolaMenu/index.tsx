@@ -32,7 +32,7 @@ const KelolaMenu = () => {
 
       const response = await getMenubyVenueId(Number(venueId), token);
       setMenuData(response.data);
-      console.log(response.data)
+      console.log(response.data);
     };
     fetchData();
   }, []);
@@ -79,7 +79,7 @@ const KelolaMenu = () => {
         {menuData.map((data, index) => (
           <MenuCard
             key={index}
-            image={`https://nobarkuy.icraftds.id/storage/${data.foto}` || ""}
+            image={data.foto}
             nama={data.nama}
             harga={formatRupiah(Number(data.harga))}
             description={data.deskripsi}

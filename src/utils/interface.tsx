@@ -111,6 +111,7 @@ export interface getMetodePembayarans {
 }
 
 export interface Konten {
+  foto: any;
   id: number;
   cabang_olahraga: string;
   liga: string;
@@ -196,10 +197,42 @@ export interface buatBooking {
   provider_id: string;
   venue_id: string;
   jumlah_orang: number;
-  menu_pesanan: [
-    id: number,
-    jumlah: number
-  ];
-  bukti_pembayaran: string
+  menu_pesanan: [id: number, jumlah: number];
+  bukti_pembayaran: string;
+}
 
+export interface Booking {
+  id: number;
+  jumlah_orang: number;
+  total_harga: number;
+  bukti_pembayaran: string;
+  status: string;
+  venue: {
+    id: number;
+    nama: string;
+  };
+  user: {
+    id: number;
+    username: string;
+  };
+  provider?: {
+    id: number;
+    nama: string;
+  } | null;
+  menus: {
+    id: number;
+    nama: string;
+    deskripsi: string;
+    harga: string;
+    foto: string;
+    kategori: string;
+    kesediaan: number;
+    pivot: {
+      booking_id: number;
+      menu_id: number;
+      jumlah_pesanan: number;
+      created_at: string;
+      updated_at: string;
+    };
+  }[];
 }
