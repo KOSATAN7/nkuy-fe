@@ -25,7 +25,7 @@ const DetailVenue: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="min-h-screen flex flex-col items-center py-10">
+      <div className="min-h-screen flex flex-col items-center ">
         <DetailVenueCard venue={venueData} />
       </div>
     </MainLayout>

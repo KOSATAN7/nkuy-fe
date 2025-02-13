@@ -72,11 +72,16 @@ const RoutingControl = ({ venue }: { venue: VenueProps["venue"] }) => {
           .bindPopup("Lokasi Anda")
           .openPopup();
 
-        // Tambahkan marker titik tujuan (venue)
+        // Tambahkan marker titik tujuan (venue) dengan event klik untuk membuka Google Maps
         L.marker([parseFloat(venue.latitude), parseFloat(venue.longitude)])
           .addTo(map)
           .bindPopup(`Tujuan: ${venue.nama}`)
-          .openPopup();
+          .on("click", () => {
+            window.open(
+              `https://www.google.com/maps?q=${parseFloat(venue.latitude)},${parseFloat(venue.longitude)}`,
+              "_blank"
+            );
+          });
 
         // Menghapus panel routing jika ada
         const container = document.querySelector(".leaflet-routing-container");
@@ -168,7 +173,7 @@ const DetailVenueCard: React.FC<VenueProps> = ({ venue }) => {
       </div>
 
       {/* Leaflet Map */}
-      <div className="relative w-full h-96 mt-16 rounded-lg overflow-hidden">
+      <div className="relative w-full h-96 mt-16 rounded-lg overflow-hidden z-10">
         <MapContainer
           center={[parseFloat(venue.latitude), parseFloat(venue.longitude)]}
           zoom={15}
