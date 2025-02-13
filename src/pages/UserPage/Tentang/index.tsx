@@ -11,7 +11,6 @@ const HomePage: React.FC = () => {
   const teamData = [
     { image: obet, id: "10122048", name: "Fahri Arsyah" },
     { image: rifqi, id: "10122054", name: "Rifqi Muhammad H" },
-    { image: logo, id: "10122067", name: "Rangga Krisna" },
     { image: logo, id: "10122069", name: "Naufal Ramdhan R" },
     { image: blek, id: "10122073", name: "M Iqbal Januar" },
     { image: logo, id: "10122074", name: "M Irsyad Fatahillah" },
@@ -19,7 +18,7 @@ const HomePage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center mt-20">
         <div className="shadow-xl flex justify-between w-9/12 rounded-2xl items-center bg-white  px-10 py-10">
           <div>
             <img src={logo} alt="" />

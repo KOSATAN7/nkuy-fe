@@ -13,6 +13,7 @@ const HeaderNav = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [hasShadow, setHasShadow] = useState(false);
+  const [bgColor, setBgColor] = useState("bg-transparent");
   const [role, setRole] = useState("");
   const [username, setUsername] = useState("");
   const [showLogoutAlert, setShowLogoutAlert] = useState(false);
@@ -27,9 +28,15 @@ const HeaderNav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setHasShadow(window.scrollY > 10);
+      if (window.scrollY > 10) {
+        setHasShadow(true);
+        setBgColor("bg-white"); // Ubah background jadi putih saat discroll
+      } else {
+        setHasShadow(false);
+        setBgColor("bg-transparent"); // Kembali transparan jika di atas
+      }
     };
-
+  
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -56,10 +63,9 @@ const HeaderNav = () => {
 
   return (
     <div
-      className={`fixed top-0 left-0 w-full bg-white transition-shadow ${
-        hasShadow ? "shadow-md" : ""
-      } z-50`}
-    >
+    className={`fixed top-0 left-0 w-full transition-shadow ${bgColor} ${hasShadow ? "shadow-md" : ""} z-50`}
+  >
+  
       <div className="mx-20 my-3 flex justify-between items-center">
         <div className="flex-1 flex justify-start">
           <img
@@ -79,11 +85,10 @@ const HeaderNav = () => {
           ].map((item) => (
             <p
               key={item.path}
-              className={`cursor-pointer hover:text-primary1 transition ${
-                location.pathname === item.path
+              className={`cursor-pointer hover:text-primary1 transition ${location.pathname === item.path
                   ? "text-primary1 font-semibold"
                   : "text-black"
-              }`}
+                }`}
               onClick={() => navigate(item.path)}
             >
               {item.name}
@@ -94,11 +99,10 @@ const HeaderNav = () => {
         <div className="flex-1 flex justify-end items-center gap-4 relative">
           <button
             onClick={() => navigate("/favorite-venue")}
-            className={`flex items-center justify-center gap-1 transition ${
-              location.pathname === "/favorite-venue"
+            className={`flex items-center justify-center gap-1 transition ${location.pathname === "/favorite-venue"
                 ? "text-primary1"
                 : "text-gray-600 hover:text-primary1"
-            }`}
+              }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >

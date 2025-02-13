@@ -104,7 +104,7 @@ const LandingPage = () => {
 
   return (
     <MainLayout>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto mt-24 px-4">
         <div className="flex flex-col items-center space-y-4">
           <p className="text-4xl font-medium">Mau nonton apa hari ini?</p>
           <input
